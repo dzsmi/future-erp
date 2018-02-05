@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component-loader xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/component-loader.xsd">
+    <load-component component-location="datamodel"/>
+    <load-component component-location="party"/>
+    <load-component component-location="commonext"/>
+    <load-component component-location="accounting"/>
+    <load-component component-location="humanres"/>
+</component-loader>
