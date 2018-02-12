@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 김현석 / 2018.02.12 -->
+<!--
+    (주)퓨처리테일 재경 플러그인 (fracct)
+    - 전표 작성/상신/결재, 결산 마감, 세금계산서, 거래처 지급조건, 지급계획
+-->
+<ofbiz-component name="fracct"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/ofbiz-component.xsd">
+    <resource-loader name="main" type="component"/>
+    <depends-on component-name="accounting"/>
+    <depends-on component-name="party"/>
+    <classpath type="dir" location="config"/>
+
+    <!-- entity -->
+    <entity-resource type="model" reader-name="main" loader="main" location="entitydef/entitymodel.xml"/>
+    <entity-resource type="data" reader-name="seed" loader="main" location="data/FrAcctTypeData.xml"/>
+    <entity-resource type="data" reader-name="seed" loader="main" location="data/FrAcctSecurityPermissionSeedData.xml"/>
+    <entity-resource type="data" reader-name="seed-initial" loader="main" location="data/FrAcctOrgData.xml"/>
+
+    <!-- service -->
+    <service-resource type="model" loader="main" location="servicedef/services_perm.xml"/>
+    <service-resource type="model" loader="main" location="servicedef/services_slip.xml"/>
+    <service-resource type="model" loader="main" location="servicedef/services_period.xml"/>
+    <service-resource type="model" loader="main" location="servicedef/services_tax.xml"/>
+    <service-resource type="model" loader="main" location="servicedef/services_payment.xml"/>
+    <service-resource type="eca" loader="main" location="servicedef/secas.xml"/>
+
+    <!-- webapp -->
+    <webapp name="fracct"
+        title="FrAcct"
+        description="FutureRetail Accounting"
+        server="default-server"
+        location="webapp/fracct"
+        base-permission="OFBTOOLS,FRACCT"
+        mount-point="/fracct"
+        app-bar-display="true"/>
+</ofbiz-component>

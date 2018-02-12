@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 김현석 / 2018.02.12 -->
+<component-loader xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/component-loader.xsd">
+    <load-component component-location="fracct"/>
+    <load-component component-location="frhr"/>
+</component-loader>
