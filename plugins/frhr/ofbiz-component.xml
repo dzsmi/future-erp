@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 김현석 / 2018.02.12 -->
+<!-- (주)퓨처리테일 인사 컴포넌트 : 인사정보 / 급여 / 4대보험 / 근태 / 연차 / 퇴직정산 -->
+<ofbiz-component name="frhr"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/ofbiz-component.xsd">
+    <resource-loader name="main" type="component"/>
+    <classpath type="dir" location="config"/>
+
+    <depends-on component-name="party"/>
+    <depends-on component-name="accounting"/>
+    <depends-on component-name="humanres"/>
+
+    <!-- entity -->
+    <entity-resource type="model" reader-name="main" loader="main" location="entitydef/entitymodel.xml"/>
+
+    <!-- seed data -->
+    <entity-resource type="data" reader-name="seed" loader="main" location="data/FrHrTypeData.xml"/>
+    <entity-resource type="data" reader-name="seed" loader="main" location="data/FrHrSecurityPermissionSeedData.xml"/>
+    <entity-resource type="data" reader-name="seed" loader="main" location="data/FrHrInsuranceRateData.xml"/>
+
+    <!-- service -->
+    <service-resource type="model" loader="main" location="servicedef/services.xml"/>
+    <service-resource type="model" loader="main" location="servicedef/services_attendance.xml"/>
+    <service-resource type="model" loader="main" location="servicedef/services_leave.xml"/>
+    <service-resource type="eca" loader="main" location="servicedef/secas.xml"/>
+
+    <webapp name="frhr"
+        title="FrHr"
+        description="FutureRetail HR Application"
+        server="default-server"
+        location="webapp/frhr"
+        base-permission="OFBTOOLS,FRHR"
+        mount-point="/frhr"
+        app-bar-display="true"/>
+</ofbiz-component>
