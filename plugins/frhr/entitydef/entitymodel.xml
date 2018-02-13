@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 김현석 / 2018.02.13 -->
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+  <!-- ========================================================= -->
+  <!-- ======================== Defaults ======================= -->
+  <!-- ========================================================= -->
+    <title>FutureRetail HR Entities</title>
+    <description>(주)퓨처리테일 인사/급여/근태 엔티티</description>
+    <version>1.0</version>
+
+  <!-- ========================================================= -->
+  <!-- com.futureretail.frhr.employee                            -->
+  <!-- ========================================================= -->
+    <entity entity-name="FrEmplInfo"
+            package-name="com.futureretail.frhr.employee"
+            title="직원 인사정보">
+        <field name="partyId" type="id"><description>Person.partyId</description></field>
+        <field name="emplNo" type="id"><description>사번</description></field>
+        <field name="hireDate" type="date"><description>입사일</description></field>
+        <field name="retireDate" type="date"><description>퇴사일</description></field>
+        <field name="positionGradeId" type="id"><description>직급 (Enumeration FR_POSITION_GRADE)</description></field>
+        <field name="departmentId" type="id"><description>부서 (PartyGroup.partyId)</description></field>
+        <field name="baseSalary" type="currency-amount"><description>월 기본급</description></field>
+        <field name="remarks" type="description"/>
+        <prim-key field="partyId"/>
+        <relation type="one" fk-name="FR_EMPL_PARTY" rel-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relation>
+        <relation type="one-nofk" rel-entity-name="Person">
+            <key-map field-name="partyId"/>
+        </relation>
+        <relation type="one-nofk" title="Department" rel-entity-name="PartyGroup">
+            <key-map field-name="departmentId" rel-field-name="partyId"/>
+        </relation>
+        <relation type="one-nofk" title="Grade" rel-entity-name="Enumeration">
+            <key-map field-name="positionGradeId" rel-field-name="enumId"/>
+        </relation>
+        <index name="FR_EMPL_NO_IDX" unique="true">
+            <index-field name="emplNo"/>
+        </index>
+    </entity>
+
+  <!-- ========================================================= -->
+  <!-- com.futureretail.frhr.payroll                             -->
+  <!-- ========================================================= -->
+    <entity entity-name="FrInsuranceRate"
+            package-name="com.futureretail.frhr.payroll"
+            title="4대보험 요율">
+        <field name="rateYear" type="numeric"><description>적용연도</description></field>
+        <field name="insuranceType" type="id"><description>HEALTH / LONGTERM / PENSION / EMPLOY</description></field>
+        <field name="rate" type="fixed-point"><description>근로자 부담 요율(%) - LONGTERM은 건강보험료 대비 %</description></field>
+        <field name="description" type="description"/>
+        <prim-key field="rateYear"/>
+        <prim-key field="insuranceType"/>
+    </entity>
+
+    <entity entity-name="FrPayroll"
+            package-name="com.futureretail.frhr.payroll"
+            title="월 급여">
+        <field name="payrollId" type="id"/>
+        <field name="payYearMonth" type="id"><description>급여년월 (yyyyMM)</description></field>
+        <field name="partyId" type="id"/>
+        <field name="baseSalary" type="currency-amount"><description>계산 시점 월 기본급</description></field>
+        <field name="workDays" type="numeric"><description>일할계산 근무일수 (중도입사만)</description></field>
+        <field name="baseAmount" type="currency-amount"><description>기본급 지급액</description></field>
+        <field name="overtimeHours" type="fixed-point"/>
+        <field name="overtimeAmount" type="currency-amount"><description>연장수당</description></field>
+        <field name="bonusAmount" type="currency-amount"><description>상여</description></field>
+        <field name="grossAmount" type="currency-amount"><description>지급총액</description></field>
+        <field name="pensionAmount" type="currency-amount"><description>국민연금</description></field>
+        <field name="healthAmount" type="currency-amount"><description>건강보험</description></field>
+        <field name="longtermAmount" type="currency-amount"><description>장기요양보험</description></field>
+        <field name="employAmount" type="currency-amount"><description>고용보험</description></field>
+        <field name="incomeTaxAmount" type="currency-amount"><description>소득세(간이)</description></field>
+        <field name="deductionAmount" type="currency-amount"><description>공제합계</description></field>
+        <field name="netAmount" type="currency-amount"><description>실지급액</description></field>
+        <field name="statusId" type="id"/>
+        <field name="calcDate" type="date-time"/>
+        <field name="calcByUserLogin" type="id-vlong"/>
+        <prim-key field="payrollId"/>
+        <relation type="one" fk-name="FR_PAYRL_PARTY" rel-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relation>
+        <relation type="one" fk-name="FR_PAYRL_STTS" rel-entity-name="StatusItem">
+            <key-map field-name="statusId"/>
+        </relation>
+        <relation type="one-nofk" rel-entity-name="FrEmplInfo">
+            <key-map field-name="partyId"/>
+        </relation>
+        <index name="FR_PAYRL_YM_PARTY" unique="true">
+            <index-field name="payYearMonth"/>
+            <index-field name="partyId"/>
+        </index>
+    </entity>
+
+  <!-- ========================================================= -->
+  <!-- com.futureretail.frhr.attendance                          -->
+  <!-- ========================================================= -->
+    <entity entity-name="FrAttendance"
+            package-name="com.futureretail.frhr.attendance"
+            title="일별 근태">
+        <field name="partyId" type="id"/>
+        <field name="workDate" type="date"><description>근무일</description></field>
+        <field name="checkInTime" type="date-time"><description>출근</description></field>
+        <field name="checkOutTime" type="date-time"><description>퇴근</description></field>
+        <field name="workHours" type="fixed-point"><description>근무시간(휴게 제외)</description></field>
+        <field name="overtimeHours" type="fixed-point"><description>연장시간(8시간 초과분)</description></field>
+        <field name="attendTypeId" type="id"><description>근태유형 (Enumeration FR_ATTEND_TYPE)</description></field>
+        <field name="remarks" type="description"/>
+        <prim-key field="partyId"/>
+        <prim-key field="workDate"/>
+        <relation type="one" fk-name="FR_ATTND_PARTY" rel-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relation>
+        <relation type="one-nofk" title="AttendType" rel-entity-name="Enumeration">
+            <key-map field-name="attendTypeId" rel-field-name="enumId"/>
+        </relation>
+    </entity>
+
+    <entity entity-name="FrLeaveGrant"
+            package-name="com.futureretail.frhr.attendance"
+            title="연차 발생">
+        <field name="leaveGrantId" type="id"/>
+        <field name="partyId" type="id"/>
+        <field name="grantYear" type="numeric"><description>발생년도</description></field>
+        <field name="serviceYearNo" type="numeric"><description>근속차수 (0 = 입사 1년 미만, 1 = 만 1년 ...)</description></field>
+        <field name="grantType" type="id"><description>발생유형 AUTO / MANUAL</description></field>
+        <field name="grantDays" type="fixed-point"><description>발생일수</description></field>
+        <field name="grantDate" type="date"><description>발생일</description></field>
+        <field name="remarks" type="description"/>
+        <field name="createdByUserLogin" type="id-vlong"/>
+        <prim-key field="leaveGrantId"/>
+        <relation type="one" fk-name="FR_LVGRT_PARTY" rel-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relation>
+    </entity>
+
+    <entity entity-name="FrLeaveUse"
+            package-name="com.futureretail.frhr.attendance"
+            title="연차 사용">
+        <field name="leaveUseId" type="id"/>
+        <field name="partyId" type="id"/>
+        <field name="fromDate" type="date"/>
+        <field name="thruDate" type="date"/>
+        <field name="useDays" type="fixed-point"><description>사용일수 (반차 0.5)</description></field>
+        <field name="reason" type="description"/>
+        <field name="statusId" type="id"/>
+        <field name="approverPartyId" type="id"/>
+        <field name="approvedDate" type="date-time"/>
+        <prim-key field="leaveUseId"/>
+        <relation type="one" fk-name="FR_LVUSE_PARTY" rel-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relation>
+        <relation type="one" fk-name="FR_LVUSE_APPR" title="Approver" rel-entity-name="Party">
+            <key-map field-name="approverPartyId" rel-field-name="partyId"/>
+        </relation>
+        <relation type="one" fk-name="FR_LVUSE_STTS" rel-entity-name="StatusItem">
+            <key-map field-name="statusId"/>
+        </relation>
+    </entity>
+
+  <!-- ========================================================= -->
+  <!-- com.futureretail.frhr.retire                              -->
+  <!-- ========================================================= -->
+    <entity entity-name="FrRetireSettle"
+            package-name="com.futureretail.frhr.retire"
+            title="퇴직 정산">
+        <field name="retireSettleId" type="id"/>
+        <field name="partyId" type="id"/>
+        <field name="hireDate" type="date"/>
+        <field name="retireDate" type="date"><description>퇴사일</description></field>
+        <field name="serviceDays" type="numeric"><description>재직일수</description></field>
+        <field name="wage3MonthAmount" type="currency-amount"><description>직전 3개월 임금총액</description></field>
+        <field name="bonus12MonthAmount" type="currency-amount"><description>직전 12개월 상여 합계</description></field>
+        <field name="calDays3Month" type="numeric"><description>직전 3개월 역일수</description></field>
+        <field name="avgDailyWage" type="fixed-point"><description>평균임금(1일)</description></field>
+        <field name="retirePayAmount" type="currency-amount"><description>퇴직금</description></field>
+        <field name="lastMonthWorkDays" type="numeric"/>
+        <field name="lastMonthPay" type="currency-amount"><description>마지막달 일할 급여</description></field>
+        <field name="lastMonthDeduction" type="currency-amount"><description>마지막달 정산 공제액</description></field>
+        <field name="lastMonthNetPay" type="currency-amount"/>
+        <field name="settleDate" type="date-time"/>
+        <field name="settleByUserLogin" type="id-vlong"/>
+        <prim-key field="retireSettleId"/>
+        <relation type="one" fk-name="FR_RTSTL_PARTY" rel-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relation>
+        <relation type="one-nofk" rel-entity-name="FrEmplInfo">
+            <key-map field-name="partyId"/>
+        </relation>
+    </entity>
+</entitymodel>
