@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 김현석 / 2018.02.14 -->
+<entity-engine-xml>
+    <!-- 직급 -->
+    <EnumerationType enumTypeId="FR_POSITION_GRADE" hasTable="N" description="퓨처리테일 직급"/>
+    <Enumeration enumId="FRPG_STAFF" enumTypeId="FR_POSITION_GRADE" enumCode="G1" sequenceId="01" description="사원"/>
+    <Enumeration enumId="FRPG_SENIOR" enumTypeId="FR_POSITION_GRADE" enumCode="G2" sequenceId="02" description="대리"/>
+    <Enumeration enumId="FRPG_MANAGER" enumTypeId="FR_POSITION_GRADE" enumCode="G3" sequenceId="03" description="과장"/>
+    <Enumeration enumId="FRPG_DEPUTY" enumTypeId="FR_POSITION_GRADE" enumCode="G4" sequenceId="04" description="차장"/>
+    <Enumeration enumId="FRPG_GENERAL" enumTypeId="FR_POSITION_GRADE" enumCode="G5" sequenceId="05" description="부장"/>
+    <Enumeration enumId="FRPG_DIRECTOR" enumTypeId="FR_POSITION_GRADE" enumCode="G6" sequenceId="06" description="이사"/>
+
+    <!-- 근태유형 -->
+    <EnumerationType enumTypeId="FR_ATTEND_TYPE" hasTable="N" description="퓨처리테일 근태유형"/>
+    <Enumeration enumId="FRAT_NORMAL" enumTypeId="FR_ATTEND_TYPE" enumCode="NORMAL" sequenceId="01" description="정상"/>
+    <Enumeration enumId="FRAT_LATE" enumTypeId="FR_ATTEND_TYPE" enumCode="LATE" sequenceId="02" description="지각"/>
+    <Enumeration enumId="FRAT_EARLY" enumTypeId="FR_ATTEND_TYPE" enumCode="EARLY" sequenceId="03" description="조퇴"/>
+    <Enumeration enumId="FRAT_BIZTRIP" enumTypeId="FR_ATTEND_TYPE" enumCode="BIZTRIP" sequenceId="04" description="출장"/>
+    <Enumeration enumId="FRAT_LEAVE" enumTypeId="FR_ATTEND_TYPE" enumCode="LEAVE" sequenceId="05" description="연차"/>
+    <Enumeration enumId="FRAT_ABSENT" enumTypeId="FR_ATTEND_TYPE" enumCode="ABSENT" sequenceId="06" description="결근"/>
+
+    <!-- 급여 상태 -->
+    <StatusType statusTypeId="FR_PAYROLL_STATUS" hasTable="N" description="퓨처리테일 급여 상태"/>
+    <StatusItem statusId="FRPAY_DRAFT" statusTypeId="FR_PAYROLL_STATUS" statusCode="DRAFT" sequenceId="01" description="계산"/>
+    <StatusItem statusId="FRPAY_CONFIRMED" statusTypeId="FR_PAYROLL_STATUS" statusCode="CONFIRMED" sequenceId="02" description="확정"/>
+    <StatusItem statusId="FRPAY_PAID" statusTypeId="FR_PAYROLL_STATUS" statusCode="PAID" sequenceId="03" description="지급"/>
+    <StatusValidChange statusId="FRPAY_DRAFT" statusIdTo="FRPAY_CONFIRMED" transitionName="확정"/>
+    <StatusValidChange statusId="FRPAY_CONFIRMED" statusIdTo="FRPAY_DRAFT" transitionName="확정취소"/>
+    <StatusValidChange statusId="FRPAY_CONFIRMED" statusIdTo="FRPAY_PAID" transitionName="지급"/>
+
+    <!-- 연차 사용 상태 -->
+    <StatusType statusTypeId="FR_LEAVE_USE_STATUS" hasTable="N" description="퓨처리테일 연차 사용 상태"/>
+    <StatusItem statusId="FRLU_REQUESTED" statusTypeId="FR_LEAVE_USE_STATUS" statusCode="REQUESTED" sequenceId="01" description="신청"/>
+    <StatusItem statusId="FRLU_APPROVED" statusTypeId="FR_LEAVE_USE_STATUS" statusCode="APPROVED" sequenceId="02" description="승인"/>
+    <StatusItem statusId="FRLU_REJECTED" statusTypeId="FR_LEAVE_USE_STATUS" statusCode="REJECTED" sequenceId="03" description="반려"/>
+    <StatusValidChange statusId="FRLU_REQUESTED" statusIdTo="FRLU_APPROVED" transitionName="승인"/>
+    <StatusValidChange statusId="FRLU_REQUESTED" statusIdTo="FRLU_REJECTED" transitionName="반려"/>
+
+    <!-- 승인된 연차를 OFBiz EmplLeave 에도 남긴다 (humanres 휴가 화면 조회용) -->
+    <EmplLeaveType leaveTypeId="FR_ANNUAL" hasTable="N" description="연차휴가"/>
+</entity-engine-xml>

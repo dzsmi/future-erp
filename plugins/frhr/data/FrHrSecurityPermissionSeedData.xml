@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 김현석 / 2018.02.14 -->
+<entity-engine-xml>
+    <SecurityPermission permissionId="FRHR_VIEW" description="퓨처리테일 인사 조회"/>
+    <SecurityPermission permissionId="FRHR_ADMIN" description="퓨처리테일 인사 전체(등록/수정/급여계산/퇴직정산)"/>
+
+    <SecurityGroup groupId="FRHR_VIEWER" description="인사 조회 그룹(부서장)"/>
+    <SecurityGroup groupId="FRHR_ADMIN" description="인사 관리 그룹(인사팀)"/>
+
+    <SecurityGroupPermission groupId="FRHR_VIEWER" permissionId="OFBTOOLS_VIEW" fromDate="2018-02-14 00:00:00.0"/>
+    <SecurityGroupPermission groupId="FRHR_VIEWER" permissionId="FRHR_VIEW" fromDate="2018-02-14 00:00:00.0"/>
+    <SecurityGroupPermission groupId="FRHR_ADMIN" permissionId="OFBTOOLS_VIEW" fromDate="2018-02-14 00:00:00.0"/>
+    <SecurityGroupPermission groupId="FRHR_ADMIN" permissionId="FRHR_ADMIN" fromDate="2018-02-14 00:00:00.0"/>
+    <SecurityGroupPermission groupId="FRHR_ADMIN" permissionId="HUMANRES_ADMIN" fromDate="2018-02-14 00:00:00.0"/>
+
+    <SecurityGroupPermission groupId="SUPER" permissionId="FRHR_ADMIN" fromDate="2018-02-14 00:00:00.0"/>
+</entity-engine-xml>
