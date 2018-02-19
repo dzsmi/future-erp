@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 김현석 / 2018.02.19 -->
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+  <!-- ========================================================= -->
+  <!-- ======================== Defaults ======================= -->
+  <!-- ========================================================= -->
+    <title>FutureRetail Accounting Entities</title>
+    <description>(주)퓨처리테일 재경 플러그인 엔티티 (전표/결재/마감/세금계산서/지급)</description>
+    <version>1.0</version>
+
+  <!-- ========================================================= -->
+  <!-- ======================== Data Model ===================== -->
+  <!-- The modules in this file are as follows:                  -->
+  <!--  - com.futureretail.fracct.slip                           -->
+  <!--  - com.futureretail.fracct.period                         -->
+  <!--  - com.futureretail.fracct.tax                            -->
+  <!--  - com.futureretail.fracct.payment                        -->
+  <!-- ========================================================= -->
+
+
+  <!-- ========================================================= -->
+  <!-- com.futureretail.fracct.slip -->
+  <!-- ========================================================= -->
+
+    <entity entity-name="FrSlip"
+            package-name="com.futureretail.fracct.slip"
+            title="FutureRetail Accounting Slip">
+        <field name="slipId" type="id"><description>전표번호</description></field>
+        <field name="slipTypeEnumId" type="id"><description>전표유형 (Enumeration FR_SLIP_TYPE)</description></field>
+        <field name="slipDate" type="date"><description>전표일자</description></field>
+        <field name="deptPartyId" type="id"><description>작성 부서 partyId</description></field>
+        <field name="amount" type="currency-amount"><description>전표금액 (차변 합계)</description></field>
+        <field name="statusId" type="id"><description>FRSLIP_DRAFT/REQUESTED/APPROVED/REJECTED</description></field>
+        <field name="apprLevelEnumId" type="id"><description>최종 결재레벨 (Enumeration FR_APPR_LEVEL, 상신 시 결정)</description></field>
+        <field name="apprStepEnumId" type="id"><description>현재까지 승인된 결재레벨</description></field>
+        <field name="acctgTransId" type="id"><description>최종 승인 시 생성된 회계 거래</description></field>
+        <field name="description" type="description"><description>적요</description></field>
+        <field name="requestedDate" type="date-time"></field>
+        <field name="approvedDate" type="date-time"></field>
+        <field name="createdByUserLogin" type="id-vlong"><description>작성자</description></field>
+        <field name="lastModifiedByUserLogin" type="id-vlong"></field>
+        <prim-key field="slipId"/>
+        <relation type="one" fk-name="FRSLIP_TYPE" title="SlipType" rel-entity-name="Enumeration">
+            <key-map field-name="slipTypeEnumId" rel-field-name="enumId"/>
+        </relation>
+        <relation type="one" fk-name="FRSLIP_APPRLV" title="ApprLevel" rel-entity-name="Enumeration">
+            <key-map field-name="apprLevelEnumId" rel-field-name="enumId"/>
+        </relation>
+        <relation type="one" fk-name="FRSLIP_APPRSTP" title="ApprStep" rel-entity-name="Enumeration">
+            <key-map field-name="apprStepEnumId" rel-field-name="enumId"/>
+        </relation>
+        <relation type="one" fk-name="FRSLIP_DEPT" title="Dept" rel-entity-name="Party">
+            <key-map field-name="deptPartyId" rel-field-name="partyId"/>
+        </relation>
+        <relation type="one" fk-name="FRSLIP_STTS" rel-entity-name="StatusItem">
+            <key-map field-name="statusId"/>
+        </relation>
+        <relation type="one" fk-name="FRSLIP_ATRANS" rel-entity-name="AcctgTrans">
+            <key-map field-name="acctgTransId"/>
+        </relation>
+        <relation type="one" fk-name="FRSLIP_CUL" title="CreatedBy" rel-entity-name="UserLogin">
+            <key-map field-name="createdByUserLogin" rel-field-name="userLoginId"/>
+        </relation>
+        <relation type="one" fk-name="FRSLIP_LMCUL" title="LastModifiedBy" rel-entity-name="UserLogin">
+            <key-map field-name="lastModifiedByUserLogin" rel-field-name="userLoginId"/>
+        </relation>
+        <relation type="many" rel-entity-name="FrSlipItem">
+            <key-map field-name="slipId"/>
+        </relation>
+        <relation type="many" rel-entity-name="FrApprHist">
+            <key-map field-name="slipId"/>
+        </relation>
+        <index name="FRSLIP_DATE_IDX">
+            <index-field name="slipDate"/>
+        </index>
+    </entity>
+
+    <entity entity-name="FrSlipItem"
+            package-name="com.futureretail.fracct.slip"
+            title="FutureRetail Accounting Slip Item">
+        <field name="slipId" type="id"></field>
+        <field name="slipItemSeqId" type="id"><description>순번</description></field>
+        <field name="glAccountId" type="id"><description>계정과목</description></field>
+        <field name="debitCreditFlag" type="indicator"><description>D: 차변, C: 대변</description></field>
+        <field name="amount" type="currency-amount"></field>
+        <field name="partyId" type="id"><description>거래처</description></field>
+        <field name="comments" type="comment"><description>메모</description></field>
+        <prim-key field="slipId"/>
+        <prim-key field="slipItemSeqId"/>
+        <relation type="one" fk-name="FRSLIPITM_SLIP" rel-entity-name="FrSlip">
+            <key-map field-name="slipId"/>
+        </relation>
+        <relation type="one" fk-name="FRSLIPITM_GLACT" rel-entity-name="GlAccount">
+            <key-map field-name="glAccountId"/>
+        </relation>
+        <relation type="one" fk-name="FRSLIPITM_PARTY" rel-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relation>
+    </entity>
+
+    <entity entity-name="FrApprHist"
+            package-name="com.futureretail.fracct.slip"
+            title="FutureRetail Slip Approval History">
+        <field name="slipId" type="id"></field>
+        <field name="apprSeqId" type="id"></field>
+        <field name="apprActionId" type="id"><description>REQUEST(상신) / APPROVE(승인) / REJECT(반려)</description></field>
+        <field name="apprLevelEnumId" type="id"><description>처리한 결재레벨</description></field>
+        <field name="apprUserLoginId" type="id-vlong"><description>처리자</description></field>
+        <field name="apprDate" type="date-time"></field>
+        <field name="slipAmount" type="currency-amount"><description>처리 시점 전표금액</description></field>
+        <field name="comments" type="comment"><description>결재 의견 / 반려 사유</description></field>
+        <prim-key field="slipId"/>
+        <prim-key field="apprSeqId"/>
+        <relation type="one" fk-name="FRAPPRH_SLIP" rel-entity-name="FrSlip">
+            <key-map field-name="slipId"/>
+        </relation>
+        <relation type="one" fk-name="FRAPPRH_LEVEL" title="ApprLevel" rel-entity-name="Enumeration">
+            <key-map field-name="apprLevelEnumId" rel-field-name="enumId"/>
+        </relation>
+        <relation type="one" fk-name="FRAPPRH_USER" rel-entity-name="UserLogin">
+            <key-map field-name="apprUserLoginId" rel-field-name="userLoginId"/>
+        </relation>
+    </entity>
+
+  <!-- ========================================================= -->
+  <!-- com.futureretail.fracct.period -->
+  <!-- ========================================================= -->
+
+    <entity entity-name="FrClosePeriod"
+            package-name="com.futureretail.fracct.period"
+            title="FutureRetail Monthly Closing">
+        <field name="closeYearMonth" type="id"><description>마감년월 (yyyyMM)</description></field>
+        <field name="isClosed" type="indicator"><description>마감여부 Y/N</description></field>
+        <field name="closedByUserLogin" type="id-vlong"><description>마감자</description></field>
+        <field name="closedDate" type="date-time"><description>마감일시</description></field>
+        <field name="comments" type="comment"></field>
+        <prim-key field="closeYearMonth"/>
+        <relation type="one" fk-name="FRCLOSE_USER" rel-entity-name="UserLogin">
+            <key-map field-name="closedByUserLogin" rel-field-name="userLoginId"/>
+        </relation>
+    </entity>
+
+  <!-- ========================================================= -->
+  <!-- com.futureretail.fracct.tax -->
+  <!-- ========================================================= -->
+
+    <entity entity-name="FrTaxInvoice"
+            package-name="com.futureretail.fracct.tax"
+            title="FutureRetail Tax Invoice">
+        <field name="taxInvoiceId" type="id"></field>
+        <field name="taxInvoiceTypeEnumId" type="id"><description>FRTI_SALES(매출) / FRTI_PURCHASE(매입)</description></field>
+        <field name="taxInvoiceNo" type="id-long"><description>세금계산서 승인번호</description></field>
+        <field name="partyId" type="id"><description>거래처</description></field>
+        <field name="issueDate" type="date"><description>발행일</description></field>
+        <field name="supplyAmount" type="currency-amount"><description>공급가액</description></field>
+        <field name="vatAmount" type="currency-amount"><description>부가세</description></field>
+        <field name="totalAmount" type="currency-amount"><description>합계</description></field>
+        <field name="statusId" type="id"></field>
+        <field name="description" type="description"></field>
+        <field name="createdByUserLogin" type="id-vlong"></field>
+        <prim-key field="taxInvoiceId"/>
+        <relation type="one" fk-name="FRTAXINV_TYPE" title="TaxInvoiceType" rel-entity-name="Enumeration">
+            <key-map field-name="taxInvoiceTypeEnumId" rel-field-name="enumId"/>
+        </relation>
+        <relation type="one" fk-name="FRTAXINV_PARTY" rel-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relation>
+        <relation type="one" fk-name="FRTAXINV_STTS" rel-entity-name="StatusItem">
+            <key-map field-name="statusId"/>
+        </relation>
+        <relation type="many" rel-entity-name="FrPaymentPlan">
+            <key-map field-name="taxInvoiceId"/>
+        </relation>
+        <index name="FRTAXINV_ISSUE_IDX">
+            <index-field name="issueDate"/>
+        </index>
+    </entity>
+
+  <!-- ========================================================= -->
+  <!-- com.futureretail.fracct.payment -->
+  <!-- ========================================================= -->
+
+    <entity entity-name="FrVendorPayTerm"
+            package-name="com.futureretail.fracct.payment"
+            title="FutureRetail Vendor Payment Term">
+        <field name="partyId" type="id"><description>거래처</description></field>
+        <field name="payDays" type="numeric"><description>지급일수</description></field>
+        <field name="comments" type="comment"></field>
+        <prim-key field="partyId"/>
+        <relation type="one" fk-name="FRVPT_PARTY" rel-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relation>
+    </entity>
+
+    <entity entity-name="FrPaymentPlan"
+            package-name="com.futureretail.fracct.payment"
+            title="FutureRetail Payment Plan">
+        <field name="paymentPlanId" type="id"></field>
+        <field name="taxInvoiceId" type="id"></field>
+        <field name="partyId" type="id"><description>지급 거래처</description></field>
+        <field name="dueDate" type="date"><description>지급기일</description></field>
+        <field name="amount" type="currency-amount"></field>
+        <field name="statusId" type="id"><description>FRPP_PLANNED/FRPP_PAID/FRPP_CANCELLED</description></field>
+        <field name="paidDate" type="date-time"></field>
+        <field name="paidByUserLogin" type="id-vlong"></field>
+        <field name="comments" type="comment"></field>
+        <prim-key field="paymentPlanId"/>
+        <relation type="one" fk-name="FRPP_TAXINV" rel-entity-name="FrTaxInvoice">
+            <key-map field-name="taxInvoiceId"/>
+        </relation>
+        <relation type="one" fk-name="FRPP_PARTY" rel-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relation>
+        <relation type="one" fk-name="FRPP_STTS" rel-entity-name="StatusItem">
+            <key-map field-name="statusId"/>
+        </relation>
+        <index name="FRPP_DUE_IDX">
+            <index-field name="dueDate"/>
+        </index>
+    </entity>
+
+</entitymodel>
