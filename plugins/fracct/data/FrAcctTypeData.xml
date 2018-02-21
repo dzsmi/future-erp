@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 김현석 / 2018.02.21 -->
+<entity-engine-xml>
+    <!-- ============ 전표유형 ============ -->
+    <EnumerationType description="FR 전표유형" enumTypeId="FR_SLIP_TYPE" hasTable="N" parentTypeId=""/>
+    <Enumeration description="입금전표" enumCode="RECEIPT" enumId="FRSLIP_RECEIPT" sequenceId="01" enumTypeId="FR_SLIP_TYPE"/>
+    <Enumeration description="출금전표" enumCode="DISBURSE" enumId="FRSLIP_DISBURSE" sequenceId="02" enumTypeId="FR_SLIP_TYPE"/>
+    <Enumeration description="대체전표" enumCode="TRANSFER" enumId="FRSLIP_TRANSFER" sequenceId="03" enumTypeId="FR_SLIP_TYPE"/>
+
+    <!-- ============ 결재레벨 (기준은 minilang FrSlipServices.xml#determineApprLevel 과 동일하게 유지) ============ -->
+    <EnumerationType description="FR 결재레벨" enumTypeId="FR_APPR_LEVEL" hasTable="N" parentTypeId=""/>
+    <Enumeration description="팀장 전결 (전표금액 1,000,000원 이하)" enumCode="TEAM" enumId="FRAPPR_TEAM" sequenceId="01" enumTypeId="FR_APPR_LEVEL"/>
+    <Enumeration description="본부장 결재 (1,000,000원 초과 ~ 10,000,000원 이하)" enumCode="DIV" enumId="FRAPPR_DIV" sequenceId="02" enumTypeId="FR_APPR_LEVEL"/>
+    <Enumeration description="대표이사 결재 (10,000,000원 초과)" enumCode="CEO" enumId="FRAPPR_CEO" sequenceId="03" enumTypeId="FR_APPR_LEVEL"/>
+
+    <!-- ============ 세금계산서 구분 ============ -->
+    <EnumerationType description="FR 세금계산서 구분" enumTypeId="FR_TAXINV_TYPE" hasTable="N" parentTypeId=""/>
+    <Enumeration description="매출 세금계산서" enumCode="SALES" enumId="FRTI_SALES" sequenceId="01" enumTypeId="FR_TAXINV_TYPE"/>
+    <Enumeration description="매입 세금계산서" enumCode="PURCHASE" enumId="FRTI_PURCHASE" sequenceId="02" enumTypeId="FR_TAXINV_TYPE"/>
+
+    <!-- ============ 전표 상태 ============ -->
+    <StatusType description="FR 전표" hasTable="N" parentTypeId="" statusTypeId="FR_SLIP_STATUS"/>
+    <StatusItem description="작성중" sequenceId="01" statusCode="DRAFT" statusId="FRSLIP_DRAFT" statusTypeId="FR_SLIP_STATUS"/>
+    <StatusItem description="상신" sequenceId="02" statusCode="REQUESTED" statusId="FRSLIP_REQUESTED" statusTypeId="FR_SLIP_STATUS"/>
+    <StatusItem description="승인" sequenceId="03" statusCode="APPROVED" statusId="FRSLIP_APPROVED" statusTypeId="FR_SLIP_STATUS"/>
+    <StatusItem description="반려" sequenceId="04" statusCode="REJECTED" statusId="FRSLIP_REJECTED" statusTypeId="FR_SLIP_STATUS"/>
+    <StatusValidChange statusId="FRSLIP_DRAFT" statusIdTo="FRSLIP_REQUESTED" transitionName="상신"/>
+    <StatusValidChange statusId="FRSLIP_REQUESTED" statusIdTo="FRSLIP_APPROVED" transitionName="승인"/>
+    <StatusValidChange statusId="FRSLIP_REQUESTED" statusIdTo="FRSLIP_REJECTED" transitionName="반려"/>
+    <StatusValidChange statusId="FRSLIP_REJECTED" statusIdTo="FRSLIP_REQUESTED" transitionName="재상신"/>
+
+    <!-- ============ 세금계산서 상태 ============ -->
+    <StatusType description="FR 세금계산서" hasTable="N" parentTypeId="" statusTypeId="FR_TAXINV_STATUS"/>
+    <StatusItem description="등록" sequenceId="01" statusCode="REGISTERED" statusId="FRTI_REGISTERED" statusTypeId="FR_TAXINV_STATUS"/>
+    <StatusItem description="취소" sequenceId="02" statusCode="CANCELLED" statusId="FRTI_CANCELLED" statusTypeId="FR_TAXINV_STATUS"/>
+    <StatusValidChange statusId="FRTI_REGISTERED" statusIdTo="FRTI_CANCELLED" transitionName="취소"/>
+
+    <!-- ============ 지급계획 상태 ============ -->
+    <StatusType description="FR 지급계획" hasTable="N" parentTypeId="" statusTypeId="FR_PAYPLAN_STATUS"/>
+    <StatusItem description="지급예정" sequenceId="01" statusCode="PLANNED" statusId="FRPP_PLANNED" statusTypeId="FR_PAYPLAN_STATUS"/>
+    <StatusItem description="지급완료" sequenceId="02" statusCode="PAID" statusId="FRPP_PAID" statusTypeId="FR_PAYPLAN_STATUS"/>
+    <StatusItem description="취소" sequenceId="03" statusCode="CANCELLED" statusId="FRPP_CANCELLED" statusTypeId="FR_PAYPLAN_STATUS"/>
+    <StatusValidChange statusId="FRPP_PLANNED" statusIdTo="FRPP_PAID" transitionName="지급완료"/>
+    <StatusValidChange statusId="FRPP_PLANNED" statusIdTo="FRPP_CANCELLED" transitionName="취소"/>
+</entity-engine-xml>

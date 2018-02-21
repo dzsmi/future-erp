@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 김현석 / 2018.02.21 -->
+<entity-engine-xml>
+    <!-- 회계 거래 생성 대상 법인 (fracct.properties 의 fracct.organizationPartyId) -->
+    <Party partyId="FR_COMPANY" partyTypeId="PARTY_GROUP" statusId="PARTY_ENABLED"/>
+    <PartyGroup partyId="FR_COMPANY" groupName="(주)퓨처리테일"/>
+    <PartyRole partyId="FR_COMPANY" roleTypeId="INTERNAL_ORGANIZATIO"/>
+    <PartyAcctgPreference partyId="FR_COMPANY" baseCurrencyUomId="KRW" fiscalYearStartMonth="1" fiscalYearStartDay="1"/>
+</entity-engine-xml>

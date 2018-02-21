@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 김현석 / 2018.02.21 -->
+<entity-engine-xml>
+    <!-- 재경 플러그인 권한
+         FRACCT_VIEW  : 현업 사용자 (전표 작성/상신, 조회)
+         FRACCT_ADMIN : 재경팀 (결재, 결산 마감, 세금계산서, 지급 관리) -->
+    <SecurityPermission description="재경 조회 및 전표 작성/상신" permissionId="FRACCT_VIEW"/>
+    <SecurityPermission description="재경 전체 관리 (결재/마감/세금계산서/지급)" permissionId="FRACCT_ADMIN"/>
+
+    <SecurityGroup groupId="FRACCT_USER" description="재경 - 현업 사용자"/>
+    <SecurityGroup groupId="FRACCT_ADMIN" description="재경 - 재경팀"/>
+
+    <SecurityGroupPermission groupId="FRACCT_USER" permissionId="OFBTOOLS_VIEW" fromDate="2018-02-21 00:00:00.0"/>
+    <SecurityGroupPermission groupId="FRACCT_USER" permissionId="FRACCT_VIEW" fromDate="2018-02-21 00:00:00.0"/>
+
+    <SecurityGroupPermission groupId="FRACCT_ADMIN" permissionId="OFBTOOLS_VIEW" fromDate="2018-02-21 00:00:00.0"/>
+    <SecurityGroupPermission groupId="FRACCT_ADMIN" permissionId="FRACCT_VIEW" fromDate="2018-02-21 00:00:00.0"/>
+    <SecurityGroupPermission groupId="FRACCT_ADMIN" permissionId="FRACCT_ADMIN" fromDate="2018-02-21 00:00:00.0"/>
+    <!-- 전표 최종 승인 시 코어 createAcctgTrans / createAcctgTransEntry 호출 권한 -->
+    <SecurityGroupPermission groupId="FRACCT_ADMIN" permissionId="ACCTG_ATX_CREATE" fromDate="2018-02-21 00:00:00.0"/>
+
+    <SecurityGroupPermission groupId="SUPER" permissionId="FRACCT_ADMIN" fromDate="2018-02-21 00:00:00.0"/>
+</entity-engine-xml>
