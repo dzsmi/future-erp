@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 김현석 / 2018.03.05 -->
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>FutureRetail HR Services - 인사정보 / 급여 / 4대보험 / 퇴직정산</description>
+    <vendor>OpenBridge Systems</vendor>
+    <version>1.0</version>
+
+    <!-- ================================================================== -->
+    <!-- 권한                                                                -->
+    <!-- ================================================================== -->
+    <service name="frHrPermissionCheck" engine="simple"
+            location="component://frhr/minilang/permission/FrHrPermissionServices.xml" invoke="frHrPermissionCheck">
+        <description>FRHR 권한 확인 (FRHR_VIEW / FRHR_ADMIN)</description>
+        <implements service="permissionInterface"/>
+    </service>
+
+    <!-- ================================================================== -->
+    <!-- 직원 인사정보                                                       -->
+    <!-- ================================================================== -->
+    <service name="createFrEmplInfo" engine="entity-auto" default-entity-name="FrEmplInfo" invoke="create" auth="true">
+        <description>기존 직원 인사정보 등록 (Person 이 이미 있는 경우)</description>
+        <permission-service service-name="frHrPermissionCheck" main-action="CREATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="emplNo" optional="false"/>
+        <override name="hireDate" optional="false"/>
+        <override name="baseSalary" optional="false"/>
+    </service>
+    <service name="updateFrEmplInfo" engine="entity-auto" default-entity-name="FrEmplInfo" invoke="update" auth="true">
+        <description>직원 인사정보 수정</description>
+        <permission-service service-name="frHrPermissionCheck" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+    <service name="processFrNewHire" engine="simple"
+            location="component://frhr/minilang/FrEmplServices.xml" invoke="processFrNewHire" auth="true">
+        <description>신규입사 처리 : Person/EMPLOYEE 역할/Employment/FrEmplInfo 생성 후 연차 수동발생 호출</description>
+        <permission-service service-name="frHrPermissionCheck" main-action="CREATE"/>
+        <attribute name="partyId" type="String" mode="INOUT" optional="true"/>
+        <attribute name="firstName" type="String" mode="IN" optional="true"/>
+        <attribute name="lastName" type="String" mode="IN" optional="true"/>
+        <attribute name="emplNo" type="String" mode="IN" optional="true"/>
+        <attribute name="hireDate" type="Date" mode="IN" optional="false"/>
+        <attribute name="positionGradeId" type="String" mode="IN" optional="true"/>
+        <attribute name="departmentId" type="String" mode="IN" optional="true"/>
+        <attribute name="baseSalary" type="BigDecimal" mode="IN" optional="false"/>
+        <attribute name="remarks" type="String" mode="IN" optional="true"/>
+    </service>
+    <service name="expireFrEmployment" engine="simple"
+            location="component://frhr/minilang/FrEmplServices.xml" invoke="expireFrEmployment" auth="true">
+        <description>퇴사 시 OFBiz Employment 종료일(thruDate) 설정</description>
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+        <attribute name="retireDate" type="Date" mode="IN" optional="false"/>
+    </service>
+
+    <!-- ================================================================== -->
+    <!-- 급여                                                                -->
+    <!-- ================================================================== -->
+    <service name="calcDailyProrate" engine="simple"
+            location="component://frhr/minilang/FrPayrollServices.xml" invoke="calcDailyProrate" auth="true">
+        <description>일할계산 : 기본급 x 근무일수 / 30 (원 미만 절사)</description>
+        <attribute name="baseSalary" type="BigDecimal" mode="IN" optional="false"/>
+        <attribute name="workDays" type="Long" mode="IN" optional="false"/>
+        <attribute name="prorateAmount" type="BigDecimal" mode="OUT" optional="false"/>
+    </service>
+    <service name="calcFrMonthlyPayroll" engine="groovy" transaction-timeout="600"
+            location="component://frhr/groovyScripts/payroll/FrPayrollServices.groovy" invoke="calcFrMonthlyPayroll" auth="true">
+        <description>월 급여 일괄 계산 (재직자 전체, 확정/지급 건은 건너뜀)</description>
+        <permission-service service-name="frHrPermissionCheck" main-action="CREATE"/>
+        <attribute name="payYearMonth" type="String" mode="IN" optional="false"/>
+        <attribute name="bonusPercent" type="BigDecimal" mode="IN" optional="true"/>
+        <attribute name="payrollCount" type="Integer" mode="OUT" optional="true"/>
+        <attribute name="skippedCount" type="Integer" mode="OUT" optional="true"/>
+    </service>
+    <service name="updateFrPayrollStatus" engine="entity-auto" default-entity-name="FrPayroll" invoke="update" auth="true">
+        <description>급여 상태 변경 (계산 → 확정 → 지급)</description>
+        <permission-service service-name="frHrPermissionCheck" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <attribute name="statusId" type="String" mode="IN" optional="false"/>
+    </service>
+
+    <!-- ================================================================== -->
+    <!-- 4대보험 요율                                                        -->
+    <!-- ================================================================== -->
+    <service name="createFrInsuranceRate" engine="entity-auto" default-entity-name="FrInsuranceRate" invoke="create" auth="true">
+        <description>4대보험 요율 등록</description>
+        <permission-service service-name="frHrPermissionCheck" main-action="CREATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="rate" optional="false"/>
+    </service>
+    <service name="updateFrInsuranceRate" engine="entity-auto" default-entity-name="FrInsuranceRate" invoke="update" auth="true">
+        <description>4대보험 요율 수정</description>
+        <permission-service service-name="frHrPermissionCheck" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+    <service name="deleteFrInsuranceRate" engine="entity-auto" default-entity-name="FrInsuranceRate" invoke="delete" auth="true">
+        <description>4대보험 요율 삭제</description>
+        <permission-service service-name="frHrPermissionCheck" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+
+    <!-- ================================================================== -->
+    <!-- 퇴직 정산                                                           -->
+    <!-- ================================================================== -->
+    <service name="processFrRetire" engine="simple"
+            location="component://frhr/minilang/FrRetireServices.xml" invoke="processFrRetire" auth="true">
+        <description>퇴사 처리 : 퇴사일 기록 + 퇴직금 계산 + 마지막 달 일할 급여/공제 정산</description>
+        <permission-service service-name="frHrPermissionCheck" main-action="UPDATE"/>
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+        <attribute name="retireDate" type="Date" mode="IN" optional="false"/>
+        <attribute name="retireSettleId" type="String" mode="OUT" optional="true"/>
+    </service>
+    <service name="calcFrRetirePay" engine="simple"
+            location="component://frhr/minilang/FrRetireServices.xml" invoke="calcFrRetirePay" auth="true">
+        <description>퇴직금 계산 : 평균임금 x 30 x 재직일수 / 365</description>
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+        <attribute name="retireDate" type="Date" mode="IN" optional="false"/>
+        <attribute name="serviceDays" type="Long" mode="OUT" optional="true"/>
+        <attribute name="wage3MonthAmount" type="BigDecimal" mode="OUT" optional="true"/>
+        <attribute name="bonus12MonthAmount" type="BigDecimal" mode="OUT" optional="true"/>
+        <attribute name="calDays3Month" type="Long" mode="OUT" optional="true"/>
+        <attribute name="avgDailyWage" type="BigDecimal" mode="OUT" optional="true"/>
+        <attribute name="retirePayAmount" type="BigDecimal" mode="OUT" optional="true"/>
+    </service>
+    <service name="settleFrLastMonthPay" engine="simple"
+            location="component://frhr/minilang/FrRetireServices.xml" invoke="settleFrLastMonthPay" auth="true">
+        <description>퇴사자 마지막 달 일할 급여 및 4대보험/소득세 공제 정산</description>
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+        <attribute name="retireDate" type="Date" mode="IN" optional="false"/>
+        <attribute name="lastMonthWorkDays" type="Long" mode="OUT" optional="true"/>
+        <attribute name="lastMonthPay" type="BigDecimal" mode="OUT" optional="true"/>
+        <attribute name="lastMonthDeduction" type="BigDecimal" mode="OUT" optional="true"/>
+        <attribute name="lastMonthNetPay" type="BigDecimal" mode="OUT" optional="true"/>
+    </service>
+</services>
