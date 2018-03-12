@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 김현석 / 2018.03.12 -->
+<simple-methods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://ofbiz.apache.org/Simple-Method" xsi:schemaLocation="http://ofbiz.apache.org/Simple-Method http://ofbiz.apache.org/dtds/simple-methods.xsd">
+
+    <!-- ================================================================== -->
+    <!-- 일할계산 : 기본급 x 근무일수 / 30  (원 미만 절사)                   -->
+    <!--  - 급여 일괄계산(중도입사자), 퇴사자 마지막 달 정산에서 공통 사용   -->
+    <!-- ================================================================== -->
+    <simple-method method-name="calcDailyProrate" short-description="일할계산">
+        <if-compare field="parameters.workDays" operator="less" value="0" type="Long">
+            <add-error><fail-property resource="FrHrUiLabels" property="FrHrErrorInvalidWorkDays"/></add-error>
+        </if-compare>
+        <check-errors/>
+        <calculate field="prorateAmount" type="BigDecimal" decimal-scale="0" rounding-mode="Floor">
+            <calcop operator="divide">
+                <calcop operator="multiply" field="parameters.baseSalary">
+                    <calcop operator="get" field="parameters.workDays"/>
+                </calcop>
+                <number value="30"/>
+            </calcop>
+        </calculate>
+        <field-to-result field="prorateAmount"/>
+    </simple-method>
+</simple-methods>
