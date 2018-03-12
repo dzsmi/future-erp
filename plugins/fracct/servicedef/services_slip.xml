@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 김현석 / 2018.03.12 -->
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>FutureRetail Accounting - Slip Services</description>
+    <vendor>OpenBridge Systems</vendor>
+    <version>1.0</version>
+
+    <!-- ================= 전표 헤더 ================= -->
+    <service name="createFrSlip" default-entity-name="FrSlip" engine="simple"
+            location="component://fracct/minilang/FrSlipServices.xml" invoke="createFrSlip" auth="true">
+        <description>전표 작성 (상태 FRSLIP_DRAFT). 전표일자 마감 체크는 secas.xml 의 checkFrClosePeriod</description>
+        <permission-service service-name="fracctUserPermissionCheck" main-action="CREATE"/>
+        <attribute name="slipTypeEnumId" type="String" mode="IN" optional="false"/>
+        <attribute name="slipDate" type="java.sql.Date" mode="IN" optional="false"/>
+        <attribute name="deptPartyId" type="String" mode="IN" optional="false"/>
+        <attribute name="description" type="String" mode="IN" optional="true"/>
+        <attribute name="slipId" type="String" mode="OUT" optional="false"/>
+    </service>
+
+    <service name="updateFrSlip" default-entity-name="FrSlip" engine="simple"
+            location="component://fracct/minilang/FrSlipServices.xml" invoke="updateFrSlip" auth="true">
+        <description>전표 헤더 수정 (작성중/반려 상태만)</description>
+        <permission-service service-name="fracctUserPermissionCheck" main-action="UPDATE"/>
+        <attribute name="slipId" type="String" mode="IN" optional="false"/>
+        <attribute name="slipTypeEnumId" type="String" mode="IN" optional="true"/>
+        <attribute name="slipDate" type="java.sql.Date" mode="IN" optional="true"/>
+        <attribute name="deptPartyId" type="String" mode="IN" optional="true"/>
+        <attribute name="description" type="String" mode="IN" optional="true"/>
+    </service>
+
+    <!-- ================= 전표 항목 ================= -->
+    <service name="createFrSlipItem" default-entity-name="FrSlipItem" engine="simple"
+            location="component://fracct/minilang/FrSlipServices.xml" invoke="createFrSlipItem" auth="true">
+        <description>전표 항목(차변/대변) 추가</description>
+        <permission-service service-name="fracctUserPermissionCheck" main-action="CREATE"/>
+        <auto-attributes include="nonpk" mode="IN" optional="true"/>
+        <attribute name="slipId" type="String" mode="IN" optional="false"/>
+        <attribute name="slipItemSeqId" type="String" mode="OUT" optional="false"/>
+        <override name="glAccountId" optional="false"/>
+        <override name="debitCreditFlag" optional="false"/>
+        <override name="amount" optional="false"/>
+    </service>
+
+    <service name="updateFrSlipItem" default-entity-name="FrSlipItem" engine="simple"
+            location="component://fracct/minilang/FrSlipServices.xml" invoke="updateFrSlipItem" auth="true">
+        <description>전표 항목 수정</description>
+        <permission-service service-name="fracctUserPermissionCheck" main-action="UPDATE"/>
+        <auto-attributes include="pk" mode="IN" optional="false"/>
+        <auto-attributes include="nonpk" mode="IN" optional="true"/>
+    </service>
+
+    <service name="deleteFrSlipItem" default-entity-name="FrSlipItem" engine="simple"
+            location="component://fracct/minilang/FrSlipServices.xml" invoke="deleteFrSlipItem" auth="true">
+        <description>전표 항목 삭제</description>
+        <permission-service service-name="fracctUserPermissionCheck" main-action="DELETE"/>
+        <auto-attributes include="pk" mode="IN" optional="false"/>
+    </service>
+
+    <service name="checkFrSlipBalance" engine="simple"
+            location="component://fracct/minilang/FrSlipServices.xml" invoke="checkFrSlipBalance" auth="true">
+        <description>전표 차변/대변 합계 및 일치 여부</description>
+        <permission-service service-name="fracctUserPermissionCheck" main-action="VIEW"/>
+        <attribute name="slipId" type="String" mode="IN" optional="false"/>
+        <attribute name="debitTotal" type="BigDecimal" mode="OUT" optional="false"/>
+        <attribute name="creditTotal" type="BigDecimal" mode="OUT" optional="false"/>
+        <attribute name="isBalanced" type="String" mode="OUT" optional="false"/>
+    </service>
+
+    <!-- ================= 결재 ================= -->
+    <service name="getFrApprLevel" engine="simple"
+            location="component://fracct/minilang/FrSlipServices.xml" invoke="getFrApprLevel" auth="true">
+        <description>금액에 해당하는 결재레벨 조회 (determineApprLevel 사용)</description>
+        <attribute name="amount" type="BigDecimal" mode="IN" optional="false"/>
+        <attribute name="apprLevelEnumId" type="String" mode="OUT" optional="false"/>
+    </service>
+
+    <service name="requestFrSlip" engine="simple"
+            location="component://fracct/minilang/FrSlipServices.xml" invoke="requestFrSlip" auth="true">
+        <description>전표 상신: 차대 일치 검사 후 결재레벨 결정, 상태 FRSLIP_REQUESTED</description>
+        <permission-service service-name="fracctUserPermissionCheck" main-action="UPDATE"/>
+        <attribute name="slipId" type="String" mode="IN" optional="false"/>
+        <attribute name="comments" type="String" mode="IN" optional="true"/>
+        <attribute name="apprLevelEnumId" type="String" mode="OUT" optional="false"/>
+    </service>
+
+    <service name="approveFrSlip" engine="simple"
+            location="component://fracct/minilang/FrSlipServices.xml" invoke="approveFrSlip" auth="true">
+        <description>전표 승인 (TEAM → DIV → CEO 순차). 최종 결재레벨 승인 시 postFrSlipAcctgTrans 호출</description>
+        <permission-service service-name="fracctAdminPermissionCheck" main-action="UPDATE"/>
+        <attribute name="slipId" type="String" mode="IN" optional="false"/>
+        <attribute name="comments" type="String" mode="IN" optional="true"/>
+        <attribute name="acctgTransId" type="String" mode="OUT" optional="true"/>
+    </service>
+
+    <service name="rejectFrSlip" engine="simple"
+            location="component://fracct/minilang/FrSlipServices.xml" invoke="rejectFrSlip" auth="true">
+        <description>전표 반려 (반려 사유 필수)</description>
+        <permission-service service-name="fracctAdminPermissionCheck" main-action="UPDATE"/>
+        <attribute name="slipId" type="String" mode="IN" optional="false"/>
+        <attribute name="comments" type="String" mode="IN" optional="false"/>
+    </service>
+
+    <!-- ================= 회계 거래 생성 ================= -->
+    <service name="postFrSlipAcctgTrans" engine="groovy"
+            location="component://fracct/groovyScripts/slip/FrSlipAcctgServices.groovy" invoke="postFrSlipAcctgTrans" auth="true">
+        <description>승인된 전표로 코어 createAcctgTrans / createAcctgTransEntry 호출 후 FrSlip.acctgTransId 연결</description>
+        <permission-service service-name="fracctAdminPermissionCheck" main-action="CREATE"/>
+        <attribute name="slipId" type="String" mode="IN" optional="false"/>
+        <attribute name="acctgTransId" type="String" mode="OUT" optional="false"/>
+    </service>
+</services>
