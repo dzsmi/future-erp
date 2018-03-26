@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 박준영 / 2018.03.26 -->
+<simple-methods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://ofbiz.apache.org/Simple-Method" xsi:schemaLocation="http://ofbiz.apache.org/Simple-Method http://ofbiz.apache.org/dtds/simple-methods.xsd">
+
+    <simple-method method-name="createFrAttendance" short-description="근태 등록">
+        <entity-one entity-name="FrAttendance" value-field="existAttendance"/>
+        <if-not-empty field="existAttendance">
+            <add-error><fail-property resource="FrHrUiLabels" property="FrHrErrorAttendanceExists"/></add-error>
+        </if-not-empty>
+        <check-errors/>
+
+        <make-value entity-name="FrAttendance" value-field="attendance"/>
+        <set-pk-fields map="parameters" value-field="attendance"/>
+        <set-nonpk-fields map="parameters" value-field="attendance"/>
+        <call-simple-method method-name="calcFrWorkHours"/>
+        <create-value value-field="attendance"/>
+    </simple-method>
+
+    <simple-method method-name="updateFrAttendance" short-description="근태 수정">
+        <entity-one entity-name="FrAttendance" value-field="attendance"/>
+        <if-empty field="attendance">
+            <add-error><fail-property resource="FrHrUiLabels" property="FrHrErrorAttendanceNotFound"/></add-error>
+        </if-empty>
+        <check-errors/>
+
+        <set-nonpk-fields map="parameters" value-field="attendance"/>
+        <call-simple-method method-name="calcFrWorkHours"/>
+        <store-value value-field="attendance"/>
+    </simple-method>
+
+    <!-- ================================================================== -->
+    <!-- 근무시간 / 연장시간 계산 (attendance 값에 직접 세팅)                -->
+    <!--  - 근무시간 = 퇴근 - 출근 - 휴게 1시간(4시간 초과 근무 시)          -->
+    <!--  - 연장시간 = 근무시간 중 1일 8시간 초과분                          -->
+    <!--  - 주 단위 연장근로 한도는 검사하지 않음 (2018 운영 기준)           -->
+    <!-- ================================================================== -->
+    <simple-method method-name="calcFrWorkHours" short-description="근무시간/연장시간 계산">
+        <if>
+            <condition>
+                <and>
+                    <not><if-empty field="attendance.checkInTime"/></not>
+                    <not><if-empty field="attendance.checkOutTime"/></not>
+                </and>
+            </condition>
+            <then>
+                <if-compare-field field="attendance.checkOutTime" to-field="attendance.checkInTime" operator="less-equals" type="Timestamp">
+                    <add-error><fail-property resource="FrHrUiLabels" property="FrHrErrorCheckOutBeforeCheckIn"/></add-error>
+                </if-compare-field>
+                <check-errors/>
+
+                <set field="spanHours" value="${groovy: new java.math.BigDecimal(attendance.checkOutTime.getTime() - attendance.checkInTime.getTime()).divide(new java.math.BigDecimal(3600000), 2, java.math.RoundingMode.HALF_UP)}" type="BigDecimal"/>
+                <if-compare field="spanHours" operator="greater" value="4" type="BigDecimal">
+                    <calculate field="attendance.workHours" type="BigDecimal" decimal-scale="2">
+                        <calcop operator="subtract" field="spanHours"><number value="1"/></calcop>
+                    </calculate>
+                    <else>
+                        <set field="attendance.workHours" from-field="spanHours"/>
+                    </else>
+                </if-compare>
+
+                <if-compare field="attendance.workHours" operator="greater" value="8" type="BigDecimal">
+                    <calculate field="attendance.overtimeHours" type="BigDecimal" decimal-scale="2">
+                        <calcop operator="subtract" field="attendance.workHours"><number value="8"/></calcop>
+                    </calculate>
+                    <else>
+                        <set field="attendance.overtimeHours" value="0" type="BigDecimal"/>
+                    </else>
+                </if-compare>
+            </then>
+            <else>
+                <!-- 결근/연차 등 출퇴근 기록 없는 날 -->
+                <set field="attendance.workHours" value="0" type="BigDecimal"/>
+                <set field="attendance.overtimeHours" value="0" type="BigDecimal"/>
+            </else>
+        </if>
+    </simple-method>
+</simple-methods>
