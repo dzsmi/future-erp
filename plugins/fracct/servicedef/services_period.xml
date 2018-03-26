@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 김현석 / 2018.03.26 -->
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>FutureRetail Accounting - Monthly Closing Services</description>
+    <vendor>OpenBridge Systems</vendor>
+    <version>1.0</version>
+
+    <service name="checkFrClosePeriod" engine="simple"
+            location="component://fracct/minilang/FrClosePeriodServices.xml" invoke="checkFrClosePeriod" auth="true">
+        <description>
+            전표일자의 년월이 마감(FrClosePeriod.isClosed=Y)되었으면 오류.
+            secas.xml 에서 전표 생성/수정 서비스 invoke 시점에 호출된다.
+            slipDate 가 없으면 slipId 로 저장된 전표일자를 조회하여 체크한다.
+        </description>
+        <attribute name="slipId" type="String" mode="IN" optional="true"/>
+        <attribute name="slipDate" type="java.sql.Date" mode="IN" optional="true"/>
+    </service>
+
+    <service name="closeFrPeriod" engine="simple"
+            location="component://fracct/minilang/FrClosePeriodServices.xml" invoke="closeFrPeriod" auth="true">
+        <description>월 마감 (isClosed=Y)</description>
+        <permission-service service-name="fracctAdminPermissionCheck" main-action="UPDATE"/>
+        <attribute name="closeYearMonth" type="String" mode="IN" optional="false"/>
+        <attribute name="comments" type="String" mode="IN" optional="true"/>
+    </service>
+
+    <service name="reopenFrPeriod" engine="simple"
+            location="component://fracct/minilang/FrClosePeriodServices.xml" invoke="reopenFrPeriod" auth="true">
+        <description>월 마감 해제 (isClosed=N)</description>
+        <permission-service service-name="fracctAdminPermissionCheck" main-action="UPDATE"/>
+        <attribute name="closeYearMonth" type="String" mode="IN" optional="false"/>
+        <attribute name="comments" type="String" mode="IN" optional="true"/>
+    </service>
+</services>

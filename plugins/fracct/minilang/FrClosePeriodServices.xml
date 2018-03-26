@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 김현석 / 2018.03.26 -->
+<simple-methods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://ofbiz.apache.org/Simple-Method" xsi:schemaLocation="http://ofbiz.apache.org/Simple-Method http://ofbiz.apache.org/dtds/simple-methods.xsd">
+
+    <!-- A2 결산 마감 체크
+         전표일자(yyyyMM)가 FrClosePeriod 에 마감여부 Y 로 등록되어 있으면 오류.
+         - 새 전표일자(parameters.slipDate)와, 기존 전표(parameters.slipId)의 저장된 전표일자를 모두 체크
+           (마감월 전표의 일자를 바꿔서 빠져나가는 것 방지)
+         - 호출: servicedef/secas.xml (createFrSlip, updateFrSlip, createFrSlipItem, updateFrSlipItem, deleteFrSlipItem / invoke) -->
+    <simple-method method-name="checkFrClosePeriod" short-description="전표일자 마감 체크">
+        <if-not-empty field="parameters.slipDate">
+            <set field="checkDate" from-field="parameters.slipDate"/>
+            <call-simple-method method-name="checkCloseYearMonthInline"/>
+        </if-not-empty>
+
+        <if-not-empty field="parameters.slipId">
+            <entity-one entity-name="FrSlip" value-field="slip">
+                <field-map field-name="slipId" from-field="parameters.slipId"/>
+            </entity-one>
+            <if-not-empty field="slip.slipDate">
+                <set field="checkDate" from-field="slip.slipDate"/>
+                <call-simple-method method-name="checkCloseYearMonthInline"/>
+            </if-not-empty>
+        </if-not-empty>
+        <check-errors/>
+    </simple-method>
+
+    <!-- checkDate 의 년월이 마감되었는지 확인 -->
+    <simple-method method-name="checkCloseYearMonthInline" short-description="년월 마감 여부">
+        <call-class-method class-name="org.apache.ofbiz.base.util.UtilDateTime" method-name="toDateString" ret-field="closeYearMonth">
+            <field field="checkDate" type="java.util.Date"/>
+            <string value="yyyyMM"/>
+        </call-class-method>
+        <entity-one entity-name="FrClosePeriod" value-field="closePeriod">
+            <field-map field-name="closeYearMonth" from-field="closeYearMonth"/>
+        </entity-one>
+        <if-compare field="closePeriod.isClosed" operator="equals" value="Y">
+            <add-error><fail-property resource="FrAcctErrorUiLabels" property="FrAcctPeriodClosed"/></add-error>
+        </if-compare>
+    </simple-method>
+
+    <simple-method method-name="validateCloseYearMonthInline" short-description="마감년월 형식 체크">
+        <if-regexp field="parameters.closeYearMonth" expr="^20[0-9]{2}(0[1-9]|1[0-2])$">
+            <else>
+                <add-error><fail-property resource="FrAcctErrorUiLabels" property="FrAcctPeriodInvalidYearMonth"/></add-error>
+            </else>
+        </if-regexp>
+        <check-errors/>
+    </simple-method>
+
+    <simple-method method-name="closeFrPeriod" short-description="월 마감">
+        <call-simple-method method-name="validateCloseYearMonthInline"/>
+        <now-timestamp field="nowTimestamp"/>
+
+        <entity-one entity-name="FrClosePeriod" value-field="closePeriod"/>
+        <if-empty field="closePeriod">
+            <make-value entity-name="FrClosePeriod" value-field="closePeriod"/>
+            <set field="closePeriod.closeYearMonth" from-field="parameters.closeYearMonth"/>
+            <set field="closePeriod.isClosed" value="Y"/>
+            <set field="closePeriod.closedByUserLogin" from-field="userLogin.userLoginId"/>
+            <set field="closePeriod.closedDate" from-field="nowTimestamp"/>
+            <set field="closePeriod.comments" from-field="parameters.comments"/>
+            <create-value value-field="closePeriod"/>
+            <else>
+                <if-compare field="closePeriod.isClosed" operator="equals" value="Y">
+                    <add-error><fail-property resource="FrAcctErrorUiLabels" property="FrAcctPeriodAlreadyClosed"/></add-error>
+                    <check-errors/>
+                </if-compare>
+                <set field="closePeriod.isClosed" value="Y"/>
+                <set field="closePeriod.closedByUserLogin" from-field="userLogin.userLoginId"/>
+                <set field="closePeriod.closedDate" from-field="nowTimestamp"/>
+                <set field="closePeriod.comments" from-field="parameters.comments"/>
+                <store-value value-field="closePeriod"/>
+            </else>
+        </if-empty>
+    </simple-method>
+
+    <simple-method method-name="reopenFrPeriod" short-description="월 마감 해제">
+        <call-simple-method method-name="validateCloseYearMonthInline"/>
+        <entity-one entity-name="FrClosePeriod" value-field="closePeriod"/>
+        <if>
+            <condition>
+                <or>
+                    <if-empty field="closePeriod"/>
+                    <if-compare field="closePeriod.isClosed" operator="not-equals" value="Y"/>
+                </or>
+            </condition>
+            <then>
+                <add-error><fail-property resource="FrAcctErrorUiLabels" property="FrAcctPeriodNotClosed"/></add-error>
+                <check-errors/>
+            </then>
+        </if>
+        <now-timestamp field="nowTimestamp"/>
+        <set field="closePeriod.isClosed" value="N"/>
+        <set field="closePeriod.closedByUserLogin" from-field="userLogin.userLoginId"/>
+        <set field="closePeriod.closedDate" from-field="nowTimestamp"/>
+        <set field="closePeriod.comments" from-field="parameters.comments"/>
+        <store-value value-field="closePeriod"/>
+    </simple-method>
+</simple-methods>
