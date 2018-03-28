@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 김현석 / 2018.03.28 -->
+<service-eca xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/service-eca.xsd">
+
+    <!-- A2 결산 마감: 전표 생성/수정 서비스 실행 전(invoke)에 마감월 체크.
+         checkFrClosePeriod 오류 시 원 서비스가 실행되지 않도록 ignore-error="false" -->
+    <eca service="createFrSlip" event="invoke">
+        <action service="checkFrClosePeriod" mode="sync" ignore-error="false" ignore-failure="false"/>
+    </eca>
+    <eca service="updateFrSlip" event="invoke">
+        <action service="checkFrClosePeriod" mode="sync" ignore-error="false" ignore-failure="false"/>
+    </eca>
+
+    <!-- 전표 항목 변경도 전표 수정으로 본다 -->
+    <eca service="createFrSlipItem" event="invoke">
+        <action service="checkFrClosePeriod" mode="sync" ignore-error="false" ignore-failure="false"/>
+    </eca>
+    <eca service="updateFrSlipItem" event="invoke">
+        <action service="checkFrClosePeriod" mode="sync" ignore-error="false" ignore-failure="false"/>
+    </eca>
+    <eca service="deleteFrSlipItem" event="invoke">
+        <action service="checkFrClosePeriod" mode="sync" ignore-error="false" ignore-failure="false"/>
+    </eca>
+</service-eca>
