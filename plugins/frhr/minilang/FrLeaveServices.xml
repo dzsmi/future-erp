@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 박준영 / 2018.04.09 -->
+<simple-methods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://ofbiz.apache.org/Simple-Method" xsi:schemaLocation="http://ofbiz.apache.org/Simple-Method http://ofbiz.apache.org/dtds/simple-methods.xsd">
+
+    <!-- ================================================================== -->
+    <!-- 연차 수동 발생 (발생유형 MANUAL)                                    -->
+    <!--  - 입사 1년 미만 : 1개월 개근(결근 없는 달)마다 1일                 -->
+    <!--  - 만 1년 되는 시점 : 15일 발생.                                   -->
+    <!--      단, 1년 미만 기간에 사용한 연차일수를 15일에서 차감            -->
+    <!--  - 3년차부터 2년마다 1일 가산 (15 + (근속년수-1)/2), 최대 25일      -->
+    <!--  - 같은 근속차수로 이미 발생한 경우 재발생 불가                     -->
+    <!-- ================================================================== -->
+    <simple-method method-name="grantFrLeave" short-description="연차 수동 발생">
+        <entity-one entity-name="FrEmplInfo" value-field="emplInfo"/>
+        <if-empty field="emplInfo">
+            <add-error><fail-property resource="FrHrUiLabels" property="FrHrErrorEmplInfoNotFound"/></add-error>
+        </if-empty>
+        <check-errors/>
+        <if-not-empty field="emplInfo.retireDate">
+            <add-error><fail-property resource="FrHrUiLabels" property="FrHrErrorAlreadyRetired"/></add-error>
+        </if-not-empty>
+        <check-errors/>
+
+        <set field="asOfDate" from-field="parameters.asOfDate"/>
+        <if-empty field="asOfDate">
+            <now field="asOfDate" type="java.sql.Date"/>
+        </if-empty>
+        <set field="hireDate" from-field="emplInfo.hireDate"/>
+
+        <!-- 만 근속년수 / 근속개월수 -->
+        <set field="serviceYears" value="${groovy: java.time.Period.between(hireDate.toLocalDate(), asOfDate.toLocalDate()).getYears()}" type="Long"/>
+        <set field="serviceMonths" value="${groovy: java.time.temporal.ChronoUnit.MONTHS.between(hireDate.toLocalDate(), asOfDate.toLocalDate())}" type="Long"/>
+        <set field="firstYearEndDate" value="${groovy: java.sql.Date.valueOf(hireDate.toLocalDate().plusYears(1))}" type="Date"/>
+        <set field="grantDays" value="0" type="BigDecimal"/>
+
+        <if-compare field="serviceYears" operator="less" value="1" type="Long">
+            <!-- ===== 입사 1년 미만 : 월 개근 1일 ===== -->
+            <set field="perfectMonthCount" value="0" type="Long"/>
+            <loop count="${serviceMonths}" field="monthIdx">
+                <set field="monthFromDate" value="${groovy: java.sql.Date.valueOf(hireDate.toLocalDate().plusMonths(monthIdx))}" type="Date"/>
+                <set field="monthThruDate" value="${groovy: java.sql.Date.valueOf(hireDate.toLocalDate().plusMonths(monthIdx + 1))}" type="Date"/>
+                <entity-count entity-name="FrAttendance" count-field="absentCount">
+                    <condition-list combine="and">
+                        <condition-expr field-name="partyId" from-field="parameters.partyId"/>
+                        <condition-expr field-name="attendTypeId" value="FRAT_ABSENT"/>
+                        <condition-expr field-name="workDate" operator="greater-equals" from-field="monthFromDate"/>
+                        <condition-expr field-name="workDate" operator="less" from-field="monthThruDate"/>
+                    </condition-list>
+                </entity-count>
+                <if-compare field="absentCount" operator="equals" value="0" type="Long">
+                    <calculate field="perfectMonthCount" type="Long">
+                        <calcop operator="add" field="perfectMonthCount"><number value="1"/></calcop>
+                    </calculate>
+                </if-compare>
+            </loop>
+
+            <!-- 1년 미만 기간에 이미 발생시킨 일수는 제외하고 차액만 발생 -->
+            <set field="serviceYearNo" value="0" type="Long"/>
+            <entity-and entity-name="FrLeaveGrant" list="underYearGrants">
+                <field-map field-name="partyId" from-field="parameters.partyId"/>
+                <field-map field-name="serviceYearNo" from-field="serviceYearNo"/>
+            </entity-and>
+            <set field="alreadyGrantedDays" value="0" type="BigDecimal"/>
+            <iterate list="underYearGrants" entry="underYearGrant">
+                <calculate field="alreadyGrantedDays" type="BigDecimal">
+                    <calcop operator="add" field="alreadyGrantedDays">
+                        <calcop operator="get" field="underYearGrant.grantDays"/>
+                    </calcop>
+                </calculate>
+            </iterate>
+            <calculate field="grantDays" type="BigDecimal">
+                <calcop operator="subtract" field="perfectMonthCount">
+                    <calcop operator="get" field="alreadyGrantedDays"/>
+                </calcop>
+            </calculate>
+            <set field="grantRemarks" value="1년 미만 월 개근 발생 (개근 ${perfectMonthCount}개월 / 기발생 ${alreadyGrantedDays}일)"/>
+
+            <else>
+                <!-- ===== 만 1년 이상 ===== -->
+                <set field="serviceYearNo" from-field="serviceYears" type="Long"/>
+                <entity-and entity-name="FrLeaveGrant" list="sameYearGrants">
+                    <field-map field-name="partyId" from-field="parameters.partyId"/>
+                    <field-map field-name="serviceYearNo" from-field="serviceYearNo"/>
+                </entity-and>
+                <if-not-empty field="sameYearGrants">
+                    <add-error><fail-property resource="FrHrUiLabels" property="FrHrErrorLeaveAlreadyGranted"/></add-error>
+                </if-not-empty>
+                <check-errors/>
+
+                <!-- 기본 15일 + 3년차부터 2년마다 1일 가산, 최대 25일 -->
+                <set field="grantDays" value="${groovy: Math.min(25L, 15L + (serviceYears - 1).intdiv(2))}" type="BigDecimal"/>
+
+                <!-- 만 1년 되는 시점 : 1년 미만 기간에 사용한 연차를 15일에서 차감 -->
+                <if-compare field="serviceYears" operator="equals" value="1" type="Long">
+                    <entity-condition entity-name="FrLeaveUse" list="firstYearUses">
+                        <condition-list combine="and">
+                            <condition-expr field-name="partyId" from-field="parameters.partyId"/>
+                            <condition-expr field-name="statusId" value="FRLU_APPROVED"/>
+                            <condition-expr field-name="fromDate" operator="greater-equals" from-field="hireDate"/>
+                            <condition-expr field-name="fromDate" operator="less" from-field="firstYearEndDate"/>
+                        </condition-list>
+                    </entity-condition>
+                    <set field="firstYearUsedDays" value="0" type="BigDecimal"/>
+                    <iterate list="firstYearUses" entry="firstYearUse">
+                        <calculate field="firstYearUsedDays" type="BigDecimal">
+                            <calcop operator="add" field="firstYearUsedDays">
+                                <calcop operator="get" field="firstYearUse.useDays"/>
+                            </calcop>
+                        </calculate>
+                    </iterate>
+                    <calculate field="grantDays" type="BigDecimal">
+                        <calcop operator="subtract" field="grantDays">
+                            <calcop operator="get" field="firstYearUsedDays"/>
+                        </calcop>
+                    </calculate>
+                    <if-compare field="grantDays" operator="less" value="0" type="BigDecimal">
+                        <set field="grantDays" value="0" type="BigDecimal"/>
+                    </if-compare>
+                </if-compare>
+                <set field="grantRemarks" value="근속 ${serviceYears}년 발생"/>
+            </else>
+        </if-compare>
+
+        <if-compare field="grantDays" operator="greater" value="0" type="BigDecimal">
+            <make-value entity-name="FrLeaveGrant" value-field="leaveGrant"/>
+            <sequenced-id sequence-name="FrLeaveGrant" field="leaveGrant.leaveGrantId"/>
+            <set field="leaveGrant.partyId" from-field="parameters.partyId"/>
+            <set field="leaveGrant.grantYear" value="${groovy: asOfDate.toLocalDate().getYear()}" type="Long"/>
+            <set field="leaveGrant.serviceYearNo" from-field="serviceYearNo"/>
+            <set field="leaveGrant.grantType" value="MANUAL"/>
+            <set field="leaveGrant.grantDays" from-field="grantDays"/>
+            <set field="leaveGrant.grantDate" from-field="asOfDate"/>
+            <set field="leaveGrant.remarks" from-field="parameters.remarks"/>
+            <if-empty field="leaveGrant.remarks">
+                <set field="leaveGrant.remarks" from-field="grantRemarks"/>
+            </if-empty>
+            <set field="leaveGrant.createdByUserLogin" from-field="userLogin.userLoginId"/>
+            <create-value value-field="leaveGrant"/>
+            <field-to-result field="leaveGrant.leaveGrantId" result-name="leaveGrantId"/>
+            <else>
+                <log level="info" message="연차 발생 대상 일수 없음 : partyId=${parameters.partyId}, asOfDate=${asOfDate}"/>
+            </else>
+        </if-compare>
+        <field-to-result field="grantDays"/>
+    </simple-method>
+
+    <!-- ================================================================== -->
+    <!-- 연차 사용 신청 / 승인 / 반려                                        -->
+    <!-- ================================================================== -->
+    <simple-method method-name="createFrLeaveUse" short-description="연차 사용 신청">
+        <if-compare-field field="parameters.thruDate" to-field="parameters.fromDate" operator="less" type="Date">
+            <add-error><fail-property resource="FrHrUiLabels" property="FrHrErrorInvalidLeavePeriod"/></add-error>
+        </if-compare-field>
+        <check-errors/>
+
+        <set field="useDays" from-field="parameters.useDays"/>
+        <if-empty field="useDays">
+            <set field="useDays" value="${groovy: (parameters.thruDate - parameters.fromDate) + 1}" type="BigDecimal"/>
+        </if-empty>
+
+        <!-- 잔여 연차 확인 -->
+        <set field="balanceCtx.partyId" from-field="parameters.partyId"/>
+        <set field="balanceCtx.grantYear" value="${groovy: parameters.fromDate.toLocalDate().getYear()}" type="Long"/>
+        <call-service service-name="getFrLeaveBalance" in-map-name="balanceCtx">
+            <result-to-field result-name="remainDays" field="remainDays"/>
+        </call-service>
+        <if-compare-field field="useDays" to-field="remainDays" operator="greater" type="BigDecimal">
+            <add-error><fail-property resource="FrHrUiLabels" property="FrHrErrorLeaveNotEnough"/></add-error>
+        </if-compare-field>
+        <check-errors/>
+
+        <make-value entity-name="FrLeaveUse" value-field="leaveUse"/>
+        <sequenced-id sequence-name="FrLeaveUse" field="leaveUse.leaveUseId"/>
+        <set field="leaveUse.partyId" from-field="parameters.partyId"/>
+        <set field="leaveUse.fromDate" from-field="parameters.fromDate"/>
+        <set field="leaveUse.thruDate" from-field="parameters.thruDate"/>
+        <set field="leaveUse.useDays" from-field="useDays"/>
+        <set field="leaveUse.reason" from-field="parameters.reason"/>
+        <set field="leaveUse.statusId" value="FRLU_REQUESTED"/>
+        <create-value value-field="leaveUse"/>
+        <field-to-result field="leaveUse.leaveUseId" result-name="leaveUseId"/>
+    </simple-method>
+
+    <simple-method method-name="approveFrLeaveUse" short-description="연차 사용 승인">
+        <entity-one entity-name="FrLeaveUse" value-field="leaveUse"/>
+        <if-empty field="leaveUse">
+            <add-error><fail-property resource="FrHrUiLabels" property="FrHrErrorLeaveUseNotFound"/></add-error>
+        </if-empty>
+        <check-errors/>
+        <if-compare field="leaveUse.statusId" operator="not-equals" value="FRLU_REQUESTED">
+            <add-error><fail-property resource="FrHrUiLabels" property="FrHrErrorLeaveUseNotRequested"/></add-error>
+        </if-compare>
+        <check-errors/>
+
+        <set field="leaveUse.statusId" value="FRLU_APPROVED"/>
+        <set field="leaveUse.approverPartyId" from-field="userLogin.partyId"/>
+        <now-timestamp field="leaveUse.approvedDate"/>
+        <store-value value-field="leaveUse"/>
+    </simple-method>
+
+    <simple-method method-name="rejectFrLeaveUse" short-description="연차 사용 반려">
+        <entity-one entity-name="FrLeaveUse" value-field="leaveUse"/>
+        <if-empty field="leaveUse">
+            <add-error><fail-property resource="FrHrUiLabels" property="FrHrErrorLeaveUseNotFound"/></add-error>
+        </if-empty>
+        <check-errors/>
+        <if-compare field="leaveUse.statusId" operator="not-equals" value="FRLU_REQUESTED">
+            <add-error><fail-property resource="FrHrUiLabels" property="FrHrErrorLeaveUseNotRequested"/></add-error>
+        </if-compare>
+        <check-errors/>
+
+        <set field="leaveUse.statusId" value="FRLU_REJECTED"/>
+        <set field="leaveUse.approverPartyId" from-field="userLogin.partyId"/>
+        <now-timestamp field="leaveUse.approvedDate"/>
+        <store-value value-field="leaveUse"/>
+    </simple-method>
+
+    <!-- ================================================================== -->
+    <!-- 연차 잔여 조회 : 해당년도 발생 합계 - 승인 사용 - 신청중            -->
+    <!-- ================================================================== -->
+    <simple-method method-name="getFrLeaveBalance" short-description="연차 잔여 조회">
+        <set field="grantYear" from-field="parameters.grantYear"/>
+        <if-empty field="grantYear">
+            <set field="grantYear" value="${groovy: java.time.LocalDate.now().getYear()}" type="Long"/>
+        </if-empty>
+        <set field="yearStartDate" value="${groovy: java.sql.Date.valueOf(java.time.LocalDate.of(grantYear.intValue(), 1, 1))}" type="Date"/>
+        <set field="yearEndDate" value="${groovy: java.sql.Date.valueOf(java.time.LocalDate.of(grantYear.intValue(), 12, 31))}" type="Date"/>
+
+        <entity-and entity-name="FrLeaveGrant" list="leaveGrants">
+            <field-map field-name="partyId" from-field="parameters.partyId"/>
+            <field-map field-name="grantYear" from-field="grantYear"/>
+        </entity-and>
+        <set field="grantedDays" value="0" type="BigDecimal"/>
+        <iterate list="leaveGrants" entry="leaveGrant">
+            <calculate field="grantedDays" type="BigDecimal">
+                <calcop operator="add" field="grantedDays"><calcop operator="get" field="leaveGrant.grantDays"/></calcop>
+            </calculate>
+        </iterate>
+
+        <entity-condition entity-name="FrLeaveUse" list="leaveUses">
+            <condition-list combine="and">
+                <condition-expr field-name="partyId" from-field="parameters.partyId"/>
+                <condition-expr field-name="fromDate" operator="greater-equals" from-field="yearStartDate"/>
+                <condition-expr field-name="fromDate" operator="less-equals" from-field="yearEndDate"/>
+                <condition-expr field-name="statusId" operator="not-equals" value="FRLU_REJECTED"/>
+            </condition-list>
+        </entity-condition>
+        <set field="usedDays" value="0" type="BigDecimal"/>
+        <set field="requestedDays" value="0" type="BigDecimal"/>
+        <iterate list="leaveUses" entry="leaveUse">
+            <if-compare field="leaveUse.statusId" operator="equals" value="FRLU_APPROVED">
+                <calculate field="usedDays" type="BigDecimal">
+                    <calcop operator="add" field="usedDays"><calcop operator="get" field="leaveUse.useDays"/></calcop>
+                </calculate>
+                <else>
+                    <calculate field="requestedDays" type="BigDecimal">
+                        <calcop operator="add" field="requestedDays"><calcop operator="get" field="leaveUse.useDays"/></calcop>
+                    </calculate>
+                </else>
+            </if-compare>
+        </iterate>
+
+        <calculate field="remainDays" type="BigDecimal">
+            <calcop operator="subtract" field="grantedDays">
+                <calcop operator="get" field="usedDays"/>
+                <calcop operator="get" field="requestedDays"/>
+            </calcop>
+        </calculate>
+        <field-to-result field="grantedDays"/>
+        <field-to-result field="usedDays"/>
+        <field-to-result field="requestedDays"/>
+        <field-to-result field="remainDays"/>
+    </simple-method>
+
+    <!-- 승인된 연차를 OFBiz EmplLeave 에 등록 (approveFrLeaveUse SECA) -->
+    <simple-method method-name="syncFrLeaveToEmplLeave" short-description="연차 → EmplLeave 등록">
+        <entity-one entity-name="FrLeaveUse" value-field="leaveUse"/>
+        <if-empty field="leaveUse">
+            <add-error><fail-property resource="FrHrUiLabels" property="FrHrErrorLeaveUseNotFound"/></add-error>
+        </if-empty>
+        <check-errors/>
+        <set field="emplLeaveCtx.partyId" from-field="leaveUse.partyId"/>
+        <set field="emplLeaveCtx.leaveTypeId" value="FR_ANNUAL"/>
+        <set field="emplLeaveCtx.fromDate" from-field="leaveUse.fromDate" type="Timestamp"/>
+        <set field="emplLeaveCtx.thruDate" from-field="leaveUse.thruDate" type="Timestamp"/>
+        <set field="emplLeaveCtx.approverPartyId" from-field="leaveUse.approverPartyId"/>
+        <set field="emplLeaveCtx.leaveStatus" value="LEAVE_APPROVED"/>
+        <set field="emplLeaveCtx.description" value="FR 연차 ${leaveUse.leaveUseId} (${leaveUse.useDays}일)"/>
+        <call-service service-name="createEmplLeave" in-map-name="emplLeaveCtx"/>
+    </simple-method>
+</simple-methods>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 박준영 / 2018.04.09 -->
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>FutureRetail HR Services - 연차</description>
+    <vendor>OpenBridge Systems</vendor>
+    <version>1.0</version>
+
+    <service name="grantFrLeave" engine="simple"
+            location="component://frhr/minilang/FrLeaveServices.xml" invoke="grantFrLeave" auth="true">
+        <description>연차 수동 발생 (발생유형 MANUAL) - 근속기간에 따라 발생일수 계산</description>
+        <permission-service service-name="frHrPermissionCheck" main-action="CREATE"/>
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+        <attribute name="asOfDate" type="Date" mode="IN" optional="true"/>
+        <attribute name="remarks" type="String" mode="IN" optional="true"/>
+        <attribute name="leaveGrantId" type="String" mode="OUT" optional="true"/>
+        <attribute name="grantDays" type="BigDecimal" mode="OUT" optional="true"/>
+    </service>
+    <service name="createFrLeaveUse" engine="simple"
+            location="component://frhr/minilang/FrLeaveServices.xml" invoke="createFrLeaveUse" auth="true">
+        <description>연차 사용 신청</description>
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+        <attribute name="fromDate" type="Date" mode="IN" optional="false"/>
+        <attribute name="thruDate" type="Date" mode="IN" optional="false"/>
+        <attribute name="useDays" type="BigDecimal" mode="IN" optional="true"/>
+        <attribute name="reason" type="String" mode="IN" optional="true"/>
+        <attribute name="leaveUseId" type="String" mode="OUT" optional="true"/>
+    </service>
+    <service name="approveFrLeaveUse" engine="simple"
+            location="component://frhr/minilang/FrLeaveServices.xml" invoke="approveFrLeaveUse" auth="true">
+        <description>연차 사용 승인</description>
+        <permission-service service-name="frHrPermissionCheck" main-action="UPDATE"/>
+        <attribute name="leaveUseId" type="String" mode="IN" optional="false"/>
+    </service>
+    <service name="rejectFrLeaveUse" engine="simple"
+            location="component://frhr/minilang/FrLeaveServices.xml" invoke="rejectFrLeaveUse" auth="true">
+        <description>연차 사용 반려</description>
+        <permission-service service-name="frHrPermissionCheck" main-action="UPDATE"/>
+        <attribute name="leaveUseId" type="String" mode="IN" optional="false"/>
+    </service>
+    <service name="getFrLeaveBalance" engine="simple"
+            location="component://frhr/minilang/FrLeaveServices.xml" invoke="getFrLeaveBalance" auth="true">
+        <description>연차 잔여 조회 (발생년도 기준 발생 - 사용)</description>
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+        <attribute name="grantYear" type="Long" mode="IN" optional="true"/>
+        <attribute name="grantedDays" type="BigDecimal" mode="OUT" optional="true"/>
+        <attribute name="usedDays" type="BigDecimal" mode="OUT" optional="true"/>
+        <attribute name="requestedDays" type="BigDecimal" mode="OUT" optional="true"/>
+        <attribute name="remainDays" type="BigDecimal" mode="OUT" optional="true"/>
+    </service>
+    <service name="syncFrLeaveToEmplLeave" engine="simple"
+            location="component://frhr/minilang/FrLeaveServices.xml" invoke="syncFrLeaveToEmplLeave" auth="true">
+        <description>승인된 연차를 OFBiz EmplLeave 로 등록 (SECA)</description>
+        <attribute name="leaveUseId" type="String" mode="IN" optional="false"/>
+    </service>
+</services>
