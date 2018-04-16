@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 김현석 / 2018.04.16 -->
+<simple-methods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://ofbiz.apache.org/Simple-Method" xsi:schemaLocation="http://ofbiz.apache.org/Simple-Method http://ofbiz.apache.org/dtds/simple-methods.xsd">
+
+    <simple-method method-name="createFrTaxInvoice" short-description="세금계산서 수기 등록">
+        <if-compare field="parameters.supplyAmount" operator="less-equals" value="0" type="BigDecimal">
+            <add-error><fail-property resource="FrAcctErrorUiLabels" property="FrAcctTaxInvoiceSupplyAmountMustBePositive"/></add-error>
+        </if-compare>
+        <check-errors/>
+
+        <make-value entity-name="FrTaxInvoice" value-field="newEntity"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity"/>
+        <sequenced-id sequence-name="FrTaxInvoice" field="taxInvoiceSeqId"/>
+        <set field="newEntity.taxInvoiceId" value="TI${taxInvoiceSeqId}"/>
+
+        <!-- A4 부가세 = 공급가액 × 0.1, 원 미만 절사 (Floor) -->
+        <calculate field="newEntity.vatAmount" type="BigDecimal" decimal-scale="0" rounding-mode="Floor">
+            <calcop operator="multiply" field="parameters.supplyAmount">
+                <number value="0.1"/>
+            </calcop>
+        </calculate>
+        <calculate field="newEntity.totalAmount" type="BigDecimal" decimal-scale="0" rounding-mode="Floor">
+            <calcop operator="add">
+                <calcop operator="get" field="parameters.supplyAmount"/>
+                <calcop operator="get" field="newEntity.vatAmount"/>
+            </calcop>
+        </calculate>
+
+        <set field="newEntity.statusId" value="FRTI_REGISTERED"/>
+        <set field="newEntity.createdByUserLogin" from-field="userLogin.userLoginId"/>
+        <create-value value-field="newEntity"/>
+
+        <!-- 매입 세금계산서 → 지급계획 생성 -->
+        <if-compare field="newEntity.taxInvoiceTypeEnumId" operator="equals" value="FRTI_PURCHASE">
+            <set field="paymentPlanMap.taxInvoiceId" from-field="newEntity.taxInvoiceId"/>
+            <call-service service-name="createFrPaymentPlanFromTaxInvoice" in-map-name="paymentPlanMap">
+                <result-to-field result-name="paymentPlanId"/>
+            </call-service>
+            <field-to-result field="paymentPlanId"/>
+        </if-compare>
+
+        <field-to-result field="newEntity.taxInvoiceId" result-name="taxInvoiceId"/>
+        <field-to-result field="newEntity.vatAmount" result-name="vatAmount"/>
+        <field-to-result field="newEntity.totalAmount" result-name="totalAmount"/>
+    </simple-method>
+
+    <simple-method method-name="cancelFrTaxInvoice" short-description="세금계산서 취소">
+        <entity-one entity-name="FrTaxInvoice" value-field="taxInvoice"/>
+        <if-empty field="taxInvoice">
+            <add-error><fail-property resource="FrAcctErrorUiLabels" property="FrAcctTaxInvoiceNotFound"/></add-error>
+            <check-errors/>
+        </if-empty>
+        <if-compare field="taxInvoice.statusId" operator="not-equals" value="FRTI_REGISTERED">
+            <add-error><fail-property resource="FrAcctErrorUiLabels" property="FrAcctTaxInvoiceNotCancellable"/></add-error>
+            <check-errors/>
+        </if-compare>
+
+        <entity-and entity-name="FrPaymentPlan" list="paymentPlans">
+            <field-map field-name="taxInvoiceId" from-field="taxInvoice.taxInvoiceId"/>
+        </entity-and>
+        <iterate list="paymentPlans" entry="paymentPlan">
+            <if-compare field="paymentPlan.statusId" operator="equals" value="FRPP_PAID">
+                <add-error><fail-property resource="FrAcctErrorUiLabels" property="FrAcctTaxInvoiceAlreadyPaid"/></add-error>
+            </if-compare>
+        </iterate>
+        <check-errors/>
+
+        <iterate list="paymentPlans" entry="paymentPlan">
+            <if-compare field="paymentPlan.statusId" operator="equals" value="FRPP_PLANNED">
+                <set field="paymentPlan.statusId" value="FRPP_CANCELLED"/>
+                <store-value value-field="paymentPlan"/>
+            </if-compare>
+        </iterate>
+
+        <set field="taxInvoice.statusId" value="FRTI_CANCELLED"/>
+        <store-value value-field="taxInvoice"/>
+    </simple-method>
+</simple-methods>
