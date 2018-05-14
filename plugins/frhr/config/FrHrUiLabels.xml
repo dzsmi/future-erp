@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 이소라 / 2018.05.14 -->
+<resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/ofbiz-properties.xsd">
+    <property key="FrHrApplication">
+        <value xml:lang="en">FR HR</value>
+        <value xml:lang="ko">인사관리</value>
+    </property>
+    <property key="FrHrCompanyName">
+        <value xml:lang="en">FutureRetail</value>
+        <value xml:lang="ko">(주)퓨처리테일</value>
+    </property>
+    <property key="FrHrCompanySubtitle">
+        <value xml:lang="en">HR / Payroll</value>
+        <value xml:lang="ko">인사 / 급여</value>
+    </property>
+    <property key="FrHrMain">
+        <value xml:lang="en">HR Main</value>
+        <value xml:lang="ko">인사 메인</value>
+    </property>
+    <property key="FrHrActiveEmplCount">
+        <value xml:lang="en">Active Employees</value>
+        <value xml:lang="ko">재직 인원</value>
+    </property>
+    <property key="FrHrViewPermissionError">
+        <value xml:lang="en">You do not have permission to view this page. (FRHR_VIEW or FRHR_ADMIN needed)</value>
+        <value xml:lang="ko">이 화면을 볼 권한이 없습니다. (FRHR_VIEW 또는 FRHR_ADMIN 필요)</value>
+    </property>
+    <property key="FrHrAdminPermissionError">
+        <value xml:lang="en">You do not have permission for this operation. (FRHR_ADMIN needed)</value>
+        <value xml:lang="ko">이 작업을 할 권한이 없습니다. (FRHR_ADMIN 필요)</value>
+    </property>
+    <property key="FrHrEmplInfo">
+        <value xml:lang="en">Employee Info</value>
+        <value xml:lang="ko">인사정보</value>
+    </property>
+    <property key="FrHrFindEmplInfo">
+        <value xml:lang="en">Find Employee Info</value>
+        <value xml:lang="ko">인사정보 조회</value>
+    </property>
+    <property key="FrHrEditEmplInfo">
+        <value xml:lang="en">Edit Employee Info</value>
+        <value xml:lang="ko">인사정보 수정</value>
+    </property>
+    <property key="FrHrRegisterEmplInfo">
+        <value xml:lang="en">Register Employee Info</value>
+        <value xml:lang="ko">인사정보 등록</value>
+    </property>
+    <property key="FrHrNewEmployee">
+        <value xml:lang="en">New Hire</value>
+        <value xml:lang="ko">신규입사</value>
+    </property>
+    <property key="FrHrNewHireProcess">
+        <value xml:lang="en">Process New Hire</value>
+        <value xml:lang="ko">신규입사 처리</value>
+    </property>
+    <property key="FrHrNewHireNotice">
+        <value xml:lang="en">Person, Employment and employee info are created, and annual leave grant is run as of hire date.</value>
+        <value xml:lang="ko">Person/Employment/인사정보를 생성하고 입사일 기준으로 연차 수동발생을 실행합니다.</value>
+    </property>
+    <property key="FrHrNewHireSuccess">
+        <value xml:lang="en">New hire has been processed.</value>
+        <value xml:lang="ko">신규입사 처리가 완료되었습니다.</value>
+    </property>
+    <property key="FrHrExistingPerson">
+        <value xml:lang="en">Existing Person</value>
+        <value xml:lang="ko">기존 인물 선택</value>
+    </property>
+    <property key="FrHrExistingPersonTooltip">
+        <value xml:lang="en">Leave empty to create a new person</value>
+        <value xml:lang="ko">비워두면 성명으로 신규 생성</value>
+    </property>
+    <property key="FrHrEmployee">
+        <value xml:lang="en">Employee</value>
+        <value xml:lang="ko">직원</value>
+    </property>
+    <property key="FrHrEmplNo">
+        <value xml:lang="en">Employee No</value>
+        <value xml:lang="ko">사번</value>
+    </property>
+    <property key="FrHrEmplNoTooltip">
+        <value xml:lang="en">Generated automatically if empty</value>
+        <value xml:lang="ko">비워두면 자동 채번</value>
+    </property>
+    <property key="FrHrHireDate">
+        <value xml:lang="en">Hire Date</value>
+        <value xml:lang="ko">입사일</value>
+    </property>
+    <property key="FrHrRetireDate">
+        <value xml:lang="en">Retire Date</value>
+        <value xml:lang="ko">퇴사일</value>
+    </property>
+    <property key="FrHrRetireDateTooltip">
+        <value xml:lang="en">Set by retire process</value>
+        <value xml:lang="ko">퇴사 처리에서 입력</value>
+    </property>
+    <property key="FrHrPositionGrade">
+        <value xml:lang="en">Grade</value>
+        <value xml:lang="ko">직급</value>
+    </property>
+    <property key="FrHrDepartment">
+        <value xml:lang="en">Department</value>
+        <value xml:lang="ko">부서</value>
+    </property>
+    <property key="FrHrBaseSalary">
+        <value xml:lang="en">Base Salary</value>
+        <value xml:lang="ko">기본급</value>
+    </property>
+    <property key="FrHrPayroll">
+        <value xml:lang="en">Payroll</value>
+        <value xml:lang="ko">급여</value>
+    </property>
+    <property key="FrHrPayrollList">
+        <value xml:lang="en">Payroll List</value>
+        <value xml:lang="ko">급여 목록</value>
+    </property>
+    <property key="FrHrPayrollCalc">
+        <value xml:lang="en">Monthly Payroll</value>
+        <value xml:lang="ko">급여 일괄계산</value>
+    </property>
+    <property key="FrHrPayrollCalcRun">
+        <value xml:lang="en">Calculate</value>
+        <value xml:lang="ko">계산 실행</value>
+    </property>
+    <property key="FrHrPayrollCalcNotice">
+        <value xml:lang="en">All active employees are calculated. Confirmed or paid payrolls are skipped.</value>
+        <value xml:lang="ko">재직자 전체를 계산합니다. 확정/지급된 급여는 다시 계산하지 않습니다.</value>
+    </property>
+    <property key="FrHrPayrollCalcSuccess">
+        <value xml:lang="en">Payroll calculated : {0} calculated, {1} skipped.</value>
+        <value xml:lang="ko">급여 계산 완료 : 계산 {0}건, 건너뜀 {1}건</value>
+    </property>
+    <property key="FrHrPayrollPreview">
+        <value xml:lang="en">Payroll Preview</value>
+        <value xml:lang="ko">급여 미리보기</value>
+    </property>
+    <property key="FrHrPayrollPreviewResult">
+        <value xml:lang="en">Preview Result</value>
+        <value xml:lang="ko">미리보기 결과</value>
+    </property>
+    <property key="FrHrPayrollPreviewNotice">
+        <value xml:lang="en">Preview is not saved. Based on monthly base salary.</value>
+        <value xml:lang="ko">미리보기는 저장되지 않으며 월 기본급 기준입니다.</value>
+    </property>
+    <property key="FrHrPaySlip">
+        <value xml:lang="en">Pay Slip</value>
+        <value xml:lang="ko">급여명세서</value>
+    </property>
+    <property key="FrHrPaySlipFooter">
+        <value xml:lang="en">Thank you for your hard work.</value>
+        <value xml:lang="ko">노고에 감사드립니다. - (주)퓨처리테일 인사팀</value>
+    </property>
+    <property key="FrHrPayrollNotFound">
+        <value xml:lang="en">Payroll not found.</value>
+        <value xml:lang="ko">급여 정보가 없습니다.</value>
+    </property>
+    <property key="FrHrPayYearMonth">
+        <value xml:lang="en">Pay Month</value>
+        <value xml:lang="ko">급여년월</value>
+    </property>
+    <property key="FrHrPayItems">
+        <value xml:lang="en">Payments</value>
+        <value xml:lang="ko">지급내역</value>
+    </property>
+    <property key="FrHrDeductionItems">
+        <value xml:lang="en">Deductions</value>
+        <value xml:lang="ko">공제내역</value>
+    </property>
+    <property key="FrHrWorkDays">
+        <value xml:lang="en">Work Days</value>
+        <value xml:lang="ko">근무일수</value>
+    </property>
+    <property key="FrHrProrated">
+        <value xml:lang="en">prorated</value>
+        <value xml:lang="ko">일할계산</value>
+    </property>
+    <property key="FrHrBaseAmount">
+        <value xml:lang="en">Base Pay</value>
+        <value xml:lang="ko">기본급</value>
+    </property>
+    <property key="FrHrOvertimeAmount">
+        <value xml:lang="en">Overtime Pay</value>
+        <value xml:lang="ko">연장수당</value>
+    </property>
+    <property key="FrHrBonusAmount">
+        <value xml:lang="en">Bonus</value>
+        <value xml:lang="ko">상여</value>
+    </property>
+    <property key="FrHrBonusPercent">
+        <value xml:lang="en">Bonus Rate(%)</value>
+        <value xml:lang="ko">상여율(%)</value>
+    </property>
+    <property key="FrHrBonusPercentTooltip">
+        <value xml:lang="en">Percent of base salary (e.g. holiday bonus 50)</value>
+        <value xml:lang="ko">기본급 대비 % (명절 상여 50 등)</value>
+    </property>
+    <property key="FrHrGrossAmount">
+        <value xml:lang="en">Gross Pay</value>
+        <value xml:lang="ko">지급총액</value>
+    </property>
+    <property key="FrHrPensionAmount">
+        <value xml:lang="en">National Pension</value>
+        <value xml:lang="ko">국민연금</value>
+    </property>
+    <property key="FrHrHealthAmount">
+        <value xml:lang="en">Health Insurance</value>
+        <value xml:lang="ko">건강보험</value>
+    </property>
+    <property key="FrHrLongtermAmount">
+        <value xml:lang="en">Long-term Care</value>
+        <value xml:lang="ko">장기요양보험</value>
+    </property>
+    <property key="FrHrEmployAmount">
+        <value xml:lang="en">Employment Insurance</value>
+        <value xml:lang="ko">고용보험</value>
+    </property>
+    <property key="FrHrIncomeTaxAmount">
+        <value xml:lang="en">Income Tax</value>
+        <value xml:lang="ko">소득세</value>
+    </property>
+    <property key="FrHrDeductionAmount">
+        <value xml:lang="en">Total Deduction</value>
+        <value xml:lang="ko">공제합계</value>
+    </property>
+    <property key="FrHrNetAmount">
+        <value xml:lang="en">Net Pay</value>
+        <value xml:lang="ko">실지급액</value>
+    </property>
+    <property key="FrHrConfirm">
+        <value xml:lang="en">Confirm</value>
+        <value xml:lang="ko">확정</value>
+    </property>
+    <property key="FrHrPaid">
+        <value xml:lang="en">Paid</value>
+        <value xml:lang="ko">지급완료</value>
+    </property>
+    <property key="FrHrInsuranceRate">
+        <value xml:lang="en">Insurance Rates</value>
+        <value xml:lang="ko">4대보험 요율</value>
+    </property>
+    <property key="FrHrInsuranceRateList">
+        <value xml:lang="en">Insurance Rate List</value>
+        <value xml:lang="ko">4대보험 요율 목록</value>
+    </property>
+    <property key="FrHrAddInsuranceRate">
+        <value xml:lang="en">Add Insurance Rate</value>
+        <value xml:lang="ko">요율 등록</value>
+    </property>
+    <property key="FrHrInsuranceRateNotice">
+        <value xml:lang="en">Employee share (%). Long-term care is % of health insurance premium.</value>
+        <value xml:lang="ko">근로자 부담 요율(%)입니다. 장기요양은 건강보험료 대비 %입니다.</value>
+    </property>
+    <property key="FrHrRateYear">
+        <value xml:lang="en">Year</value>
+        <value xml:lang="ko">적용연도</value>
+    </property>
+    <property key="FrHrInsuranceType">
+        <value xml:lang="en">Insurance</value>
+        <value xml:lang="ko">보험구분</value>
+    </property>
+    <property key="FrHrRatePercent">
+        <value xml:lang="en">Rate(%)</value>
+        <value xml:lang="ko">요율(%)</value>
+    </property>
+    <property key="FrHrInsuranceHealth">
+        <value xml:lang="en">Health</value>
+        <value xml:lang="ko">건강보험</value>
+    </property>
+    <property key="FrHrInsuranceLongterm">
+        <value xml:lang="en">Long-term Care</value>
+        <value xml:lang="ko">장기요양보험</value>
+    </property>
+    <property key="FrHrInsurancePension">
+        <value xml:lang="en">National Pension</value>
+        <value xml:lang="ko">국민연금</value>
+    </property>
+    <property key="FrHrInsuranceEmploy">
+        <value xml:lang="en">Employment</value>
+        <value xml:lang="ko">고용보험</value>
+    </property>
+    <property key="FrHrAttendance">
+        <value xml:lang="en">Attendance</value>
+        <value xml:lang="ko">근태</value>
+    </property>
+    <property key="FrHrNewAttendance">
+        <value xml:lang="en">New Attendance</value>
+        <value xml:lang="ko">근태 등록</value>
+    </property>
+    <property key="FrHrEditAttendance">
+        <value xml:lang="en">Edit Attendance</value>
+        <value xml:lang="ko">근태 등록/수정</value>
+    </property>
+    <property key="FrHrAttendanceNotice">
+        <value xml:lang="en">Work hours exclude 1 hour break. Hours over 8 a day are recorded as overtime.</value>
+        <value xml:lang="ko">근무시간은 휴게 1시간을 제외하며, 1일 8시간 초과분은 연장시간으로 기록됩니다.</value>
+    </property>
+    <property key="FrHrWorkDate">
+        <value xml:lang="en">Work Date</value>
+        <value xml:lang="ko">근무일</value>
+    </property>
+    <property key="FrHrAttendType">
+        <value xml:lang="en">Type</value>
+        <value xml:lang="ko">근태유형</value>
+    </property>
+    <property key="FrHrCheckIn">
+        <value xml:lang="en">Check In</value>
+        <value xml:lang="ko">출근</value>
+    </property>
+    <property key="FrHrCheckOut">
+        <value xml:lang="en">Check Out</value>
+        <value xml:lang="ko">퇴근</value>
+    </property>
+    <property key="FrHrWorkHours">
+        <value xml:lang="en">Work Hours</value>
+        <value xml:lang="ko">근무시간</value>
+    </property>
+    <property key="FrHrOvertimeHours">
+        <value xml:lang="en">Overtime Hours</value>
+        <value xml:lang="ko">연장시간</value>
+    </property>
+    <property key="FrHrLeave">
+        <value xml:lang="en">Annual Leave</value>
+        <value xml:lang="ko">연차</value>
+    </property>
+    <property key="FrHrLeaveGrant">
+        <value xml:lang="en">Leave Grant</value>
+        <value xml:lang="ko">연차 발생</value>
+    </property>
+    <property key="FrHrManualLeaveGrant">
+        <value xml:lang="en">Grant Leave (Manual)</value>
+        <value xml:lang="ko">연차 수동발생</value>
+    </property>
+    <property key="FrHrLeaveGrantNotice">
+        <value xml:lang="en">Days are calculated by service period as of the base date.</value>
+        <value xml:lang="ko">기준일 현재 근속기간으로 발생일수를 계산합니다.</value>
+    </property>
+    <property key="FrHrAsOfDate">
+        <value xml:lang="en">Base Date</value>
+        <value xml:lang="ko">기준일</value>
+    </property>
+    <property key="FrHrAsOfDateTooltip">
+        <value xml:lang="en">Today if empty</value>
+        <value xml:lang="ko">비워두면 오늘</value>
+    </property>
+    <property key="FrHrGrantYear">
+        <value xml:lang="en">Year</value>
+        <value xml:lang="ko">발생년도</value>
+    </property>
+    <property key="FrHrServiceYearNo">
+        <value xml:lang="en">Service Year</value>
+        <value xml:lang="ko">근속차수</value>
+    </property>
+    <property key="FrHrGrantType">
+        <value xml:lang="en">Grant Type</value>
+        <value xml:lang="ko">발생유형</value>
+    </property>
+    <property key="FrHrGrantDays">
+        <value xml:lang="en">Granted Days</value>
+        <value xml:lang="ko">발생일수</value>
+    </property>
+    <property key="FrHrGrantDate">
+        <value xml:lang="en">Grant Date</value>
+        <value xml:lang="ko">발생일</value>
+    </property>
+    <property key="FrHrLeaveUse">
+        <value xml:lang="en">Leave Request</value>
+        <value xml:lang="ko">연차 사용</value>
+    </property>
+    <property key="FrHrNewLeaveUse">
+        <value xml:lang="en">New Leave Request</value>
+        <value xml:lang="ko">연차 신청</value>
+    </property>
+    <property key="FrHrUseDays">
+        <value xml:lang="en">Days</value>
+        <value xml:lang="ko">사용일수</value>
+    </property>
+    <property key="FrHrUseDaysTooltip">
+        <value xml:lang="en">Calculated from period if empty (half day 0.5)</value>
+        <value xml:lang="ko">비워두면 기간으로 계산 (반차 0.5)</value>
+    </property>
+    <property key="FrHrLeaveReason">
+        <value xml:lang="en">Reason</value>
+        <value xml:lang="ko">사유</value>
+    </property>
+    <property key="FrHrApprover">
+        <value xml:lang="en">Approver</value>
+        <value xml:lang="ko">승인자</value>
+    </property>
+    <property key="FrHrApprove">
+        <value xml:lang="en">Approve</value>
+        <value xml:lang="ko">승인</value>
+    </property>
+    <property key="FrHrReject">
+        <value xml:lang="en">Reject</value>
+        <value xml:lang="ko">반려</value>
+    </property>
+    <property key="FrHrRequest">
+        <value xml:lang="en">Request</value>
+        <value xml:lang="ko">신청</value>
+    </property>
+    <property key="FrHrLeaveBalance">
+        <value xml:lang="en">Leave Balance</value>
+        <value xml:lang="ko">연차 잔여</value>
+    </property>
+    <property key="FrHrUsedDays">
+        <value xml:lang="en">Used</value>
+        <value xml:lang="ko">사용</value>
+    </property>
+    <property key="FrHrRequestedDays">
+        <value xml:lang="en">Requested</value>
+        <value xml:lang="ko">신청중</value>
+    </property>
+    <property key="FrHrRemainDays">
+        <value xml:lang="en">Remain</value>
+        <value xml:lang="ko">잔여</value>
+    </property>
+    <property key="FrHrRetire">
+        <value xml:lang="en">Retirement</value>
+        <value xml:lang="ko">퇴직</value>
+    </property>
+    <property key="FrHrRetireProcess">
+        <value xml:lang="en">Retire Process</value>
+        <value xml:lang="ko">퇴사 처리</value>
+    </property>
+    <property key="FrHrRetireProcessRun">
+        <value xml:lang="en">Process</value>
+        <value xml:lang="ko">퇴사 처리 실행</value>
+    </property>
+    <property key="FrHrRetireProcessNotice">
+        <value xml:lang="en">Severance pay and last month settlement are calculated. Payroll of previous 3 months must exist.</value>
+        <value xml:lang="ko">퇴직금과 마지막 달 일할 급여/공제를 정산합니다. 직전 3개월 급여가 계산되어 있어야 합니다.</value>
+    </property>
+    <property key="FrHrRetireSuccess">
+        <value xml:lang="en">Retire process completed.</value>
+        <value xml:lang="ko">퇴사 처리가 완료되었습니다.</value>
+    </property>
+    <property key="FrHrRetireSettle">
+        <value xml:lang="en">Retire Settlement</value>
+        <value xml:lang="ko">퇴직 정산</value>
+    </property>
+    <property key="FrHrRetireSettleList">
+        <value xml:lang="en">Retire Settlement List</value>
+        <value xml:lang="ko">퇴직 정산 목록</value>
+    </property>
+    <property key="FrHrServiceDays">
+        <value xml:lang="en">Service Days</value>
+        <value xml:lang="ko">재직일수</value>
+    </property>
+    <property key="FrHrWage3Month">
+        <value xml:lang="en">Wage (3 Months)</value>
+        <value xml:lang="ko">직전 3개월 임금총액</value>
+    </property>
+    <property key="FrHrBonus12Month">
+        <value xml:lang="en">Bonus (12 Months)</value>
+        <value xml:lang="ko">직전 12개월 상여</value>
+    </property>
+    <property key="FrHrCalDays3Month">
+        <value xml:lang="en">Days (3 Months)</value>
+        <value xml:lang="ko">직전 3개월 역일수</value>
+    </property>
+    <property key="FrHrAvgDailyWage">
+        <value xml:lang="en">Average Daily Wage</value>
+        <value xml:lang="ko">평균임금(1일)</value>
+    </property>
+    <property key="FrHrRetirePay">
+        <value xml:lang="en">Severance Pay</value>
+        <value xml:lang="ko">퇴직금</value>
+    </property>
+    <property key="FrHrLastMonthWorkDays">
+        <value xml:lang="en">Last Month Work Days</value>
+        <value xml:lang="ko">마지막달 근무일수</value>
+    </property>
+    <property key="FrHrLastMonthPay">
+        <value xml:lang="en">Last Month Pay</value>
+        <value xml:lang="ko">마지막달 일할급여</value>
+    </property>
+    <property key="FrHrLastMonthDeduction">
+        <value xml:lang="en">Last Month Deduction</value>
+        <value xml:lang="ko">마지막달 공제액</value>
+    </property>
+    <property key="FrHrLastMonthNetPay">
+        <value xml:lang="en">Last Month Net Pay</value>
+        <value xml:lang="ko">마지막달 실지급액</value>
+    </property>
+    <property key="FrHrSettleDate">
+        <value xml:lang="en">Settle Date</value>
+        <value xml:lang="ko">정산일시</value>
+    </property>
+    <property key="FrHrErrorNameRequired">
+        <value xml:lang="en">Last name is required for a new person.</value>
+        <value xml:lang="ko">신규 인물은 성(姓)을 입력해야 합니다.</value>
+    </property>
+    <property key="FrHrErrorEmplInfoAlreadyExists">
+        <value xml:lang="en">Employee info already exists for this person.</value>
+        <value xml:lang="ko">이미 인사정보가 등록된 직원입니다.</value>
+    </property>
+    <property key="FrHrErrorEmplInfoNotFound">
+        <value xml:lang="en">Employee info not found.</value>
+        <value xml:lang="ko">인사정보가 없습니다.</value>
+    </property>
+    <property key="FrHrErrorAlreadyRetired">
+        <value xml:lang="en">Employee has already retired.</value>
+        <value xml:lang="ko">이미 퇴사한 직원입니다.</value>
+    </property>
+    <property key="FrHrErrorRetireBeforeHire">
+        <value xml:lang="en">Retire date is before hire date.</value>
+        <value xml:lang="ko">퇴사일이 입사일보다 이전입니다.</value>
+    </property>
+    <property key="FrHrErrorInvalidWorkDays">
+        <value xml:lang="en">Work days must not be negative.</value>
+        <value xml:lang="ko">근무일수가 올바르지 않습니다.</value>
+    </property>
+    <property key="FrHrErrorPayYearMonth">
+        <value xml:lang="en">Pay month must be yyyyMM.</value>
+        <value xml:lang="ko">급여년월은 yyyyMM 형식이어야 합니다.</value>
+    </property>
+    <property key="FrHrErrorInsuranceRateNotFound">
+        <value xml:lang="en">Insurance rate for the year is not registered.</value>
+        <value xml:lang="ko">해당 연도 4대보험 요율이 등록되어 있지 않습니다.</value>
+    </property>
+    <property key="FrHrErrorAttendanceExists">
+        <value xml:lang="en">Attendance already exists for the date.</value>
+        <value xml:lang="ko">해당 일자 근태가 이미 등록되어 있습니다.</value>
+    </property>
+    <property key="FrHrErrorAttendanceNotFound">
+        <value xml:lang="en">Attendance not found.</value>
+        <value xml:lang="ko">근태 정보가 없습니다.</value>
+    </property>
+    <property key="FrHrErrorCheckOutBeforeCheckIn">
+        <value xml:lang="en">Check out time must be after check in time.</value>
+        <value xml:lang="ko">퇴근 시각이 출근 시각보다 빠릅니다.</value>
+    </property>
+    <property key="FrHrErrorLeaveAlreadyGranted">
+        <value xml:lang="en">Leave has already been granted for this service year.</value>
+        <value xml:lang="ko">해당 근속차수 연차가 이미 발생되었습니다.</value>
+    </property>
+    <property key="FrHrErrorInvalidLeavePeriod">
+        <value xml:lang="en">Leave period is not valid.</value>
+        <value xml:lang="ko">연차 기간이 올바르지 않습니다.</value>
+    </property>
+    <property key="FrHrErrorLeaveNotEnough">
+        <value xml:lang="en">Not enough leave balance.</value>
+        <value xml:lang="ko">잔여 연차가 부족합니다.</value>
+    </property>
+    <property key="FrHrErrorLeaveUseNotFound">
+        <value xml:lang="en">Leave request not found.</value>
+        <value xml:lang="ko">연차 신청 정보가 없습니다.</value>
+    </property>
+    <property key="FrHrErrorLeaveUseNotRequested">
+        <value xml:lang="en">Only requested leave can be approved or rejected.</value>
+        <value xml:lang="ko">신청 상태인 건만 승인/반려할 수 있습니다.</value>
+    </property>
+</resource>
