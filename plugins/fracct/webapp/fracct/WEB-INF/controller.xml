@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 이소라 / 2018.05.14 -->
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://ofbiz.apache.org/Site-Conf" xsi:schemaLocation="http://ofbiz.apache.org/Site-Conf http://ofbiz.apache.org/dtds/site-conf.xsd">
+    <include location="component://common/webcommon/WEB-INF/common-controller.xml"/>
+    <include location="component://party/webapp/partymgr/WEB-INF/controller.xml"/>
+    <description>FutureRetail Accounting (fracct) Site Configuration File</description>
+
+    <!-- Request Mappings -->
+    <request-map uri="main">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="main"/>
+    </request-map>
+
+    <!-- ================ 전표 ================ -->
+    <request-map uri="FindFrSlip">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindFrSlip"/>
+    </request-map>
+    <request-map uri="EditFrSlip">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EditFrSlip"/>
+    </request-map>
+    <request-map uri="createFrSlip">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createFrSlip"/>
+        <response name="success" type="request-redirect" value="EditFrSlipItems">
+            <redirect-parameter name="slipId"/>
+        </response>
+        <response name="error" type="view" value="EditFrSlip"/>
+    </request-map>
+    <request-map uri="updateFrSlip">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updateFrSlip"/>
+        <response name="success" type="view" value="EditFrSlip"/>
+        <response name="error" type="view" value="EditFrSlip"/>
+    </request-map>
+    <request-map uri="EditFrSlipItems">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EditFrSlipItems"/>
+    </request-map>
+    <request-map uri="createFrSlipItem">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createFrSlipItem"/>
+        <response name="success" type="view" value="EditFrSlipItems"/>
+        <response name="error" type="view" value="EditFrSlipItems"/>
+    </request-map>
+    <request-map uri="updateFrSlipItem">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updateFrSlipItem"/>
+        <response name="success" type="view" value="EditFrSlipItems"/>
+        <response name="error" type="view" value="EditFrSlipItems"/>
+    </request-map>
+    <request-map uri="deleteFrSlipItem">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deleteFrSlipItem"/>
+        <response name="success" type="view" value="EditFrSlipItems"/>
+        <response name="error" type="view" value="EditFrSlipItems"/>
+    </request-map>
+    <request-map uri="ViewFrSlip">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="ViewFrSlip"/>
+    </request-map>
+    <request-map uri="requestFrSlip">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="requestFrSlip"/>
+        <response name="success" type="view" value="ViewFrSlip"/>
+        <response name="error" type="view" value="ViewFrSlip"/>
+    </request-map>
+
+    <!-- ================ 결재 ================ -->
+    <request-map uri="FindFrApproval">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindFrApproval"/>
+    </request-map>
+    <request-map uri="approveFrSlip">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="approveFrSlip"/>
+        <response name="success" type="view" value="ViewFrSlip"/>
+        <response name="error" type="view" value="ViewFrSlip"/>
+    </request-map>
+    <request-map uri="rejectFrSlip">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="rejectFrSlip"/>
+        <response name="success" type="view" value="ViewFrSlip"/>
+        <response name="error" type="view" value="ViewFrSlip"/>
+    </request-map>
+
+    <!-- ================ 결산 마감 ================ -->
+    <request-map uri="FindFrClosePeriod">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindFrClosePeriod"/>
+    </request-map>
+    <request-map uri="closeFrPeriod">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="closeFrPeriod"/>
+        <response name="success" type="view" value="FindFrClosePeriod"/>
+        <response name="error" type="view" value="FindFrClosePeriod"/>
+    </request-map>
+    <request-map uri="reopenFrPeriod">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="reopenFrPeriod"/>
+        <response name="success" type="view" value="FindFrClosePeriod"/>
+        <response name="error" type="view" value="FindFrClosePeriod"/>
+    </request-map>
+
+    <!-- ================ 세금계산서 ================ -->
+    <request-map uri="FindFrTaxInvoice">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindFrTaxInvoice"/>
+    </request-map>
+    <request-map uri="EditFrTaxInvoice">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EditFrTaxInvoice"/>
+    </request-map>
+    <request-map uri="createFrTaxInvoice">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createFrTaxInvoice"/>
+        <response name="success" type="request-redirect" value="ViewFrTaxInvoice">
+            <redirect-parameter name="taxInvoiceId"/>
+        </response>
+        <response name="error" type="view" value="EditFrTaxInvoice"/>
+    </request-map>
+    <request-map uri="ViewFrTaxInvoice">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="ViewFrTaxInvoice"/>
+    </request-map>
+    <request-map uri="cancelFrTaxInvoice">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="cancelFrTaxInvoice"/>
+        <response name="success" type="view" value="ViewFrTaxInvoice"/>
+        <response name="error" type="view" value="ViewFrTaxInvoice"/>
+    </request-map>
+
+    <!-- ================ 거래처 지급조건 ================ -->
+    <request-map uri="FindFrVendorPayTerm">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindFrVendorPayTerm"/>
+    </request-map>
+    <request-map uri="EditFrVendorPayTerm">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EditFrVendorPayTerm"/>
+    </request-map>
+    <request-map uri="createFrVendorPayTerm">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createFrVendorPayTerm"/>
+        <response name="success" type="view" value="FindFrVendorPayTerm"/>
+        <response name="error" type="view" value="EditFrVendorPayTerm"/>
+    </request-map>
+    <request-map uri="updateFrVendorPayTerm">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updateFrVendorPayTerm"/>
+        <response name="success" type="view" value="FindFrVendorPayTerm"/>
+        <response name="error" type="view" value="EditFrVendorPayTerm"/>
+    </request-map>
+    <request-map uri="deleteFrVendorPayTerm">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deleteFrVendorPayTerm"/>
+        <response name="success" type="view" value="FindFrVendorPayTerm"/>
+        <response name="error" type="view" value="FindFrVendorPayTerm"/>
+    </request-map>
+
+    <!-- ================ 지급계획 ================ -->
+    <request-map uri="FindFrPaymentPlan">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindFrPaymentPlan"/>
+    </request-map>
+    <request-map uri="completeFrPaymentPlan">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="completeFrPaymentPlan"/>
+        <response name="success" type="view" value="FindFrPaymentPlan"/>
+        <response name="error" type="view" value="FindFrPaymentPlan"/>
+    </request-map>
+
+    <!-- ================ Lookup ================ -->
+    <request-map uri="LookupGlAccount">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="LookupGlAccount"/>
+    </request-map>
+
+    <!-- View Mappings -->
+    <view-map name="main" type="screen" page="component://fracct/widget/CommonScreens.xml#Main"/>
+
+    <view-map name="FindFrSlip" type="screen" page="component://fracct/widget/FrSlipScreens.xml#FindFrSlip"/>
+    <view-map name="EditFrSlip" type="screen" page="component://fracct/widget/FrSlipScreens.xml#EditFrSlip"/>
+    <view-map name="EditFrSlipItems" type="screen" page="component://fracct/widget/FrSlipScreens.xml#EditFrSlipItems"/>
+    <view-map name="ViewFrSlip" type="screen" page="component://fracct/widget/FrSlipScreens.xml#ViewFrSlip"/>
+    <view-map name="FindFrApproval" type="screen" page="component://fracct/widget/FrSlipScreens.xml#FindFrApproval"/>
+
+    <view-map name="FindFrClosePeriod" type="screen" page="component://fracct/widget/FrPeriodScreens.xml#FindFrClosePeriod"/>
+
+    <view-map name="FindFrTaxInvoice" type="screen" page="component://fracct/widget/FrTaxInvoiceScreens.xml#FindFrTaxInvoice"/>
+    <view-map name="EditFrTaxInvoice" type="screen" page="component://fracct/widget/FrTaxInvoiceScreens.xml#EditFrTaxInvoice"/>
+    <view-map name="ViewFrTaxInvoice" type="screen" page="component://fracct/widget/FrTaxInvoiceScreens.xml#ViewFrTaxInvoice"/>
+
+    <view-map name="FindFrVendorPayTerm" type="screen" page="component://fracct/widget/FrPaymentScreens.xml#FindFrVendorPayTerm"/>
+    <view-map name="EditFrVendorPayTerm" type="screen" page="component://fracct/widget/FrPaymentScreens.xml#EditFrVendorPayTerm"/>
+    <view-map name="FindFrPaymentPlan" type="screen" page="component://fracct/widget/FrPaymentScreens.xml#FindFrPaymentPlan"/>
+
+    <view-map name="LookupGlAccount" type="screen" page="component://fracct/widget/LookupScreens.xml#LookupGlAccount"/>
+</site-conf>

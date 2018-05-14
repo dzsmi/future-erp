@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 이소라 / 2018.05.14 -->
+<menus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://ofbiz.apache.org/Widget-Menu" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Menu http://ofbiz.apache.org/dtds/widget-menu.xsd">
+
+    <menu name="FrAcctAppBar" title="${uiLabelMap.FrAcctApplication}" extends="CommonAppBarMenu" extends-resource="component://common/widget/CommonMenus.xml">
+        <menu-item name="main" title="${uiLabelMap.CommonMain}"><link target="main"/></menu-item>
+        <menu-item name="FrSlip" title="${uiLabelMap.FrAcctSlip}"><link target="FindFrSlip"/></menu-item>
+        <menu-item name="FrApproval" title="${uiLabelMap.FrAcctApproval}"><link target="FindFrApproval"/></menu-item>
+        <menu-item name="FrClosePeriod" title="${uiLabelMap.FrAcctClosePeriod}">
+            <condition><if-has-permission permission="FRACCT" action="_ADMIN"/></condition>
+            <link target="FindFrClosePeriod"/>
+        </menu-item>
+        <menu-item name="FrTaxInvoice" title="${uiLabelMap.FrAcctTaxInvoice}">
+            <condition><if-has-permission permission="FRACCT" action="_ADMIN"/></condition>
+            <link target="FindFrTaxInvoice"/>
+        </menu-item>
+        <menu-item name="FrPaymentPlan" title="${uiLabelMap.FrAcctPaymentPlan}">
+            <condition><if-has-permission permission="FRACCT" action="_ADMIN"/></condition>
+            <link target="FindFrPaymentPlan"/>
+        </menu-item>
+        <menu-item name="FrVendorPayTerm" title="${uiLabelMap.FrAcctVendorPayTerm}">
+            <condition><if-has-permission permission="FRACCT" action="_ADMIN"/></condition>
+            <link target="FindFrVendorPayTerm"/>
+        </menu-item>
+    </menu>
+
+    <menu name="FrSlipTabBar" extends="CommonTabBarMenu" extends-resource="component://common/widget/CommonMenus.xml"
+        default-menu-item-name="ViewFrSlip" selected-menuitem-context-field-name="tabButtonItem">
+        <menu-item name="ViewFrSlip" title="${uiLabelMap.FrAcctSlipDetail}">
+            <link target="ViewFrSlip">
+                <parameter param-name="slipId"/>
+            </link>
+        </menu-item>
+        <menu-item name="EditFrSlip" title="${uiLabelMap.FrAcctSlipHeader}">
+            <link target="EditFrSlip">
+                <parameter param-name="slipId"/>
+            </link>
+        </menu-item>
+        <menu-item name="EditFrSlipItems" title="${uiLabelMap.FrAcctSlipItems}">
+            <link target="EditFrSlipItems">
+                <parameter param-name="slipId"/>
+            </link>
+        </menu-item>
+    </menu>
+</menus>

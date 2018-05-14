@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 이소라 / 2018.05.14 -->
+<resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/ofbiz-properties.xsd">
+    <property key="FrAcctApplication">
+        <value xml:lang="en">FR Accounting</value>
+        <value xml:lang="ko">재경관리</value>
+    </property>
+    <property key="FrAcctCompanyName">
+        <value xml:lang="en">FutureRetail</value>
+        <value xml:lang="ko">(주)퓨처리테일</value>
+    </property>
+    <property key="FrAcctCompanySubtitle">
+        <value xml:lang="en">Part of the FutureRetail ERP</value>
+        <value xml:lang="ko">퓨처리테일 사내 ERP</value>
+    </property>
+    <property key="FrAcctMain">
+        <value xml:lang="en">Accounting Main</value>
+        <value xml:lang="ko">재경 메인</value>
+    </property>
+    <property key="FrAcctViewPermissionError">
+        <value xml:lang="en">You do not have permission to view this page. ("FRACCT_VIEW" or "FRACCT_ADMIN" needed)</value>
+        <value xml:lang="ko">이 화면을 볼 권한이 없습니다. (FRACCT_VIEW 또는 FRACCT_ADMIN 필요)</value>
+    </property>
+    <property key="FrAcctSlip">
+        <value xml:lang="en">Slip</value>
+        <value xml:lang="ko">전표</value>
+    </property>
+    <property key="FrAcctFindSlip">
+        <value xml:lang="en">Find Slips</value>
+        <value xml:lang="ko">전표 조회</value>
+    </property>
+    <property key="FrAcctNewSlip">
+        <value xml:lang="en">New Slip</value>
+        <value xml:lang="ko">전표 작성</value>
+    </property>
+    <property key="FrAcctEditSlip">
+        <value xml:lang="en">Edit Slip</value>
+        <value xml:lang="ko">전표 수정</value>
+    </property>
+    <property key="FrAcctSlipDetail">
+        <value xml:lang="en">Slip Detail</value>
+        <value xml:lang="ko">전표 상세</value>
+    </property>
+    <property key="FrAcctSlipHeader">
+        <value xml:lang="en">Slip Header</value>
+        <value xml:lang="ko">전표 헤더</value>
+    </property>
+    <property key="FrAcctSlipItems">
+        <value xml:lang="en">Slip Items</value>
+        <value xml:lang="ko">전표 항목</value>
+    </property>
+    <property key="FrAcctAddSlipItem">
+        <value xml:lang="en">Add Slip Item</value>
+        <value xml:lang="ko">전표 항목 추가</value>
+    </property>
+    <property key="FrAcctSlipId">
+        <value xml:lang="en">Slip No.</value>
+        <value xml:lang="ko">전표번호</value>
+    </property>
+    <property key="FrAcctSlipType">
+        <value xml:lang="en">Slip Type</value>
+        <value xml:lang="ko">전표유형</value>
+    </property>
+    <property key="FrAcctSlipDate">
+        <value xml:lang="en">Slip Date</value>
+        <value xml:lang="ko">전표일자</value>
+    </property>
+    <property key="FrAcctSlipAmount">
+        <value xml:lang="en">Slip Amount</value>
+        <value xml:lang="ko">전표금액</value>
+    </property>
+    <property key="FrAcctSlipDescription">
+        <value xml:lang="en">Summary</value>
+        <value xml:lang="ko">적요</value>
+    </property>
+    <property key="FrAcctDept">
+        <value xml:lang="en">Department</value>
+        <value xml:lang="ko">부서</value>
+    </property>
+    <property key="FrAcctCreatedBy">
+        <value xml:lang="en">Created By</value>
+        <value xml:lang="ko">작성자</value>
+    </property>
+    <property key="FrAcctAcctgTransId">
+        <value xml:lang="en">Accounting Transaction</value>
+        <value xml:lang="ko">회계거래번호</value>
+    </property>
+    <property key="FrAcctSeq">
+        <value xml:lang="en">Seq</value>
+        <value xml:lang="ko">순번</value>
+    </property>
+    <property key="FrAcctGlAccount">
+        <value xml:lang="en">GL Account</value>
+        <value xml:lang="ko">계정과목</value>
+    </property>
+    <property key="FrAcctDebitCredit">
+        <value xml:lang="en">Debit/Credit</value>
+        <value xml:lang="ko">차대구분</value>
+    </property>
+    <property key="FrAcctDebit">
+        <value xml:lang="en">Debit</value>
+        <value xml:lang="ko">차변</value>
+    </property>
+    <property key="FrAcctCredit">
+        <value xml:lang="en">Credit</value>
+        <value xml:lang="ko">대변</value>
+    </property>
+    <property key="FrAcctVendor">
+        <value xml:lang="en">Vendor</value>
+        <value xml:lang="ko">거래처</value>
+    </property>
+    <property key="FrAcctVendorName">
+        <value xml:lang="en">Vendor Name</value>
+        <value xml:lang="ko">거래처명</value>
+    </property>
+    <property key="FrAcctMemo">
+        <value xml:lang="en">Memo</value>
+        <value xml:lang="ko">메모</value>
+    </property>
+    <property key="FrAcctBalanceCheck">
+        <value xml:lang="en">Debit/Credit Balance</value>
+        <value xml:lang="ko">차대 합계 검사</value>
+    </property>
+    <property key="FrAcctDebitTotal">
+        <value xml:lang="en">Debit Total</value>
+        <value xml:lang="ko">차변 합계</value>
+    </property>
+    <property key="FrAcctCreditTotal">
+        <value xml:lang="en">Credit Total</value>
+        <value xml:lang="ko">대변 합계</value>
+    </property>
+    <property key="FrAcctBalanceDiff">
+        <value xml:lang="en">Difference</value>
+        <value xml:lang="ko">차액</value>
+    </property>
+    <property key="FrAcctBalanced">
+        <value xml:lang="en">Balanced</value>
+        <value xml:lang="ko">일치</value>
+    </property>
+    <property key="FrAcctNotBalanced">
+        <value xml:lang="en">Not balanced - cannot be requested</value>
+        <value xml:lang="ko">불일치 - 상신할 수 없습니다</value>
+    </property>
+    <property key="FrAcctApproval">
+        <value xml:lang="en">Approval</value>
+        <value xml:lang="ko">결재</value>
+    </property>
+    <property key="FrAcctApprovalPending">
+        <value xml:lang="en">Slips Waiting for Approval</value>
+        <value xml:lang="ko">결재 대기 전표</value>
+    </property>
+    <property key="FrAcctApprLevel">
+        <value xml:lang="en">Approval Level</value>
+        <value xml:lang="ko">결재레벨</value>
+    </property>
+    <property key="FrAcctApprStep">
+        <value xml:lang="en">Approved Up To</value>
+        <value xml:lang="ko">승인 완료 단계</value>
+    </property>
+    <property key="FrAcctApprHist">
+        <value xml:lang="en">Approval History</value>
+        <value xml:lang="ko">결재이력</value>
+    </property>
+    <property key="FrAcctApprAction">
+        <value xml:lang="en">Action</value>
+        <value xml:lang="ko">처리</value>
+    </property>
+    <property key="FrAcctApprActionRequest">
+        <value xml:lang="en">Request</value>
+        <value xml:lang="ko">상신</value>
+    </property>
+    <property key="FrAcctApprActionApprove">
+        <value xml:lang="en">Approve</value>
+        <value xml:lang="ko">승인</value>
+    </property>
+    <property key="FrAcctApprActionReject">
+        <value xml:lang="en">Reject</value>
+        <value xml:lang="ko">반려</value>
+    </property>
+    <property key="FrAcctApprUser">
+        <value xml:lang="en">Processed By</value>
+        <value xml:lang="ko">처리자</value>
+    </property>
+    <property key="FrAcctApprDate">
+        <value xml:lang="en">Processed Date</value>
+        <value xml:lang="ko">처리일시</value>
+    </property>
+    <property key="FrAcctApprComments">
+        <value xml:lang="en">Comments</value>
+        <value xml:lang="ko">결재 의견</value>
+    </property>
+    <property key="FrAcctRequestedDate">
+        <value xml:lang="en">Requested Date</value>
+        <value xml:lang="ko">상신일시</value>
+    </property>
+    <property key="FrAcctRequestSlip">
+        <value xml:lang="en">Request Approval</value>
+        <value xml:lang="ko">상신</value>
+    </property>
+    <property key="FrAcctApproveSlip">
+        <value xml:lang="en">Approve</value>
+        <value xml:lang="ko">승인</value>
+    </property>
+    <property key="FrAcctRejectSlip">
+        <value xml:lang="en">Reject</value>
+        <value xml:lang="ko">반려</value>
+    </property>
+    <property key="FrAcctRejectReason">
+        <value xml:lang="en">Reject Reason</value>
+        <value xml:lang="ko">반려 사유</value>
+    </property>
+    <property key="FrAcctClosePeriod">
+        <value xml:lang="en">Monthly Closing</value>
+        <value xml:lang="ko">결산 마감</value>
+    </property>
+    <property key="FrAcctClosePeriodSearch">
+        <value xml:lang="en">Search Closing</value>
+        <value xml:lang="ko">마감 조회</value>
+    </property>
+    <property key="FrAcctClosePeriodList">
+        <value xml:lang="en">Closing Status</value>
+        <value xml:lang="ko">마감 현황</value>
+    </property>
+    <property key="FrAcctCloseMonth">
+        <value xml:lang="en">Close Month</value>
+        <value xml:lang="ko">월 마감 처리</value>
+    </property>
+    <property key="FrAcctCloseYear">
+        <value xml:lang="en">Year</value>
+        <value xml:lang="ko">조회년도</value>
+    </property>
+    <property key="FrAcctCloseYearMonth">
+        <value xml:lang="en">Year/Month</value>
+        <value xml:lang="ko">마감년월</value>
+    </property>
+    <property key="FrAcctIsClosed">
+        <value xml:lang="en">Closed</value>
+        <value xml:lang="ko">마감여부</value>
+    </property>
+    <property key="FrAcctClosed">
+        <value xml:lang="en">Closed</value>
+        <value xml:lang="ko">마감</value>
+    </property>
+    <property key="FrAcctOpen">
+        <value xml:lang="en">Open</value>
+        <value xml:lang="ko">미마감</value>
+    </property>
+    <property key="FrAcctClosedBy">
+        <value xml:lang="en">Closed By</value>
+        <value xml:lang="ko">마감자</value>
+    </property>
+    <property key="FrAcctClosedDate">
+        <value xml:lang="en">Closed Date</value>
+        <value xml:lang="ko">마감일시</value>
+    </property>
+    <property key="FrAcctDoClose">
+        <value xml:lang="en">Close</value>
+        <value xml:lang="ko">마감</value>
+    </property>
+    <property key="FrAcctDoReopen">
+        <value xml:lang="en">Reopen</value>
+        <value xml:lang="ko">마감 해제</value>
+    </property>
+    <property key="FrAcctReopenConfirm">
+        <value xml:lang="en">Reopen this month? Slips of this month can be changed again.</value>
+        <value xml:lang="ko">마감을 해제하시겠습니까? 해당 월 전표를 다시 수정할 수 있게 됩니다.</value>
+    </property>
+    <property key="FrAcctTaxInvoice">
+        <value xml:lang="en">Tax Invoice</value>
+        <value xml:lang="ko">세금계산서</value>
+    </property>
+    <property key="FrAcctNewTaxInvoice">
+        <value xml:lang="en">New Tax Invoice</value>
+        <value xml:lang="ko">세금계산서 수기 등록</value>
+    </property>
+    <property key="FrAcctTaxInvoiceId">
+        <value xml:lang="en">Tax Invoice ID</value>
+        <value xml:lang="ko">세금계산서ID</value>
+    </property>
+    <property key="FrAcctTaxInvoiceNo">
+        <value xml:lang="en">Approval No.</value>
+        <value xml:lang="ko">승인번호</value>
+    </property>
+    <property key="FrAcctTaxInvoiceType">
+        <value xml:lang="en">Sales/Purchase</value>
+        <value xml:lang="ko">매출/매입</value>
+    </property>
+    <property key="FrAcctIssueDate">
+        <value xml:lang="en">Issue Date</value>
+        <value xml:lang="ko">발행일</value>
+    </property>
+    <property key="FrAcctSupplyAmount">
+        <value xml:lang="en">Supply Amount</value>
+        <value xml:lang="ko">공급가액</value>
+    </property>
+    <property key="FrAcctVatAmount">
+        <value xml:lang="en">VAT</value>
+        <value xml:lang="ko">부가세</value>
+    </property>
+    <property key="FrAcctTotalAmount">
+        <value xml:lang="en">Total</value>
+        <value xml:lang="ko">합계</value>
+    </property>
+    <property key="FrAcctTaxInvoiceVatNotice">
+        <value xml:lang="en">VAT is calculated automatically as 10% of the supply amount (amounts under 1 won are truncated). Purchase tax invoices create a payment plan.</value>
+        <value xml:lang="ko">부가세는 공급가액의 10%로 자동 계산됩니다(원 미만 절사). 매입 세금계산서는 지급계획이 자동 생성됩니다.</value>
+    </property>
+    <property key="FrAcctCancelTaxInvoice">
+        <value xml:lang="en">Cancel Tax Invoice</value>
+        <value xml:lang="ko">세금계산서 취소</value>
+    </property>
+    <property key="FrAcctCancelTaxInvoiceConfirm">
+        <value xml:lang="en">Cancel this tax invoice? Planned payments will also be cancelled.</value>
+        <value xml:lang="ko">세금계산서를 취소하시겠습니까? 지급예정 건도 함께 취소됩니다.</value>
+    </property>
+    <property key="FrAcctPaymentPlan">
+        <value xml:lang="en">Payment Plan</value>
+        <value xml:lang="ko">지급계획</value>
+    </property>
+    <property key="FrAcctPaymentPlanId">
+        <value xml:lang="en">Payment Plan ID</value>
+        <value xml:lang="ko">지급계획ID</value>
+    </property>
+    <property key="FrAcctPaymentPlanUpcoming">
+        <value xml:lang="en">Planned Payments (by due date)</value>
+        <value xml:lang="ko">지급 예정 (지급기일순)</value>
+    </property>
+    <property key="FrAcctDueDate">
+        <value xml:lang="en">Due Date</value>
+        <value xml:lang="ko">지급기일</value>
+    </property>
+    <property key="FrAcctPaidDate">
+        <value xml:lang="en">Paid Date</value>
+        <value xml:lang="ko">지급일시</value>
+    </property>
+    <property key="FrAcctCompletePayment">
+        <value xml:lang="en">Mark as Paid</value>
+        <value xml:lang="ko">지급완료</value>
+    </property>
+    <property key="FrAcctCompletePaymentConfirm">
+        <value xml:lang="en">Mark this payment plan as paid?</value>
+        <value xml:lang="ko">지급완료 처리하시겠습니까?</value>
+    </property>
+    <property key="FrAcctVendorPayTerm">
+        <value xml:lang="en">Vendor Payment Terms</value>
+        <value xml:lang="ko">거래처 지급조건</value>
+    </property>
+    <property key="FrAcctNewVendorPayTerm">
+        <value xml:lang="en">New Vendor Payment Term</value>
+        <value xml:lang="ko">지급조건 등록</value>
+    </property>
+    <property key="FrAcctPayDays">
+        <value xml:lang="en">Payment Days</value>
+        <value xml:lang="ko">지급일수</value>
+    </property>
+    <property key="FrAcctPayDaysTooltip">
+        <value xml:lang="en">Days from tax invoice issue date</value>
+        <value xml:lang="ko">세금계산서 발행일 기준 지급일수</value>
+    </property>
+</resource>
