@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 이소라 / 2018.05.21 -->
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://ofbiz.apache.org/Site-Conf" xsi:schemaLocation="http://ofbiz.apache.org/Site-Conf http://ofbiz.apache.org/dtds/site-conf.xsd">
+    <include location="component://common/webcommon/WEB-INF/common-controller.xml"/>
+    <!-- LookupPerson / LookupPartyName / LookupPartyGroup 사용 -->
+    <include location="component://party/webapp/partymgr/WEB-INF/controller.xml"/>
+    <description>FutureRetail HR (frhr) Site Configuration File</description>
+
+    <!-- Request Mappings -->
+    <request-map uri="main">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="main"/>
+    </request-map>
+
+    <!-- ===================== 직원 인사정보 ===================== -->
+    <request-map uri="FindFrEmplInfo">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindFrEmplInfo"/>
+    </request-map>
+    <request-map uri="EditFrEmplInfo">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EditFrEmplInfo"/>
+    </request-map>
+    <request-map uri="NewFrEmployee">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="NewFrEmployee"/>
+    </request-map>
+    <request-map uri="processFrNewHire">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="processFrNewHire"/>
+        <response name="success" type="view" value="EditFrEmplInfo"/>
+        <response name="error" type="view" value="NewFrEmployee"/>
+    </request-map>
+    <request-map uri="createFrEmplInfo">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createFrEmplInfo"/>
+        <response name="success" type="view" value="EditFrEmplInfo"/>
+        <response name="error" type="view" value="EditFrEmplInfo"/>
+    </request-map>
+    <request-map uri="updateFrEmplInfo">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updateFrEmplInfo"/>
+        <response name="success" type="view" value="EditFrEmplInfo"/>
+        <response name="error" type="view" value="EditFrEmplInfo"/>
+    </request-map>
+
+    <!-- ===================== 급여 ===================== -->
+    <request-map uri="FindFrPayroll">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindFrPayroll"/>
+    </request-map>
+    <request-map uri="FrPayrollCalc">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FrPayrollCalc"/>
+    </request-map>
+    <request-map uri="calcFrMonthlyPayroll">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="calcFrMonthlyPayroll"/>
+        <response name="success" type="view" value="FindFrPayroll"/>
+        <response name="error" type="view" value="FrPayrollCalc"/>
+    </request-map>
+    <request-map uri="updateFrPayrollStatus">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updateFrPayrollStatus"/>
+        <response name="success" type="view" value="FindFrPayroll"/>
+        <response name="error" type="view" value="FindFrPayroll"/>
+    </request-map>
+    <request-map uri="FrPayrollPreview">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FrPayrollPreview"/>
+    </request-map>
+    <request-map uri="ViewFrPaySlip">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="ViewFrPaySlip"/>
+    </request-map>
+
+    <!-- ===================== 4대보험 요율 ===================== -->
+    <request-map uri="FindFrInsuranceRate">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindFrInsuranceRate"/>
+    </request-map>
+    <request-map uri="createFrInsuranceRate">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createFrInsuranceRate"/>
+        <response name="success" type="view" value="FindFrInsuranceRate"/>
+        <response name="error" type="view" value="FindFrInsuranceRate"/>
+    </request-map>
+    <request-map uri="updateFrInsuranceRate">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updateFrInsuranceRate"/>
+        <response name="success" type="view" value="FindFrInsuranceRate"/>
+        <response name="error" type="view" value="FindFrInsuranceRate"/>
+    </request-map>
+    <request-map uri="deleteFrInsuranceRate">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deleteFrInsuranceRate"/>
+        <response name="success" type="view" value="FindFrInsuranceRate"/>
+        <response name="error" type="view" value="FindFrInsuranceRate"/>
+    </request-map>
+
+    <!-- ===================== 근태 ===================== -->
+    <request-map uri="FindFrAttendance">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindFrAttendance"/>
+    </request-map>
+    <request-map uri="EditFrAttendance">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EditFrAttendance"/>
+    </request-map>
+    <request-map uri="createFrAttendance">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createFrAttendance"/>
+        <response name="success" type="view" value="FindFrAttendance"/>
+        <response name="error" type="view" value="EditFrAttendance"/>
+    </request-map>
+    <request-map uri="updateFrAttendance">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updateFrAttendance"/>
+        <response name="success" type="view" value="FindFrAttendance"/>
+        <response name="error" type="view" value="EditFrAttendance"/>
+    </request-map>
+    <request-map uri="deleteFrAttendance">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deleteFrAttendance"/>
+        <response name="success" type="view" value="FindFrAttendance"/>
+        <response name="error" type="view" value="FindFrAttendance"/>
+    </request-map>
+
+    <!-- ===================== 연차 ===================== -->
+    <request-map uri="FindFrLeaveGrant">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindFrLeaveGrant"/>
+    </request-map>
+    <request-map uri="grantFrLeave">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="grantFrLeave"/>
+        <response name="success" type="view" value="FindFrLeaveGrant"/>
+        <response name="error" type="view" value="FindFrLeaveGrant"/>
+    </request-map>
+    <request-map uri="FindFrLeaveUse">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindFrLeaveUse"/>
+    </request-map>
+    <request-map uri="EditFrLeaveUse">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EditFrLeaveUse"/>
+    </request-map>
+    <request-map uri="createFrLeaveUse">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createFrLeaveUse"/>
+        <response name="success" type="view" value="FindFrLeaveUse"/>
+        <response name="error" type="view" value="EditFrLeaveUse"/>
+    </request-map>
+    <request-map uri="approveFrLeaveUse">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="approveFrLeaveUse"/>
+        <response name="success" type="view" value="FindFrLeaveUse"/>
+        <response name="error" type="view" value="FindFrLeaveUse"/>
+    </request-map>
+    <request-map uri="rejectFrLeaveUse">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="rejectFrLeaveUse"/>
+        <response name="success" type="view" value="FindFrLeaveUse"/>
+        <response name="error" type="view" value="FindFrLeaveUse"/>
+    </request-map>
+    <request-map uri="FrLeaveBalance">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FrLeaveBalance"/>
+    </request-map>
+
+    <!-- ===================== 퇴직 정산 ===================== -->
+    <request-map uri="FindFrRetireSettle">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindFrRetireSettle"/>
+    </request-map>
+    <request-map uri="FrRetireProcess">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FrRetireProcess"/>
+    </request-map>
+    <request-map uri="processFrRetire">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="processFrRetire"/>
+        <response name="success" type="view" value="ViewFrRetireSettle"/>
+        <response name="error" type="view" value="FrRetireProcess"/>
+    </request-map>
+    <request-map uri="ViewFrRetireSettle">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="ViewFrRetireSettle"/>
+    </request-map>
+
+    <!-- View Mappings -->
+    <view-map name="main" type="screen" page="component://frhr/widget/CommonScreens.xml#FrHrMain"/>
+
+    <view-map name="FindFrEmplInfo" type="screen" page="component://frhr/widget/EmplInfoScreens.xml#FindFrEmplInfo"/>
+    <view-map name="EditFrEmplInfo" type="screen" page="component://frhr/widget/EmplInfoScreens.xml#EditFrEmplInfo"/>
+    <view-map name="NewFrEmployee" type="screen" page="component://frhr/widget/EmplInfoScreens.xml#NewFrEmployee"/>
+
+    <view-map name="FindFrPayroll" type="screen" page="component://frhr/widget/PayrollScreens.xml#FindFrPayroll"/>
+    <view-map name="FrPayrollCalc" type="screen" page="component://frhr/widget/PayrollScreens.xml#FrPayrollCalc"/>
+    <view-map name="FrPayrollPreview" type="screen" page="component://frhr/widget/PayrollPreviewScreens.xml#FrPayrollPreview"/>
+    <view-map name="ViewFrPaySlip" type="screen" page="component://frhr/widget/PayrollScreens.xml#ViewFrPaySlip"/>
+
+    <view-map name="FindFrInsuranceRate" type="screen" page="component://frhr/widget/InsuranceRateScreens.xml#FindFrInsuranceRate"/>
+
+    <view-map name="FindFrAttendance" type="screen" page="component://frhr/widget/AttendanceScreens.xml#FindFrAttendance"/>
+    <view-map name="EditFrAttendance" type="screen" page="component://frhr/widget/AttendanceScreens.xml#EditFrAttendance"/>
+
+    <view-map name="FindFrLeaveGrant" type="screen" page="component://frhr/widget/LeaveScreens.xml#FindFrLeaveGrant"/>
+    <view-map name="FindFrLeaveUse" type="screen" page="component://frhr/widget/LeaveScreens.xml#FindFrLeaveUse"/>
+    <view-map name="EditFrLeaveUse" type="screen" page="component://frhr/widget/LeaveScreens.xml#EditFrLeaveUse"/>
+    <view-map name="FrLeaveBalance" type="screen" page="component://frhr/widget/LeaveScreens.xml#FrLeaveBalance"/>
+
+    <view-map name="FindFrRetireSettle" type="screen" page="component://frhr/widget/RetireScreens.xml#FindFrRetireSettle"/>
+    <view-map name="FrRetireProcess" type="screen" page="component://frhr/widget/RetireScreens.xml#FrRetireProcess"/>
+    <view-map name="ViewFrRetireSettle" type="screen" page="component://frhr/widget/RetireScreens.xml#ViewFrRetireSettle"/>
+</site-conf>

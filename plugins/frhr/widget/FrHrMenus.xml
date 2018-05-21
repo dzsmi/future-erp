@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 이소라 / 2018.05.21 -->
+<menus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://ofbiz.apache.org/Widget-Menu" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Menu http://ofbiz.apache.org/dtds/widget-menu.xsd">
+    <menu name="FrHrAppBar" title="${uiLabelMap.FrHrApplication}" extends="CommonAppBarMenu" extends-resource="component://common/widget/CommonMenus.xml">
+        <menu-item name="main" title="${uiLabelMap.CommonMain}"><link target="main"/></menu-item>
+        <menu-item name="EmplInfo" title="${uiLabelMap.FrHrEmplInfo}"><link target="FindFrEmplInfo"/></menu-item>
+        <menu-item name="Payroll" title="${uiLabelMap.FrHrPayroll}"><link target="FindFrPayroll"/></menu-item>
+        <menu-item name="Attendance" title="${uiLabelMap.FrHrAttendance}"><link target="FindFrAttendance"/></menu-item>
+        <menu-item name="Leave" title="${uiLabelMap.FrHrLeave}"><link target="FindFrLeaveUse"/></menu-item>
+        <menu-item name="Retire" title="${uiLabelMap.FrHrRetire}"><link target="FindFrRetireSettle"/></menu-item>
+        <menu-item name="InsuranceRate" title="${uiLabelMap.FrHrInsuranceRate}">
+            <condition><if-has-permission permission="FRHR" action="_ADMIN"/></condition>
+            <link target="FindFrInsuranceRate"/>
+        </menu-item>
+    </menu>
+
+    <menu name="FrPayrollTabBar" default-selected-style="selected" type="simple" menu-container-style="button-bar tab-bar"
+            selected-menuitem-context-field-name="tabButtonItem">
+        <menu-item name="FindFrPayroll" title="${uiLabelMap.FrHrPayrollList}"><link target="FindFrPayroll"/></menu-item>
+        <menu-item name="FrPayrollCalc" title="${uiLabelMap.FrHrPayrollCalc}">
+            <condition><if-has-permission permission="FRHR" action="_ADMIN"/></condition>
+            <link target="FrPayrollCalc"/>
+        </menu-item>
+        <menu-item name="FrPayrollPreview" title="${uiLabelMap.FrHrPayrollPreview}"><link target="FrPayrollPreview"/></menu-item>
+    </menu>
+
+    <menu name="FrLeaveTabBar" default-selected-style="selected" type="simple" menu-container-style="button-bar tab-bar"
+            selected-menuitem-context-field-name="tabButtonItem">
+        <menu-item name="FindFrLeaveUse" title="${uiLabelMap.FrHrLeaveUse}"><link target="FindFrLeaveUse"/></menu-item>
+        <menu-item name="FindFrLeaveGrant" title="${uiLabelMap.FrHrLeaveGrant}"><link target="FindFrLeaveGrant"/></menu-item>
+        <menu-item name="FrLeaveBalance" title="${uiLabelMap.FrHrLeaveBalance}"><link target="FrLeaveBalance"/></menu-item>
+    </menu>
+
+    <menu name="FrRetireTabBar" default-selected-style="selected" type="simple" menu-container-style="button-bar tab-bar"
+            selected-menuitem-context-field-name="tabButtonItem">
+        <menu-item name="FindFrRetireSettle" title="${uiLabelMap.FrHrRetireSettleList}"><link target="FindFrRetireSettle"/></menu-item>
+        <menu-item name="FrRetireProcess" title="${uiLabelMap.FrHrRetireProcess}">
+            <condition><if-has-permission permission="FRHR" action="_ADMIN"/></condition>
+            <link target="FrRetireProcess"/>
+        </menu-item>
+    </menu>
+</menus>
