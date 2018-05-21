@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 이소라 / 2018.05.21 -->
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://ofbiz.apache.org/Widget-Screen" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Screen http://ofbiz.apache.org/dtds/widget-screen.xsd">
+
+    <!-- ================ 전표 목록 ================ -->
+    <screen name="FindFrSlip">
+        <section>
+            <actions>
+                <set field="titleProperty" value="FrAcctFindSlip"/>
+                <set field="headerItem" value="FrSlip"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonFrAcctDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="menu-bar">
+                                <container style="button-bar">
+                                    <link target="EditFrSlip" text="${uiLabelMap.FrAcctNewSlip}" style="buttontext create"/>
+                                </container>
+                            </decorator-section>
+                            <decorator-section name="search-options">
+                                <include-form name="FindFrSlipOptions" location="component://fracct/widget/FrSlipForms.xml"/>
+                            </decorator-section>
+                            <decorator-section name="search-results">
+                                <include-screen name="FrSlipSearchResults"/>
+                            </decorator-section>
+                        </decorator-screen>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <screen name="FrSlipSearchResults">
+        <section>
+            <actions>
+                <property-map resource="FrAcctUiLabels" map-name="uiLabelMap" global="true"/>
+                <property-map resource="CommonUiLabels" map-name="uiLabelMap" global="true"/>
+            </actions>
+            <widgets>
+                <include-form name="ListFrSlip" location="component://fracct/widget/FrSlipForms.xml"/>
+            </widgets>
+        </section>
+    </screen>
+
+    <!-- ================ 전표 작성/수정 (헤더) ================ -->
+    <screen name="EditFrSlip">
+        <section>
+            <actions>
+                <set field="titleProperty" value="FrAcctEditSlip"/>
+                <set field="tabButtonItem" value="EditFrSlip"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonFrSlipDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <section>
+                            <condition>
+                                <not><if-empty field="frSlip"/></not>
+                            </condition>
+                            <widgets>
+                                <screenlet title="${uiLabelMap.FrAcctEditSlip}">
+                                    <include-form name="EditFrSlip" location="component://fracct/widget/FrSlipForms.xml"/>
+                                </screenlet>
+                            </widgets>
+                            <fail-widgets>
+                                <screenlet title="${uiLabelMap.FrAcctNewSlip}">
+                                    <include-form name="EditFrSlip" location="component://fracct/widget/FrSlipForms.xml"/>
+                                </screenlet>
+                            </fail-widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <!-- ================ 전표 항목 (차변/대변) ================ -->
+    <screen name="EditFrSlipItems">
+        <section>
+            <actions>
+                <set field="titleProperty" value="FrAcctSlipItems"/>
+                <set field="tabButtonItem" value="EditFrSlipItems"/>
+                <entity-and entity-name="FrSlipItem" list="slipItems">
+                    <field-map field-name="slipId" from-field="parameters.slipId"/>
+                    <order-by field-name="slipItemSeqId"/>
+                </entity-and>
+                <script location="component://fracct/groovyScripts/slip/FrSlipBalance.groovy"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonFrSlipDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <section>
+                            <condition>
+                                <or>
+                                    <if-compare field="frSlip.statusId" operator="equals" value="FRSLIP_DRAFT"/>
+                                    <if-compare field="frSlip.statusId" operator="equals" value="FRSLIP_REJECTED"/>
+                                </or>
+                            </condition>
+                            <widgets>
+                                <screenlet title="${uiLabelMap.FrAcctSlipItems}">
+                                    <include-form name="ListFrSlipItems" location="component://fracct/widget/FrSlipForms.xml"/>
+                                </screenlet>
+                                <screenlet title="${uiLabelMap.FrAcctAddSlipItem}">
+                                    <include-form name="AddFrSlipItem" location="component://fracct/widget/FrSlipForms.xml"/>
+                                </screenlet>
+                            </widgets>
+                            <fail-widgets>
+                                <screenlet title="${uiLabelMap.FrAcctSlipItems}">
+                                    <include-form name="ListFrSlipItemsView" location="component://fracct/widget/FrSlipForms.xml"/>
+                                </screenlet>
+                            </fail-widgets>
+                        </section>
+                        <screenlet title="${uiLabelMap.FrAcctBalanceCheck}">
+                            <platform-specific><html><html-template location="component://fracct/template/slip/FrSlipBalance.ftl"/></html></platform-specific>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <!-- ================ 전표 상세 (상신/결재) ================ -->
+    <screen name="ViewFrSlip">
+        <section>
+            <actions>
+                <set field="titleProperty" value="FrAcctSlipDetail"/>
+                <set field="tabButtonItem" value="ViewFrSlip"/>
+                <entity-and entity-name="FrSlipItem" list="slipItems">
+                    <field-map field-name="slipId" from-field="parameters.slipId"/>
+                    <order-by field-name="slipItemSeqId"/>
+                </entity-and>
+                <entity-and entity-name="FrApprHist" list="apprHists">
+                    <field-map field-name="slipId" from-field="parameters.slipId"/>
+                    <order-by field-name="apprSeqId"/>
+                </entity-and>
+                <script location="component://fracct/groovyScripts/slip/FrSlipBalance.groovy"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonFrSlipDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <section>
+                            <condition>
+                                <not><if-empty field="frSlip"/></not>
+                            </condition>
+                            <widgets>
+                                <screenlet title="${uiLabelMap.FrAcctSlipHeader}">
+                                    <include-form name="FrSlipHeader" location="component://fracct/widget/FrSlipForms.xml"/>
+                                </screenlet>
+                                <screenlet title="${uiLabelMap.FrAcctSlipItems}">
+                                    <include-form name="ListFrSlipItemsView" location="component://fracct/widget/FrSlipForms.xml"/>
+                                </screenlet>
+                                <screenlet title="${uiLabelMap.FrAcctBalanceCheck}">
+                                    <platform-specific><html><html-template location="component://fracct/template/slip/FrSlipBalance.ftl"/></html></platform-specific>
+                                </screenlet>
+                                <screenlet title="${uiLabelMap.FrAcctApprHist}">
+                                    <include-form name="ListFrApprHist" location="component://fracct/widget/FrSlipForms.xml"/>
+                                </screenlet>
+                                <include-screen name="FrSlipActions"/>
+                            </widgets>
+                            <fail-widgets>
+                                <label style="h3">${uiLabelMap.FrAcctSlipNotFound}</label>
+                            </fail-widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <!-- 상태별 처리 버튼: 작성중/반려 → 상신, 상신 → 승인/반려(재경팀) -->
+    <screen name="FrSlipActions">
+        <section>
+            <widgets>
+                <section>
+                    <condition>
+                        <or>
+                            <if-compare field="frSlip.statusId" operator="equals" value="FRSLIP_DRAFT"/>
+                            <if-compare field="frSlip.statusId" operator="equals" value="FRSLIP_REJECTED"/>
+                        </or>
+                    </condition>
+                    <widgets>
+                        <screenlet title="${uiLabelMap.FrAcctRequestSlip}">
+                            <include-form name="RequestFrSlip" location="component://fracct/widget/FrSlipForms.xml"/>
+                        </screenlet>
+                    </widgets>
+                </section>
+                <section>
+                    <condition>
+                        <and>
+                            <if-compare field="frSlip.statusId" operator="equals" value="FRSLIP_REQUESTED"/>
+                            <if-has-permission permission="FRACCT" action="_ADMIN"/>
+                        </and>
+                    </condition>
+                    <widgets>
+                        <container style="lefthalf">
+                            <screenlet title="${uiLabelMap.FrAcctApproveSlip}">
+                                <include-form name="ApproveFrSlip" location="component://fracct/widget/FrSlipForms.xml"/>
+                            </screenlet>
+                        </container>
+                        <container style="righthalf">
+                            <screenlet title="${uiLabelMap.FrAcctRejectSlip}">
+                                <include-form name="RejectFrSlip" location="component://fracct/widget/FrSlipForms.xml"/>
+                            </screenlet>
+                        </container>
+                        <container style="clear"/>
+                    </widgets>
+                </section>
+            </widgets>
+        </section>
+    </screen>
+
+    <!-- ================ 결재 대기 목록 ================ -->
+    <screen name="FindFrApproval">
+        <section>
+            <actions>
+                <set field="titleProperty" value="FrAcctApprovalPending"/>
+                <set field="headerItem" value="FrApproval"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonFrAcctDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet title="${uiLabelMap.FrAcctApprovalPending}">
+                            <include-form name="ListFrApprovalPending" location="component://fracct/widget/FrSlipForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+</screens>

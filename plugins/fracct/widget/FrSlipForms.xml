@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 이소라 / 2018.05.21 -->
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://ofbiz.apache.org/Widget-Form" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Form http://ofbiz.apache.org/dtds/widget-form.xsd">
+
+    <!-- ================ 전표 검색 ================ -->
+    <form name="FindFrSlipOptions" type="single" target="FindFrSlip" default-entity-name="FrSlip"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="noConditionFind"><hidden value="Y"/></field>
+        <field name="slipId" title="${uiLabelMap.FrAcctSlipId}"><text-find ignore-case="true"/></field>
+        <field name="slipTypeEnumId" title="${uiLabelMap.FrAcctSlipType}">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="Enumeration" key-field-name="enumId" description="${description}">
+                    <entity-constraint name="enumTypeId" value="FR_SLIP_TYPE"/>
+                    <entity-order-by field-name="sequenceId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="statusId" title="${uiLabelMap.CommonStatus}">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="StatusItem" description="${description}">
+                    <entity-constraint name="statusTypeId" value="FR_SLIP_STATUS"/>
+                    <entity-order-by field-name="sequenceId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="deptPartyId" title="${uiLabelMap.FrAcctDept}"><lookup target-form-name="LookupPartyName"/></field>
+        <field name="slipDate" title="${uiLabelMap.FrAcctSlipDate}"><date-find type="date"/></field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+
+    <form name="ListFrSlip" type="list" list-name="listIt" paginate-target="FindFrSlip"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <set field="parameters.sortField" from-field="parameters.sortField" default-value="-slipDate"/>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="FrSlip"/>
+                <field-map field-name="orderBy" from-field="parameters.sortField"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="slipId" title="${uiLabelMap.FrAcctSlipId}" widget-style="buttontext" sort-field="true">
+            <hyperlink description="${slipId}" target="ViewFrSlip" also-hidden="false">
+                <parameter param-name="slipId"/>
+            </hyperlink>
+        </field>
+        <field name="slipTypeEnumId" title="${uiLabelMap.FrAcctSlipType}"><display-entity entity-name="Enumeration" key-field-name="enumId"/></field>
+        <field name="slipDate" title="${uiLabelMap.FrAcctSlipDate}" sort-field="true"><display type="date"/></field>
+        <field name="deptPartyId" title="${uiLabelMap.FrAcctDept}">
+            <display-entity entity-name="PartyNameView" key-field-name="partyId" description="${groupName}${lastName}${firstName}"/>
+        </field>
+        <field name="amount" title="${uiLabelMap.FrAcctSlipAmount}" sort-field="true"><display type="currency" currency="KRW"/></field>
+        <field name="statusId" title="${uiLabelMap.CommonStatus}"><display-entity entity-name="StatusItem"/></field>
+        <field name="apprLevelEnumId" title="${uiLabelMap.FrAcctApprLevel}"><display-entity entity-name="Enumeration" key-field-name="enumId"/></field>
+        <field name="description" title="${uiLabelMap.FrAcctSlipDescription}"><display/></field>
+        <field name="acctgTransId" title="${uiLabelMap.FrAcctAcctgTransId}"><display/></field>
+        <on-event-update-area event-type="paginate" area-id="search-results" area-target="FrSlipSearchResults"/>
+    </form>
+
+    <!-- ================ 전표 헤더 ================ -->
+    <form name="EditFrSlip" type="single" target="updateFrSlip" default-map-name="frSlip"
+        header-row-style="header-row" default-table-style="basic-table">
+        <alt-target use-when="frSlip==null" target="createFrSlip"/>
+        <field use-when="frSlip!=null" name="slipId" title="${uiLabelMap.FrAcctSlipId}"><display/></field>
+        <field name="slipTypeEnumId" title="${uiLabelMap.FrAcctSlipType}">
+            <drop-down allow-empty="false">
+                <entity-options entity-name="Enumeration" key-field-name="enumId" description="${description}">
+                    <entity-constraint name="enumTypeId" value="FR_SLIP_TYPE"/>
+                    <entity-order-by field-name="sequenceId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="slipDate" title="${uiLabelMap.FrAcctSlipDate}" required-field="true"><date-time type="date"/></field>
+        <field name="deptPartyId" title="${uiLabelMap.FrAcctDept}" required-field="true"><lookup target-form-name="LookupPartyName"/></field>
+        <field name="description" title="${uiLabelMap.FrAcctSlipDescription}"><text size="60" maxlength="255"/></field>
+        <field use-when="frSlip!=null" name="statusId" title="${uiLabelMap.CommonStatus}"><display-entity entity-name="StatusItem"/></field>
+        <field use-when="frSlip!=null" name="amount" title="${uiLabelMap.FrAcctSlipAmount}"><display type="currency" currency="KRW"/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonCreate}" use-when="frSlip==null"><submit button-type="button"/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonUpdate}" use-when="frSlip!=null"><submit button-type="button"/></field>
+    </form>
+
+    <form name="FrSlipHeader" type="single" default-map-name="frSlip"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="slipId" title="${uiLabelMap.FrAcctSlipId}" position="1"><display/></field>
+        <field name="slipTypeEnumId" title="${uiLabelMap.FrAcctSlipType}" position="2"><display-entity entity-name="Enumeration" key-field-name="enumId"/></field>
+        <field name="slipDate" title="${uiLabelMap.FrAcctSlipDate}" position="1"><display type="date"/></field>
+        <field name="deptPartyId" title="${uiLabelMap.FrAcctDept}" position="2">
+            <display-entity entity-name="PartyNameView" key-field-name="partyId" description="${groupName}${lastName}${firstName} [${partyId}]"/>
+        </field>
+        <field name="amount" title="${uiLabelMap.FrAcctSlipAmount}" position="1"><display type="currency" currency="KRW"/></field>
+        <field name="statusId" title="${uiLabelMap.CommonStatus}" position="2"><display-entity entity-name="StatusItem"/></field>
+        <field name="apprLevelEnumId" title="${uiLabelMap.FrAcctApprLevel}" position="1"><display-entity entity-name="Enumeration" key-field-name="enumId"/></field>
+        <field name="apprStepEnumId" title="${uiLabelMap.FrAcctApprStep}" position="2"><display-entity entity-name="Enumeration" key-field-name="enumId"/></field>
+        <field name="createdByUserLogin" title="${uiLabelMap.FrAcctCreatedBy}" position="1"><display/></field>
+        <field name="acctgTransId" title="${uiLabelMap.FrAcctAcctgTransId}" position="2">
+            <hyperlink description="${frSlip.acctgTransId}" target="/accounting/control/EditAcctgTrans" target-type="inter-app" also-hidden="false">
+                <parameter param-name="acctgTransId" from-field="frSlip.acctgTransId"/>
+                <parameter param-name="organizationPartyId" value="FR_COMPANY"/>
+            </hyperlink>
+        </field>
+        <field name="description" title="${uiLabelMap.FrAcctSlipDescription}"><display/></field>
+    </form>
+
+    <!-- ================ 전표 항목 ================ -->
+    <form name="ListFrSlipItems" type="list" list-name="slipItems"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <field name="slipId"><hidden/></field>
+        <field name="slipItemSeqId" title="${uiLabelMap.FrAcctSeq}"><display/></field>
+        <field name="glAccountId" title="${uiLabelMap.FrAcctGlAccount}">
+            <display-entity entity-name="GlAccount" description="${accountName} [${glAccountId}]"/>
+        </field>
+        <field name="debitCreditFlag" title="${uiLabelMap.FrAcctDebitCredit}">
+            <display description="${groovy: debitCreditFlag == 'D' ? uiLabelMap.FrAcctDebit : uiLabelMap.FrAcctCredit}"/>
+        </field>
+        <field name="amount" title="${uiLabelMap.CommonAmount}"><display type="currency" currency="KRW"/></field>
+        <field name="partyId" title="${uiLabelMap.FrAcctVendor}">
+            <display-entity entity-name="PartyNameView" key-field-name="partyId" description="${groupName}${lastName}${firstName}"/>
+        </field>
+        <field name="comments" title="${uiLabelMap.FrAcctMemo}"><display/></field>
+        <field name="deleteLink" title=" " widget-style="buttontext">
+            <hyperlink description="${uiLabelMap.CommonDelete}" target="deleteFrSlipItem" link-type="hidden-form" also-hidden="false">
+                <parameter param-name="slipId"/>
+                <parameter param-name="slipItemSeqId"/>
+            </hyperlink>
+        </field>
+    </form>
+
+    <!-- 상신 이후(조회 전용) -->
+    <form name="ListFrSlipItemsView" extends="ListFrSlipItems" target="">
+        <field name="deleteLink"><ignored/></field>
+    </form>
+
+    <form name="AddFrSlipItem" type="single" target="createFrSlipItem"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="slipId"><hidden value="${frSlip.slipId}"/></field>
+        <field name="glAccountId" title="${uiLabelMap.FrAcctGlAccount}" required-field="true"><lookup target-form-name="LookupGlAccount"/></field>
+        <field name="debitCreditFlag" title="${uiLabelMap.FrAcctDebitCredit}">
+            <drop-down allow-empty="false">
+                <option key="D" description="${uiLabelMap.FrAcctDebit}"/>
+                <option key="C" description="${uiLabelMap.FrAcctCredit}"/>
+            </drop-down>
+        </field>
+        <field name="amount" title="${uiLabelMap.CommonAmount}" required-field="true"><text size="15"/></field>
+        <field name="partyId" title="${uiLabelMap.FrAcctVendor}"><lookup target-form-name="LookupPartyName"/></field>
+        <field name="comments" title="${uiLabelMap.FrAcctMemo}"><text size="60" maxlength="255"/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonAdd}"><submit button-type="button"/></field>
+    </form>
+
+    <!-- ================ 결재 ================ -->
+    <form name="ListFrApprHist" type="list" list-name="apprHists"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table">
+        <field name="apprSeqId" title="${uiLabelMap.FrAcctSeq}"><display/></field>
+        <field name="apprActionId" title="${uiLabelMap.FrAcctApprAction}">
+            <display description="${groovy: apprActionId == 'REQUEST' ? uiLabelMap.FrAcctApprActionRequest : (apprActionId == 'APPROVE' ? uiLabelMap.FrAcctApprActionApprove : uiLabelMap.FrAcctApprActionReject)}"/>
+        </field>
+        <field name="apprLevelEnumId" title="${uiLabelMap.FrAcctApprLevel}"><display-entity entity-name="Enumeration" key-field-name="enumId"/></field>
+        <field name="apprUserLoginId" title="${uiLabelMap.FrAcctApprUser}"><display/></field>
+        <field name="apprDate" title="${uiLabelMap.FrAcctApprDate}"><display type="date-time"/></field>
+        <field name="slipAmount" title="${uiLabelMap.FrAcctSlipAmount}"><display type="currency" currency="KRW"/></field>
+        <field name="comments" title="${uiLabelMap.FrAcctApprComments}"><display/></field>
+    </form>
+
+    <form name="RequestFrSlip" type="single" target="requestFrSlip"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="slipId"><hidden value="${frSlip.slipId}"/></field>
+        <field name="comments" title="${uiLabelMap.FrAcctApprComments}"><textarea cols="60" rows="2"/></field>
+        <field name="submitButton" title="${uiLabelMap.FrAcctRequestSlip}"><submit button-type="button"/></field>
+    </form>
+
+    <form name="ApproveFrSlip" type="single" target="approveFrSlip"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="slipId"><hidden value="${frSlip.slipId}"/></field>
+        <field name="comments" title="${uiLabelMap.FrAcctApprComments}"><textarea cols="40" rows="2"/></field>
+        <field name="submitButton" title="${uiLabelMap.FrAcctApproveSlip}"><submit button-type="button"/></field>
+    </form>
+
+    <form name="RejectFrSlip" type="single" target="rejectFrSlip"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="slipId"><hidden value="${frSlip.slipId}"/></field>
+        <field name="comments" title="${uiLabelMap.FrAcctRejectReason}" required-field="true"><textarea cols="40" rows="2"/></field>
+        <field name="submitButton" title="${uiLabelMap.FrAcctRejectSlip}"><submit button-type="button"/></field>
+    </form>
+
+    <form name="ListFrApprovalPending" type="list" list-name="pendingSlips" paginate-target="FindFrApproval"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <entity-condition entity-name="FrSlip" list="pendingSlips">
+                <condition-expr field-name="statusId" value="FRSLIP_REQUESTED"/>
+                <order-by field-name="requestedDate"/>
+            </entity-condition>
+        </actions>
+        <field name="slipId" title="${uiLabelMap.FrAcctSlipId}" widget-style="buttontext">
+            <hyperlink description="${slipId}" target="ViewFrSlip" also-hidden="false">
+                <parameter param-name="slipId"/>
+            </hyperlink>
+        </field>
+        <field name="slipDate" title="${uiLabelMap.FrAcctSlipDate}"><display type="date"/></field>
+        <field name="deptPartyId" title="${uiLabelMap.FrAcctDept}">
+            <display-entity entity-name="PartyNameView" key-field-name="partyId" description="${groupName}${lastName}${firstName}"/>
+        </field>
+        <field name="amount" title="${uiLabelMap.FrAcctSlipAmount}"><display type="currency" currency="KRW"/></field>
+        <field name="apprLevelEnumId" title="${uiLabelMap.FrAcctApprLevel}"><display-entity entity-name="Enumeration" key-field-name="enumId"/></field>
+        <field name="apprStepEnumId" title="${uiLabelMap.FrAcctApprStep}"><display-entity entity-name="Enumeration" key-field-name="enumId"/></field>
+        <field name="description" title="${uiLabelMap.FrAcctSlipDescription}"><display/></field>
+        <field name="requestedDate" title="${uiLabelMap.FrAcctRequestedDate}"><display type="date-time"/></field>
+    </form>
+</forms>
