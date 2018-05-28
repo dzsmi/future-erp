@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 이소라 / 2018.05.28 -->
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://ofbiz.apache.org/Widget-Screen" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Screen http://ofbiz.apache.org/dtds/widget-screen.xsd">
+    <screen name="FindFrEmplInfo">
+        <section>
+            <actions>
+                <set field="titleProperty" value="FrHrFindEmplInfo"/>
+                <set field="headerItem" value="EmplInfo"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonFrHrDecorator" location="component://frhr/widget/CommonScreens.xml">
+                    <decorator-section name="body">
+                        <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="menu-bar">
+                                <section>
+                                    <condition><if-has-permission permission="FRHR" action="_ADMIN"/></condition>
+                                    <widgets>
+                                        <container style="button-bar">
+                                            <link target="NewFrEmployee" text="${uiLabelMap.FrHrNewEmployee}" style="buttontext create"/>
+                                            <link target="EditFrEmplInfo" text="${uiLabelMap.FrHrRegisterEmplInfo}" style="buttontext create"/>
+                                        </container>
+                                    </widgets>
+                                </section>
+                            </decorator-section>
+                            <decorator-section name="search-options">
+                                <include-form name="FindFrEmplInfo" location="component://frhr/widget/EmplInfoForms.xml"/>
+                            </decorator-section>
+                            <decorator-section name="search-results">
+                                <include-form name="ListFrEmplInfo" location="component://frhr/widget/EmplInfoForms.xml"/>
+                            </decorator-section>
+                        </decorator-screen>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <screen name="EditFrEmplInfo">
+        <section>
+            <actions>
+                <set field="titleProperty" value="FrHrEditEmplInfo"/>
+                <set field="headerItem" value="EmplInfo"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <entity-one entity-name="FrEmplInfo" value-field="emplInfo"/>
+                <entity-one entity-name="Person" value-field="person"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonFrHrDecorator" location="component://frhr/widget/CommonScreens.xml">
+                    <decorator-section name="body">
+                        <screenlet title="${uiLabelMap.FrHrEmplInfo} ${person.lastName}${person.firstName} [${partyId}]">
+                            <include-form name="EditFrEmplInfo" location="component://frhr/widget/EmplInfoForms.xml"/>
+                        </screenlet>
+                        <section>
+                            <condition><not><if-empty field="emplInfo"/></not></condition>
+                            <widgets>
+                                <container style="button-bar">
+                                    <link target="FindFrPayroll" text="${uiLabelMap.FrHrPayrollList}" style="buttontext">
+                                        <parameter param-name="partyId"/>
+                                        <parameter param-name="noConditionFind" value="Y"/>
+                                    </link>
+                                    <link target="FindFrAttendance" text="${uiLabelMap.FrHrAttendance}" style="buttontext">
+                                        <parameter param-name="partyId"/>
+                                        <parameter param-name="noConditionFind" value="Y"/>
+                                    </link>
+                                    <link target="FrLeaveBalance" text="${uiLabelMap.FrHrLeaveBalance}" style="buttontext">
+                                        <parameter param-name="partyId"/>
+                                    </link>
+                                    <link target="/humanres/control/EmployeeProfile" url-mode="inter-app" text="${uiLabelMap.HumanResEmployeeProfile}" style="buttontext">
+                                        <parameter param-name="partyId"/>
+                                    </link>
+                                </container>
+                            </widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <screen name="NewFrEmployee">
+        <section>
+            <actions>
+                <set field="titleProperty" value="FrHrNewEmployee"/>
+                <set field="headerItem" value="EmplInfo"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonFrHrDecorator" location="component://frhr/widget/CommonScreens.xml">
+                    <decorator-section name="body">
+                        <screenlet title="${uiLabelMap.FrHrNewEmployee}">
+                            <label style="h3" text="${uiLabelMap.FrHrNewHireNotice}"/>
+                            <include-form name="NewFrEmployee" location="component://frhr/widget/EmplInfoForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+</screens>
