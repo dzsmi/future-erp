@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 이소라 / 2018.06.11 -->
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://ofbiz.apache.org/Widget-Screen" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Screen http://ofbiz.apache.org/dtds/widget-screen.xsd">
+
+    <!-- 결산 마감 관리: 연도별 12개월 마감 현황 + 마감/해제 -->
+    <screen name="FindFrClosePeriod">
+        <section>
+            <actions>
+                <set field="titleProperty" value="FrAcctClosePeriod"/>
+                <set field="headerItem" value="FrClosePeriod"/>
+                <script location="component://fracct/groovyScripts/period/FrClosePeriodList.groovy"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonFrAcctAdminDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet title="${uiLabelMap.FrAcctClosePeriodSearch}">
+                            <include-form name="FindFrClosePeriodOptions" location="component://fracct/widget/FrPeriodForms.xml"/>
+                        </screenlet>
+                        <screenlet title="${uiLabelMap.FrAcctClosePeriodList} (${closeYear})">
+                            <include-form name="ListFrClosePeriod" location="component://fracct/widget/FrPeriodForms.xml"/>
+                        </screenlet>
+                        <screenlet title="${uiLabelMap.FrAcctCloseMonth}">
+                            <include-form name="CloseFrPeriod" location="component://fracct/widget/FrPeriodForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+</screens>
