@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 이소라 / 2018.06.11 -->
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://ofbiz.apache.org/Widget-Form" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Form http://ofbiz.apache.org/dtds/widget-form.xsd">
+    <form name="FindFrPayroll" type="single" target="FindFrPayroll" default-entity-name="FrPayroll"
+            header-row-style="header-row" default-table-style="basic-table">
+        <field name="noConditionFind"><hidden value="Y"/></field>
+        <field name="payYearMonth" title="${uiLabelMap.FrHrPayYearMonth}" tooltip="yyyyMM"><text-find default-option="equals" hide-options="true"/></field>
+        <field name="partyId" title="${uiLabelMap.FrHrEmployee}"><lookup target-form-name="LookupPerson"/></field>
+        <field name="statusId" title="${uiLabelMap.CommonStatus}">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="StatusItem" key-field-name="statusId" description="${description}">
+                    <entity-constraint name="statusTypeId" value="FR_PAYROLL_STATUS"/>
+                    <entity-order-by field-name="sequenceId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+
+    <form name="ListFrPayroll" type="list" list-name="listIt" paginate-target="FindFrPayroll" default-entity-name="FrPayroll"
+            odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="FrPayroll"/>
+                <field-map field-name="orderBy" value="-payYearMonth|partyId"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="payYearMonth" title="${uiLabelMap.FrHrPayYearMonth}"><display/></field>
+        <field name="partyId" title="${uiLabelMap.FrHrEmployee}">
+            <display-entity entity-name="Person" description="${lastName}${firstName}"/>
+        </field>
+        <field name="baseAmount" title="${uiLabelMap.FrHrBaseAmount}"><display type="currency" currency="KRW"/></field>
+        <field name="overtimeAmount" title="${uiLabelMap.FrHrOvertimeAmount}"><display type="currency" currency="KRW"/></field>
+        <field name="bonusAmount" title="${uiLabelMap.FrHrBonusAmount}"><display type="currency" currency="KRW"/></field>
+        <field name="grossAmount" title="${uiLabelMap.FrHrGrossAmount}"><display type="currency" currency="KRW"/></field>
+        <field name="deductionAmount" title="${uiLabelMap.FrHrDeductionAmount}"><display type="currency" currency="KRW"/></field>
+        <field name="netAmount" title="${uiLabelMap.FrHrNetAmount}"><display type="currency" currency="KRW"/></field>
+        <field name="statusId" title="${uiLabelMap.CommonStatus}"><display-entity entity-name="StatusItem"/></field>
+        <field name="paySlipLink" title=" " widget-style="buttontext">
+            <hyperlink description="${uiLabelMap.FrHrPaySlip}" target="ViewFrPaySlip">
+                <parameter param-name="payrollId"/>
+            </hyperlink>
+        </field>
+        <field name="confirmLink" title=" " use-when="&quot;FRPAY_DRAFT&quot;.equals(statusId)" widget-style="buttontext">
+            <hyperlink description="${uiLabelMap.FrHrConfirm}" target="updateFrPayrollStatus" link-type="hidden-form">
+                <parameter param-name="payrollId"/>
+                <parameter param-name="statusId" value="FRPAY_CONFIRMED"/>
+            </hyperlink>
+        </field>
+        <field name="payLink" title=" " use-when="&quot;FRPAY_CONFIRMED&quot;.equals(statusId)" widget-style="buttontext">
+            <hyperlink description="${uiLabelMap.FrHrPaid}" target="updateFrPayrollStatus" link-type="hidden-form">
+                <parameter param-name="payrollId"/>
+                <parameter param-name="statusId" value="FRPAY_PAID"/>
+            </hyperlink>
+        </field>
+    </form>
+
+    <form name="FrPayrollCalc" type="single" target="calcFrMonthlyPayroll"
+            header-row-style="header-row" default-table-style="basic-table">
+        <field name="payYearMonth" title="${uiLabelMap.FrHrPayYearMonth}" tooltip="yyyyMM" required-field="true"><text size="6" maxlength="6" default-value="${defaultPayYearMonth}"/></field>
+        <field name="bonusPercent" title="${uiLabelMap.FrHrBonusPercent}" tooltip="${uiLabelMap.FrHrBonusPercentTooltip}"><text size="5" default-value="0"/></field>
+        <field name="submitButton" title="${uiLabelMap.FrHrPayrollCalcRun}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+</forms>
