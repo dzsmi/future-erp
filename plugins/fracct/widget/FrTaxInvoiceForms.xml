@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 이소라 / 2018.06.25 -->
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://ofbiz.apache.org/Widget-Form" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Form http://ofbiz.apache.org/dtds/widget-form.xsd">
+
+    <form name="FindFrTaxInvoiceOptions" type="single" target="FindFrTaxInvoice" default-entity-name="FrTaxInvoice"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="noConditionFind"><hidden value="Y"/></field>
+        <field name="taxInvoiceId" title="${uiLabelMap.FrAcctTaxInvoiceId}"><text-find ignore-case="true"/></field>
+        <field name="taxInvoiceTypeEnumId" title="${uiLabelMap.FrAcctTaxInvoiceType}">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="Enumeration" key-field-name="enumId" description="${description}">
+                    <entity-constraint name="enumTypeId" value="FR_TAXINV_TYPE"/>
+                    <entity-order-by field-name="sequenceId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="partyId" title="${uiLabelMap.FrAcctVendor}"><lookup target-form-name="LookupPartyName"/></field>
+        <field name="issueDate" title="${uiLabelMap.FrAcctIssueDate}"><date-find type="date"/></field>
+        <field name="statusId" title="${uiLabelMap.CommonStatus}">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="StatusItem" description="${description}">
+                    <entity-constraint name="statusTypeId" value="FR_TAXINV_STATUS"/>
+                    <entity-order-by field-name="sequenceId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+
+    <form name="ListFrTaxInvoice" type="list" list-name="listIt" paginate-target="FindFrTaxInvoice"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <set field="parameters.sortField" from-field="parameters.sortField" default-value="-issueDate"/>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="FrTaxInvoice"/>
+                <field-map field-name="orderBy" from-field="parameters.sortField"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="taxInvoiceId" title="${uiLabelMap.FrAcctTaxInvoiceId}" widget-style="buttontext" sort-field="true">
+            <hyperlink description="${taxInvoiceId}" target="ViewFrTaxInvoice" also-hidden="false">
+                <parameter param-name="taxInvoiceId"/>
+            </hyperlink>
+        </field>
+        <field name="taxInvoiceTypeEnumId" title="${uiLabelMap.FrAcctTaxInvoiceType}"><display-entity entity-name="Enumeration" key-field-name="enumId"/></field>
+        <field name="taxInvoiceNo" title="${uiLabelMap.FrAcctTaxInvoiceNo}"><display/></field>
+        <field name="partyId" title="${uiLabelMap.FrAcctVendor}">
+            <display-entity entity-name="PartyNameView" key-field-name="partyId" description="${groupName}${lastName}${firstName}"/>
+        </field>
+        <field name="issueDate" title="${uiLabelMap.FrAcctIssueDate}" sort-field="true"><display type="date"/></field>
+        <field name="supplyAmount" title="${uiLabelMap.FrAcctSupplyAmount}"><display type="currency" currency="KRW"/></field>
+        <field name="vatAmount" title="${uiLabelMap.FrAcctVatAmount}"><display type="currency" currency="KRW"/></field>
+        <field name="totalAmount" title="${uiLabelMap.FrAcctTotalAmount}"><display type="currency" currency="KRW"/></field>
+        <field name="statusId" title="${uiLabelMap.CommonStatus}"><display-entity entity-name="StatusItem"/></field>
+        <on-event-update-area event-type="paginate" area-id="search-results" area-target="FrTaxInvoiceSearchResults"/>
+    </form>
+
+    <!-- 부가세/합계는 입력받지 않음 (서비스에서 공급가액 기준 계산) -->
+    <form name="EditFrTaxInvoice" type="single" target="createFrTaxInvoice"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="taxInvoiceTypeEnumId" title="${uiLabelMap.FrAcctTaxInvoiceType}">
+            <drop-down allow-empty="false">
+                <entity-options entity-name="Enumeration" key-field-name="enumId" description="${description}">
+                    <entity-constraint name="enumTypeId" value="FR_TAXINV_TYPE"/>
+                    <entity-order-by field-name="sequenceId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="taxInvoiceNo" title="${uiLabelMap.FrAcctTaxInvoiceNo}"><text size="30" maxlength="60"/></field>
+        <field name="partyId" title="${uiLabelMap.FrAcctVendor}" required-field="true"><lookup target-form-name="LookupPartyName"/></field>
+        <field name="issueDate" title="${uiLabelMap.FrAcctIssueDate}" required-field="true"><date-time type="date"/></field>
+        <field name="supplyAmount" title="${uiLabelMap.FrAcctSupplyAmount}" required-field="true"><text size="15"/></field>
+        <field name="description" title="${uiLabelMap.CommonDescription}"><text size="60" maxlength="255"/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonCreate}"><submit button-type="button"/></field>
+    </form>
+
+    <form name="FrTaxInvoiceHeader" type="single" default-map-name="taxInvoice"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="taxInvoiceId" title="${uiLabelMap.FrAcctTaxInvoiceId}" position="1"><display/></field>
+        <field name="taxInvoiceTypeEnumId" title="${uiLabelMap.FrAcctTaxInvoiceType}" position="2"><display-entity entity-name="Enumeration" key-field-name="enumId"/></field>
+        <field name="taxInvoiceNo" title="${uiLabelMap.FrAcctTaxInvoiceNo}" position="1"><display/></field>
+        <field name="statusId" title="${uiLabelMap.CommonStatus}" position="2"><display-entity entity-name="StatusItem"/></field>
+        <field name="partyId" title="${uiLabelMap.FrAcctVendor}" position="1">
+            <display-entity entity-name="PartyNameView" key-field-name="partyId" description="${groupName}${lastName}${firstName} [${partyId}]"/>
+        </field>
+        <field name="issueDate" title="${uiLabelMap.FrAcctIssueDate}" position="2"><display type="date"/></field>
+        <field name="supplyAmount" title="${uiLabelMap.FrAcctSupplyAmount}" position="1"><display type="currency" currency="KRW"/></field>
+        <field name="vatAmount" title="${uiLabelMap.FrAcctVatAmount}" position="2"><display type="currency" currency="KRW"/></field>
+        <field name="totalAmount" title="${uiLabelMap.FrAcctTotalAmount}" position="1"><display type="currency" currency="KRW"/></field>
+        <field name="createdByUserLogin" title="${uiLabelMap.FrAcctCreatedBy}" position="2"><display/></field>
+        <field name="description" title="${uiLabelMap.CommonDescription}"><display/></field>
+    </form>
+
+    <form name="ListFrTaxInvoicePaymentPlan" type="list" list-name="paymentPlans"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table">
+        <field name="paymentPlanId" title="${uiLabelMap.FrAcctPaymentPlanId}"><display/></field>
+        <field name="dueDate" title="${uiLabelMap.FrAcctDueDate}"><display type="date"/></field>
+        <field name="amount" title="${uiLabelMap.CommonAmount}"><display type="currency" currency="KRW"/></field>
+        <field name="statusId" title="${uiLabelMap.CommonStatus}"><display-entity entity-name="StatusItem"/></field>
+        <field name="paidDate" title="${uiLabelMap.FrAcctPaidDate}"><display type="date-time"/></field>
+    </form>
+</forms>

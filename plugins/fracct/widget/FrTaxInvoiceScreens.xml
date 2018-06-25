@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 이소라 / 2018.06.25 -->
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://ofbiz.apache.org/Widget-Screen" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Screen http://ofbiz.apache.org/dtds/widget-screen.xsd">
+
+    <screen name="FindFrTaxInvoice">
+        <section>
+            <actions>
+                <set field="titleProperty" value="FrAcctTaxInvoice"/>
+                <set field="headerItem" value="FrTaxInvoice"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonFrAcctAdminDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="menu-bar">
+                                <container style="button-bar">
+                                    <link target="EditFrTaxInvoice" text="${uiLabelMap.FrAcctNewTaxInvoice}" style="buttontext create"/>
+                                </container>
+                            </decorator-section>
+                            <decorator-section name="search-options">
+                                <include-form name="FindFrTaxInvoiceOptions" location="component://fracct/widget/FrTaxInvoiceForms.xml"/>
+                            </decorator-section>
+                            <decorator-section name="search-results">
+                                <include-screen name="FrTaxInvoiceSearchResults"/>
+                            </decorator-section>
+                        </decorator-screen>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <screen name="FrTaxInvoiceSearchResults">
+        <section>
+            <actions>
+                <property-map resource="FrAcctUiLabels" map-name="uiLabelMap" global="true"/>
+                <property-map resource="CommonUiLabels" map-name="uiLabelMap" global="true"/>
+            </actions>
+            <widgets>
+                <include-form name="ListFrTaxInvoice" location="component://fracct/widget/FrTaxInvoiceForms.xml"/>
+            </widgets>
+        </section>
+    </screen>
+
+    <!-- 수기 등록 (등록 후 수정 불가 - 잘못 등록 시 취소 후 재등록) -->
+    <screen name="EditFrTaxInvoice">
+        <section>
+            <actions>
+                <set field="titleProperty" value="FrAcctNewTaxInvoice"/>
+                <set field="headerItem" value="FrTaxInvoice"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonFrAcctAdminDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet title="${uiLabelMap.FrAcctNewTaxInvoice}">
+                            <include-form name="EditFrTaxInvoice" location="component://fracct/widget/FrTaxInvoiceForms.xml"/>
+                        </screenlet>
+                        <label style="h3" text="${uiLabelMap.FrAcctTaxInvoiceVatNotice}"/>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <screen name="ViewFrTaxInvoice">
+        <section>
+            <actions>
+                <set field="titleProperty" value="FrAcctTaxInvoice"/>
+                <set field="headerItem" value="FrTaxInvoice"/>
+                <set field="taxInvoiceId" from-field="parameters.taxInvoiceId"/>
+                <entity-one entity-name="FrTaxInvoice" value-field="taxInvoice"/>
+                <entity-and entity-name="FrPaymentPlan" list="paymentPlans">
+                    <field-map field-name="taxInvoiceId" from-field="taxInvoiceId"/>
+                    <order-by field-name="dueDate"/>
+                </entity-and>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonFrAcctAdminDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <section>
+                            <condition>
+                                <not><if-empty field="taxInvoice"/></not>
+                            </condition>
+                            <widgets>
+                                <section>
+                                    <condition>
+                                        <if-compare field="taxInvoice.statusId" operator="equals" value="FRTI_REGISTERED"/>
+                                    </condition>
+                                    <widgets>
+                                        <container style="button-bar">
+                                            <link target="cancelFrTaxInvoice" text="${uiLabelMap.FrAcctCancelTaxInvoice}" style="buttontext"
+                                                link-type="hidden-form" request-confirmation="true" confirmation-message="${uiLabelMap.FrAcctCancelTaxInvoiceConfirm}">
+                                                <parameter param-name="taxInvoiceId" from-field="taxInvoice.taxInvoiceId"/>
+                                            </link>
+                                        </container>
+                                    </widgets>
+                                </section>
+                                <screenlet title="${uiLabelMap.FrAcctTaxInvoice} [${taxInvoice.taxInvoiceId}]">
+                                    <include-form name="FrTaxInvoiceHeader" location="component://fracct/widget/FrTaxInvoiceForms.xml"/>
+                                </screenlet>
+                                <screenlet title="${uiLabelMap.FrAcctPaymentPlan}">
+                                    <include-form name="ListFrTaxInvoicePaymentPlan" location="component://fracct/widget/FrTaxInvoiceForms.xml"/>
+                                </screenlet>
+                            </widgets>
+                            <fail-widgets>
+                                <label style="h3">${uiLabelMap.FrAcctTaxInvoiceNotFound}</label>
+                            </fail-widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+</screens>
