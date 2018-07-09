@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 박준영 / 2018.07.09 -->
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://ofbiz.apache.org/Widget-Form" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Form http://ofbiz.apache.org/dtds/widget-form.xsd">
+
+    <!-- ================ 거래처 지급조건 ================ -->
+    <form name="FindFrVendorPayTermOptions" type="single" target="FindFrVendorPayTerm" default-entity-name="FrVendorPayTerm"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="noConditionFind"><hidden value="Y"/></field>
+        <field name="partyId" title="${uiLabelMap.FrAcctVendor}"><lookup target-form-name="LookupPartyName"/></field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+
+    <form name="ListFrVendorPayTerm" type="list" list-name="listIt" paginate-target="FindFrVendorPayTerm"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="FrVendorPayTerm"/>
+                <field-map field-name="orderBy" value="partyId"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="partyId" title="${uiLabelMap.FrAcctVendor}" widget-style="buttontext">
+            <hyperlink description="${partyId}" target="EditFrVendorPayTerm" also-hidden="false">
+                <parameter param-name="partyId"/>
+            </hyperlink>
+        </field>
+        <field name="vendorName" title="${uiLabelMap.FrAcctVendorName}" entry-name="partyId">
+            <display-entity entity-name="PartyNameView" key-field-name="partyId" description="${groupName}${lastName}${firstName}"/>
+        </field>
+        <field name="payDays" title="${uiLabelMap.FrAcctPayDays}"><display/></field>
+        <field name="comments" title="${uiLabelMap.CommonComments}"><display/></field>
+        <field name="deleteLink" title=" " widget-style="buttontext">
+            <hyperlink description="${uiLabelMap.CommonDelete}" target="deleteFrVendorPayTerm" link-type="hidden-form" also-hidden="false"
+                request-confirmation="true">
+                <parameter param-name="partyId"/>
+            </hyperlink>
+        </field>
+    </form>
+
+    <form name="EditFrVendorPayTerm" type="single" target="updateFrVendorPayTerm" default-map-name="vendorPayTerm"
+        header-row-style="header-row" default-table-style="basic-table">
+        <alt-target use-when="vendorPayTerm==null" target="createFrVendorPayTerm"/>
+        <field use-when="vendorPayTerm!=null" name="partyId" title="${uiLabelMap.FrAcctVendor}"><display/></field>
+        <field use-when="vendorPayTerm==null" name="partyId" title="${uiLabelMap.FrAcctVendor}" required-field="true"><lookup target-form-name="LookupPartyName"/></field>
+        <field name="payDays" title="${uiLabelMap.FrAcctPayDays}" tooltip="${uiLabelMap.FrAcctPayDaysTooltip}"><text size="5"/></field>
+        <field name="comments" title="${uiLabelMap.CommonComments}"><text size="60" maxlength="255"/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonCreate}" use-when="vendorPayTerm==null"><submit button-type="button"/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonUpdate}" use-when="vendorPayTerm!=null"><submit button-type="button"/></field>
+    </form>
+
+    <!-- ================ 지급계획 ================ -->
+    <form name="FindFrPaymentPlanOptions" type="single" target="FindFrPaymentPlan" default-entity-name="FrPaymentPlan"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="noConditionFind"><hidden value="Y"/></field>
+        <field name="paymentPlanId" title="${uiLabelMap.FrAcctPaymentPlanId}"><text-find ignore-case="true"/></field>
+        <field name="taxInvoiceId" title="${uiLabelMap.FrAcctTaxInvoiceId}"><text-find ignore-case="true"/></field>
+        <field name="partyId" title="${uiLabelMap.FrAcctVendor}"><lookup target-form-name="LookupPartyName"/></field>
+        <field name="dueDate" title="${uiLabelMap.FrAcctDueDate}"><date-find type="date"/></field>
+        <field name="statusId" title="${uiLabelMap.CommonStatus}">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="StatusItem" description="${description}">
+                    <entity-constraint name="statusTypeId" value="FR_PAYPLAN_STATUS"/>
+                    <entity-order-by field-name="sequenceId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+
+    <form name="ListFrPaymentPlan" type="list" list-name="listIt" paginate-target="FindFrPaymentPlan"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="FrPaymentPlan"/>
+                <field-map field-name="orderBy" value="dueDate"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="paymentPlanId" title="${uiLabelMap.FrAcctPaymentPlanId}"><display/></field>
+        <field name="taxInvoiceId" title="${uiLabelMap.FrAcctTaxInvoiceId}" widget-style="buttontext">
+            <hyperlink description="${taxInvoiceId}" target="ViewFrTaxInvoice" also-hidden="false">
+                <parameter param-name="taxInvoiceId"/>
+            </hyperlink>
+        </field>
+        <field name="partyId" title="${uiLabelMap.FrAcctVendor}">
+            <display-entity entity-name="PartyNameView" key-field-name="partyId" description="${groupName}${lastName}${firstName}"/>
+        </field>
+        <field name="dueDate" title="${uiLabelMap.FrAcctDueDate}"><display type="date"/></field>
+        <field name="amount" title="${uiLabelMap.CommonAmount}"><display type="currency" currency="KRW"/></field>
+        <field name="statusId" title="${uiLabelMap.CommonStatus}"><display-entity entity-name="StatusItem"/></field>
+        <field name="paidDate" title="${uiLabelMap.FrAcctPaidDate}"><display type="date-time"/></field>
+        <field name="completeLink" title=" " widget-style="buttontext" use-when="&quot;FRPP_PLANNED&quot;.equals(statusId)">
+            <hyperlink description="${uiLabelMap.FrAcctCompletePayment}" target="completeFrPaymentPlan" link-type="hidden-form" also-hidden="false"
+                request-confirmation="true" confirmation-message="${uiLabelMap.FrAcctCompletePaymentConfirm}">
+                <parameter param-name="paymentPlanId"/>
+            </hyperlink>
+        </field>
+    </form>
+
+    <!-- 메인 화면: 지급예정 건 (기일순) -->
+    <form name="ListFrPaymentPlanDue" type="list" list-name="duePaymentPlans"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table">
+        <actions>
+            <entity-condition entity-name="FrPaymentPlan" list="duePaymentPlans">
+                <condition-expr field-name="statusId" value="FRPP_PLANNED"/>
+                <order-by field-name="dueDate"/>
+                <limit-range start="0" size="20"/>
+            </entity-condition>
+        </actions>
+        <field name="paymentPlanId" title="${uiLabelMap.FrAcctPaymentPlanId}"><display/></field>
+        <field name="partyId" title="${uiLabelMap.FrAcctVendor}">
+            <display-entity entity-name="PartyNameView" key-field-name="partyId" description="${groupName}${lastName}${firstName}"/>
+        </field>
+        <field name="dueDate" title="${uiLabelMap.FrAcctDueDate}"><display type="date"/></field>
+        <field name="amount" title="${uiLabelMap.CommonAmount}"><display type="currency" currency="KRW"/></field>
+    </form>
+</forms>
