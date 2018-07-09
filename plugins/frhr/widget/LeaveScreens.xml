@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 박준영 / 2018.07.09 -->
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://ofbiz.apache.org/Widget-Screen" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Screen http://ofbiz.apache.org/dtds/widget-screen.xsd">
+    <!-- 연차 발생 (수동 발생 버튼 + 발생 내역) -->
+    <screen name="FindFrLeaveGrant">
+        <section>
+            <actions>
+                <set field="titleProperty" value="FrHrLeaveGrant"/>
+                <set field="headerItem" value="Leave"/>
+                <set field="tabButtonItem" value="FindFrLeaveGrant"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonFrHrDecorator" location="component://frhr/widget/CommonScreens.xml">
+                    <decorator-section name="pre-body">
+                        <include-menu name="FrLeaveTabBar" location="component://frhr/widget/FrHrMenus.xml"/>
+                    </decorator-section>
+                    <decorator-section name="body">
+                        <section>
+                            <condition><if-has-permission permission="FRHR" action="_ADMIN"/></condition>
+                            <widgets>
+                                <screenlet title="${uiLabelMap.FrHrManualLeaveGrant}" collapsible="true">
+                                    <label text="${uiLabelMap.FrHrLeaveGrantNotice}"/>
+                                    <include-form name="GrantFrLeave" location="component://frhr/widget/LeaveForms.xml"/>
+                                </screenlet>
+                            </widgets>
+                        </section>
+                        <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="search-options">
+                                <include-form name="FindFrLeaveGrant" location="component://frhr/widget/LeaveForms.xml"/>
+                            </decorator-section>
+                            <decorator-section name="search-results">
+                                <include-form name="ListFrLeaveGrant" location="component://frhr/widget/LeaveForms.xml"/>
+                            </decorator-section>
+                        </decorator-screen>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <!-- 연차 사용 신청 / 승인 -->
+    <screen name="FindFrLeaveUse">
+        <section>
+            <actions>
+                <set field="titleProperty" value="FrHrLeaveUse"/>
+                <set field="headerItem" value="Leave"/>
+                <set field="tabButtonItem" value="FindFrLeaveUse"/>
+                <service service-name="frHrPermissionCheck" result-map="permResult">
+                    <field-map field-name="mainAction" value="ADMIN"/>
+                </service>
+                <set field="hasAdminPermission" from-field="permResult.hasPermission"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonFrHrDecorator" location="component://frhr/widget/CommonScreens.xml">
+                    <decorator-section name="pre-body">
+                        <include-menu name="FrLeaveTabBar" location="component://frhr/widget/FrHrMenus.xml"/>
+                    </decorator-section>
+                    <decorator-section name="body">
+                        <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="menu-bar">
+                                <container style="button-bar">
+                                    <link target="EditFrLeaveUse" text="${uiLabelMap.FrHrNewLeaveUse}" style="buttontext create"/>
+                                </container>
+                            </decorator-section>
+                            <decorator-section name="search-options">
+                                <include-form name="FindFrLeaveUse" location="component://frhr/widget/LeaveForms.xml"/>
+                            </decorator-section>
+                            <decorator-section name="search-results">
+                                <include-form name="ListFrLeaveUse" location="component://frhr/widget/LeaveForms.xml"/>
+                            </decorator-section>
+                        </decorator-screen>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <screen name="EditFrLeaveUse">
+        <section>
+            <actions>
+                <set field="titleProperty" value="FrHrNewLeaveUse"/>
+                <set field="headerItem" value="Leave"/>
+                <set field="tabButtonItem" value="FindFrLeaveUse"/>
+                <set field="defaultPartyId" from-field="parameters.partyId" default-value="${userLogin.partyId}"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonFrHrDecorator" location="component://frhr/widget/CommonScreens.xml">
+                    <decorator-section name="pre-body">
+                        <include-menu name="FrLeaveTabBar" location="component://frhr/widget/FrHrMenus.xml"/>
+                    </decorator-section>
+                    <decorator-section name="body">
+                        <screenlet title="${uiLabelMap.FrHrNewLeaveUse}">
+                            <include-form name="EditFrLeaveUse" location="component://frhr/widget/LeaveForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <!-- 연차 잔여 조회 -->
+    <screen name="FrLeaveBalance">
+        <section>
+            <actions>
+                <set field="titleProperty" value="FrHrLeaveBalance"/>
+                <set field="headerItem" value="Leave"/>
+                <set field="tabButtonItem" value="FrLeaveBalance"/>
+                <script location="component://frhr/groovyScripts/leave/LeaveBalanceList.groovy"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonFrHrDecorator" location="component://frhr/widget/CommonScreens.xml">
+                    <decorator-section name="pre-body">
+                        <include-menu name="FrLeaveTabBar" location="component://frhr/widget/FrHrMenus.xml"/>
+                    </decorator-section>
+                    <decorator-section name="body">
+                        <screenlet title="${uiLabelMap.FrHrLeaveBalance}">
+                            <include-form name="FindFrLeaveBalance" location="component://frhr/widget/LeaveForms.xml"/>
+                        </screenlet>
+                        <screenlet title="${grantYear} ${uiLabelMap.FrHrLeaveBalance}">
+                            <include-form name="ListFrLeaveBalance" location="component://frhr/widget/LeaveForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+</screens>

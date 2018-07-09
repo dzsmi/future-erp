@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 박준영 / 2018.07.09 -->
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://ofbiz.apache.org/Widget-Form" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Form http://ofbiz.apache.org/dtds/widget-form.xsd">
+    <!-- ===== 연차 발생 ===== -->
+    <form name="GrantFrLeave" type="single" target="grantFrLeave"
+            header-row-style="header-row" default-table-style="basic-table">
+        <field name="partyId" title="${uiLabelMap.FrHrEmployee}" required-field="true"><lookup target-form-name="LookupPerson"/></field>
+        <field name="asOfDate" title="${uiLabelMap.FrHrAsOfDate}" tooltip="${uiLabelMap.FrHrAsOfDateTooltip}"><date-time type="date"/></field>
+        <field name="remarks" title="${uiLabelMap.CommonRemarks}"><text size="60"/></field>
+        <field name="submitButton" title="${uiLabelMap.FrHrManualLeaveGrant}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+
+    <form name="FindFrLeaveGrant" type="single" target="FindFrLeaveGrant" default-entity-name="FrLeaveGrant"
+            header-row-style="header-row" default-table-style="basic-table">
+        <field name="noConditionFind"><hidden value="Y"/></field>
+        <field name="partyId" title="${uiLabelMap.FrHrEmployee}"><lookup target-form-name="LookupPerson"/></field>
+        <field name="grantYear" title="${uiLabelMap.FrHrGrantYear}"><text size="4" maxlength="4"/></field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+
+    <form name="ListFrLeaveGrant" type="list" list-name="listIt" paginate-target="FindFrLeaveGrant" default-entity-name="FrLeaveGrant"
+            odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="FrLeaveGrant"/>
+                <field-map field-name="orderBy" value="-grantDate|partyId"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="leaveGrantId" title="${uiLabelMap.CommonId}"><display/></field>
+        <field name="partyId" title="${uiLabelMap.FrHrEmployee}">
+            <display-entity entity-name="Person" description="${lastName}${firstName}"/>
+        </field>
+        <field name="grantYear" title="${uiLabelMap.FrHrGrantYear}"><display/></field>
+        <field name="serviceYearNo" title="${uiLabelMap.FrHrServiceYearNo}"><display/></field>
+        <field name="grantType" title="${uiLabelMap.FrHrGrantType}"><display/></field>
+        <field name="grantDays" title="${uiLabelMap.FrHrGrantDays}"><display/></field>
+        <field name="grantDate" title="${uiLabelMap.FrHrGrantDate}"><display/></field>
+        <field name="remarks" title="${uiLabelMap.CommonRemarks}"><display/></field>
+    </form>
+
+    <!-- ===== 연차 사용 ===== -->
+    <form name="FindFrLeaveUse" type="single" target="FindFrLeaveUse" default-entity-name="FrLeaveUse"
+            header-row-style="header-row" default-table-style="basic-table">
+        <field name="noConditionFind"><hidden value="Y"/></field>
+        <field name="partyId" title="${uiLabelMap.FrHrEmployee}"><lookup target-form-name="LookupPerson"/></field>
+        <field name="fromDate" title="${uiLabelMap.CommonFromDate}"><date-find type="date"/></field>
+        <field name="statusId" title="${uiLabelMap.CommonStatus}">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="StatusItem" key-field-name="statusId" description="${description}">
+                    <entity-constraint name="statusTypeId" value="FR_LEAVE_USE_STATUS"/>
+                    <entity-order-by field-name="sequenceId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+
+    <form name="ListFrLeaveUse" type="list" list-name="listIt" paginate-target="FindFrLeaveUse" default-entity-name="FrLeaveUse"
+            odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="FrLeaveUse"/>
+                <field-map field-name="orderBy" value="-fromDate"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="leaveUseId" title="${uiLabelMap.CommonId}"><display/></field>
+        <field name="partyId" title="${uiLabelMap.FrHrEmployee}">
+            <display-entity entity-name="Person" description="${lastName}${firstName}"/>
+        </field>
+        <field name="fromDate" title="${uiLabelMap.CommonFromDate}"><display/></field>
+        <field name="thruDate" title="${uiLabelMap.CommonThruDate}"><display/></field>
+        <field name="useDays" title="${uiLabelMap.FrHrUseDays}"><display/></field>
+        <field name="reason" title="${uiLabelMap.FrHrLeaveReason}"><display/></field>
+        <field name="statusId" title="${uiLabelMap.CommonStatus}"><display-entity entity-name="StatusItem"/></field>
+        <field name="approverPartyId" title="${uiLabelMap.FrHrApprover}">
+            <display-entity entity-name="Person" key-field-name="partyId" description="${lastName}${firstName}"/>
+        </field>
+        <field name="approveLink" title=" " use-when="hasAdminPermission &amp;&amp; &quot;FRLU_REQUESTED&quot;.equals(statusId)" widget-style="buttontext">
+            <hyperlink description="${uiLabelMap.FrHrApprove}" target="approveFrLeaveUse" link-type="hidden-form">
+                <parameter param-name="leaveUseId"/>
+            </hyperlink>
+        </field>
+        <field name="rejectLink" title=" " use-when="hasAdminPermission &amp;&amp; &quot;FRLU_REQUESTED&quot;.equals(statusId)" widget-style="buttontext">
+            <hyperlink description="${uiLabelMap.FrHrReject}" target="rejectFrLeaveUse" link-type="hidden-form" request-confirmation="true">
+                <parameter param-name="leaveUseId"/>
+            </hyperlink>
+        </field>
+    </form>
+
+    <form name="EditFrLeaveUse" type="single" target="createFrLeaveUse"
+            header-row-style="header-row" default-table-style="basic-table">
+        <field name="partyId" title="${uiLabelMap.FrHrEmployee}" required-field="true"><lookup target-form-name="LookupPerson" default-value="${defaultPartyId}"/></field>
+        <field name="fromDate" title="${uiLabelMap.CommonFromDate}" required-field="true"><date-time type="date"/></field>
+        <field name="thruDate" title="${uiLabelMap.CommonThruDate}" required-field="true"><date-time type="date"/></field>
+        <field name="useDays" title="${uiLabelMap.FrHrUseDays}" tooltip="${uiLabelMap.FrHrUseDaysTooltip}"><text size="5"/></field>
+        <field name="reason" title="${uiLabelMap.FrHrLeaveReason}"><text size="60"/></field>
+        <field name="submitButton" title="${uiLabelMap.FrHrRequest}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+
+    <!-- ===== 잔여 조회 ===== -->
+    <form name="FindFrLeaveBalance" type="single" target="FrLeaveBalance"
+            header-row-style="header-row" default-table-style="basic-table">
+        <field name="partyId" title="${uiLabelMap.FrHrEmployee}"><lookup target-form-name="LookupPerson"/></field>
+        <field name="grantYear" title="${uiLabelMap.FrHrGrantYear}"><text size="4" maxlength="4" default-value="${grantYear}"/></field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+
+    <form name="ListFrLeaveBalance" type="list" list-name="balanceList"
+            odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <field name="emplNo" title="${uiLabelMap.FrHrEmplNo}"><display/></field>
+        <field name="partyId" title="${uiLabelMap.FrHrEmployee}">
+            <display-entity entity-name="Person" description="${lastName}${firstName}"/>
+        </field>
+        <field name="hireDate" title="${uiLabelMap.FrHrHireDate}"><display/></field>
+        <field name="grantedDays" title="${uiLabelMap.FrHrGrantDays}"><display/></field>
+        <field name="usedDays" title="${uiLabelMap.FrHrUsedDays}"><display/></field>
+        <field name="requestedDays" title="${uiLabelMap.FrHrRequestedDays}"><display/></field>
+        <field name="remainDays" title="${uiLabelMap.FrHrRemainDays}"><display/></field>
+    </form>
+</forms>
