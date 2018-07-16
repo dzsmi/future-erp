@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 김현석 / 2018.07.16 -->
+<service-eca xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/service-eca.xsd">
+    <!-- 퇴사 처리 후 OFBiz Employment 종료 -->
+    <eca service="processFrRetire" event="commit">
+        <action service="expireFrEmployment" mode="sync"/>
+    </eca>
+    <!-- 연차 승인 시 OFBiz EmplLeave 에도 등록 -->
+    <eca service="approveFrLeaveUse" event="commit">
+        <action service="syncFrLeaveToEmplLeave" mode="sync"/>
+    </eca>
+</service-eca>
