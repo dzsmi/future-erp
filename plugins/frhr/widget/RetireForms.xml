@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 오픈브릿지시스템즈 이소라 / 2018.07.23 -->
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://ofbiz.apache.org/Widget-Form" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Form http://ofbiz.apache.org/dtds/widget-form.xsd">
+    <form name="FrRetireProcess" type="single" target="processFrRetire"
+            header-row-style="header-row" default-table-style="basic-table">
+        <field name="partyId" title="${uiLabelMap.FrHrEmployee}" required-field="true"><lookup target-form-name="LookupPerson"/></field>
+        <field name="retireDate" title="${uiLabelMap.FrHrRetireDate}" required-field="true"><date-time type="date"/></field>
+        <field name="submitButton" title="${uiLabelMap.FrHrRetireProcessRun}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+
+    <form name="FindFrRetireSettle" type="single" target="FindFrRetireSettle" default-entity-name="FrRetireSettle"
+            header-row-style="header-row" default-table-style="basic-table">
+        <field name="noConditionFind"><hidden value="Y"/></field>
+        <field name="partyId" title="${uiLabelMap.FrHrEmployee}"><lookup target-form-name="LookupPerson"/></field>
+        <field name="retireDate" title="${uiLabelMap.FrHrRetireDate}"><date-find type="date"/></field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+
+    <form name="ListFrRetireSettle" type="list" list-name="listIt" paginate-target="FindFrRetireSettle" default-entity-name="FrRetireSettle"
+            odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="FrRetireSettle"/>
+                <field-map field-name="orderBy" value="-retireDate"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="retireSettleId" title="${uiLabelMap.CommonId}" widget-style="buttontext">
+            <hyperlink description="${retireSettleId}" target="ViewFrRetireSettle">
+                <parameter param-name="retireSettleId"/>
+            </hyperlink>
+        </field>
+        <field name="partyId" title="${uiLabelMap.FrHrEmployee}">
+            <display-entity entity-name="Person" description="${lastName}${firstName}"/>
+        </field>
+        <field name="hireDate" title="${uiLabelMap.FrHrHireDate}"><display/></field>
+        <field name="retireDate" title="${uiLabelMap.FrHrRetireDate}"><display/></field>
+        <field name="serviceDays" title="${uiLabelMap.FrHrServiceDays}"><display/></field>
+        <field name="retirePayAmount" title="${uiLabelMap.FrHrRetirePay}"><display type="currency" currency="KRW"/></field>
+        <field name="lastMonthPay" title="${uiLabelMap.FrHrLastMonthPay}"><display type="currency" currency="KRW"/></field>
+        <field name="lastMonthDeduction" title="${uiLabelMap.FrHrLastMonthDeduction}"><display type="currency" currency="KRW"/></field>
+        <field name="lastMonthNetPay" title="${uiLabelMap.FrHrLastMonthNetPay}"><display type="currency" currency="KRW"/></field>
+    </form>
+
+    <form name="ViewFrRetireSettle" type="single" default-map-name="retireSettle"
+            header-row-style="header-row" default-table-style="basic-table">
+        <field name="partyId" title="${uiLabelMap.FrHrEmployee}">
+            <display-entity entity-name="Person" description="${lastName}${firstName} [${partyId}]"/>
+        </field>
+        <field name="hireDate" title="${uiLabelMap.FrHrHireDate}"><display/></field>
+        <field name="retireDate" title="${uiLabelMap.FrHrRetireDate}"><display/></field>
+        <field name="serviceDays" title="${uiLabelMap.FrHrServiceDays}"><display/></field>
+        <field name="wage3MonthAmount" title="${uiLabelMap.FrHrWage3Month}"><display type="currency" currency="KRW"/></field>
+        <field name="bonus12MonthAmount" title="${uiLabelMap.FrHrBonus12Month}"><display type="currency" currency="KRW"/></field>
+        <field name="calDays3Month" title="${uiLabelMap.FrHrCalDays3Month}"><display/></field>
+        <field name="avgDailyWage" title="${uiLabelMap.FrHrAvgDailyWage}"><display/></field>
+        <field name="retirePayAmount" title="${uiLabelMap.FrHrRetirePay}"><display type="currency" currency="KRW"/></field>
+        <field name="lastMonthWorkDays" title="${uiLabelMap.FrHrLastMonthWorkDays}"><display/></field>
+        <field name="lastMonthPay" title="${uiLabelMap.FrHrLastMonthPay}"><display type="currency" currency="KRW"/></field>
+        <field name="lastMonthDeduction" title="${uiLabelMap.FrHrLastMonthDeduction}"><display type="currency" currency="KRW"/></field>
+        <field name="lastMonthNetPay" title="${uiLabelMap.FrHrLastMonthNetPay}"><display type="currency" currency="KRW"/></field>
+        <field name="settleDate" title="${uiLabelMap.FrHrSettleDate}"><display/></field>
+    </form>
+</forms>
