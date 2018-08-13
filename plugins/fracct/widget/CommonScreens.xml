@@ -24,6 +24,28 @@
         </section>
     </screen>
 
+    <!-- 20180813 박준영 신규 (기존 유지) -->
+    <screen name="main-decorator2">
+        <section>
+            <actions>
+                <property-map resource="FrAcctUiLabels" map-name="uiLabelMap" global="true"/>
+                <property-map resource="FrAcctErrorUiLabels" map-name="uiLabelMap" global="true"/>
+                <property-map resource="AccountingUiLabels" map-name="uiLabelMap" global="true"/>
+                <property-map resource="PartyUiLabels" map-name="uiLabelMap" global="true"/>
+                <property-map resource="CommonUiLabels" map-name="uiLabelMap" global="true"/>
+                <set field="layoutSettings.companyName" from-field="uiLabelMap.FrAcctCompanyName" global="true"/>
+                <set field="layoutSettings.companySubtitle" from-field="uiLabelMap.FrAcctCompanySubtitle" global="true"/>
+                <set field="activeApp" value="fracct" global="true"/>
+                <set field="applicationMenuName" value="FrAcctAppBar" global="true"/>
+                <set field="applicationMenuLocation" value="component://fracct/widget/FrAcctMenus.xml" global="true"/>
+                <set field="applicationTitle" from-field="uiLabelMap.FrAcctApplication" global="true"/>
+            </actions>
+            <widgets>
+                <include-screen name="ApplicationDecorator" location="component://commonext/widget/CommonScreens.xml"/>
+            </widgets>
+        </section>
+    </screen>
+
     <!-- 재경 화면 공통: FRACCT_VIEW 권한 체크 -->
     <screen name="CommonFrAcctDecorator">
         <section>
