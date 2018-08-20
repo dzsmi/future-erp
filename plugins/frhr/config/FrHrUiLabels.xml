@@ -413,6 +413,10 @@
         <value xml:lang="en">Remain</value>
         <value xml:lang="ko">잔여</value>
     </property>
+    <property key="FrHrExpectGrantDays">
+        <value xml:lang="en">Expected Grant</value>
+        <value xml:lang="ko">예상 발생 연차</value>
+    </property>
     <property key="FrHrRetire">
         <value xml:lang="en">Retirement</value>
         <value xml:lang="ko">퇴직</value>

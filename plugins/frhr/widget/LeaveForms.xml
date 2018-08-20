@@ -123,5 +123,6 @@
         <field name="usedDays" title="${uiLabelMap.FrHrUsedDays}"><display/></field>
         <field name="requestedDays" title="${uiLabelMap.FrHrRequestedDays}"><display/></field>
         <field name="remainDays" title="${uiLabelMap.FrHrRemainDays}"><display/></field>
+        <field name="expectGrantDays" title="${uiLabelMap.FrHrExpectGrantDays}" tooltip="${expectBaseDate}"><display/></field>
     </form>
 </forms>
