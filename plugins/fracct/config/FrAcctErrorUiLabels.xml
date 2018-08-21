@@ -69,6 +69,12 @@
         <value xml:lang="en">This month is not closed.</value>
         <value xml:lang="ko">마감되지 않은 월입니다.</value>
     </property>
+
+    <!-- 20180821 박준영 테스트용 -->
+    <property key="FrAcctPeriodNotClosed2">
+        <value xml:lang="en">This month is not closed.</value>
+        <value xml:lang="ko">마감되지 않은 월입니다.</value>
+    </property>
     <property key="FrAcctTaxInvoiceSupplyAmountMustBePositive">
         <value xml:lang="en">Supply amount must be greater than 0.</value>
         <value xml:lang="ko">공급가액은 0보다 커야 합니다.</value>

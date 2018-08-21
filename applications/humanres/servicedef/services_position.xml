@@ -34,6 +34,7 @@ under the License.
         <auto-attributes mode="IN" include="pk"/>
         <auto-attributes mode="IN" include="nonpk" optional="true"/>
     </service>
+    <!-- TODO 추후 공통화 -->
     <service name="expireEmplPositionTypeClass" default-entity-name="EmplPositionTypeClass" engine="entity-auto" invoke="expire" auth="true">
         <description>Expire a EmplPositionTypeClass record</description>
         <auto-attributes mode="IN" include="pk"/>
