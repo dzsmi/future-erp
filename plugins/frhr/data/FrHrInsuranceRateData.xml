@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 작성: 오픈브릿지시스템즈 김현석 / 2018.02.20 -->
+<!--
+  수정이력
+    2018.08.22  김현석  4대보험 항목 추가
+-->
 <!-- 2018년 4대보험 근로자 부담 요율 (%) -->
 <entity-engine-xml>
     <FrInsuranceRate rateYear="2018" insuranceType="HEALTH" rate="3.12" description="건강보험 (보수월액 대비)"/>
