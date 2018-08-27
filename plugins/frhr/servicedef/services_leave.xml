@@ -41,6 +41,9 @@
     <service name="getFrLeaveBalance" engine="simple"
             location="component://frhr/minilang/FrLeaveServices.xml" invoke="getFrLeaveBalance" auth="true">
         <description>연차 잔여 조회 (발생년도 기준 발생 - 사용)</description>
+        <!-- 2018.08.27 사용안함
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+        -->
         <attribute name="partyId" type="String" mode="IN" optional="false"/>
         <attribute name="grantYear" type="Long" mode="IN" optional="true"/>
         <attribute name="grantedDays" type="BigDecimal" mode="OUT" optional="true"/>
