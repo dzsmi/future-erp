@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 작성: 오픈브릿지시스템즈 김현석 / 2018.02.14 -->
+<!--
+  수정이력
+    2018.10.08  윤서진  인사 항목 추가
+-->
 <entity-engine-xml>
     <!-- 직급 -->
     <EnumerationType enumTypeId="FR_POSITION_GRADE" hasTable="N" description="퓨처리테일 직급"/>
