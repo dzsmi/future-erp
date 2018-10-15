@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 윤서진 / 2018.10.15 -->
+<!--
+  연차 일괄 발생 배치(grantFrLeaveBatch) 스케줄
+    - 매월 1일 02:00 : 1년 미만자 월 개근 발생 + 입사 기념일 지난 직원 근속차수 발생
+    - 매년 1/1 03:00 : 전체 재직자 근속차수 발생 누락분 재처리
+  ※ 운영 반영 후 Webtools > Job List 에서 상태 확인
+-->
+<entity-engine-xml>
+    <RecurrenceRule recurrenceRuleId="FR_LEAVE_MONTHLY" frequency="MONTHLY" intervalNumber="1" countNumber="-1" byMonthDayList="1"/>
+    <RecurrenceInfo recurrenceInfoId="FR_LEAVE_MONTHLY" startDateTime="2018-11-01 02:00:00.000" recurrenceRuleId="FR_LEAVE_MONTHLY" recurrenceCount="0"/>
+    <JobSandbox jobId="FR_LEAVE_MONTHLY" jobName="연차 일괄 발생(월)" runTime="2018-11-01 02:00:00.000" serviceName="grantFrLeaveBatch"
+            poolId="pool" runAsUser="system" recurrenceInfoId="FR_LEAVE_MONTHLY" statusId="SERVICE_PENDING" maxRecurrenceCount="-1"/>
+
+    <RecurrenceRule recurrenceRuleId="FR_LEAVE_YEARLY" frequency="YEARLY" intervalNumber="1" countNumber="-1" byMonthList="1" byMonthDayList="1"/>
+    <RecurrenceInfo recurrenceInfoId="FR_LEAVE_YEARLY" startDateTime="2019-01-01 03:00:00.000" recurrenceRuleId="FR_LEAVE_YEARLY" recurrenceCount="0"/>
+    <JobSandbox jobId="FR_LEAVE_YEARLY" jobName="연차 일괄 발생(년)" runTime="2019-01-01 03:00:00.000" serviceName="grantFrLeaveBatch"
+            poolId="pool" runAsUser="system" recurrenceInfoId="FR_LEAVE_YEARLY" statusId="SERVICE_PENDING" maxRecurrenceCount="-1"/>
+</entity-engine-xml>

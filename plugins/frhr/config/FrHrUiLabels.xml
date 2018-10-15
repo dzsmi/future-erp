@@ -125,6 +125,10 @@
         <value xml:lang="en">All active employees are calculated. Confirmed or paid payrolls are skipped.</value>
         <value xml:lang="ko">재직자 전체를 계산합니다. 확정/지급된 급여는 다시 계산하지 않습니다.</value>
     </property>
+    <property key="FrHrLeaveBatchSuccess">
+        <value xml:lang="en">Leave batch finished : {0} grants, {1} days.</value>
+        <value xml:lang="ko">연차 일괄 발생 완료 : {0}건, {1}일</value>
+    </property>
     <property key="FrHrPayrollCalcSuccess">
         <value xml:lang="en">Payroll calculated : {0} calculated, {1} skipped.</value>
         <value xml:lang="ko">급여 계산 완료 : 계산 {0}건, 건너뜀 {1}건</value>

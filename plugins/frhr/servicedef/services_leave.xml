@@ -56,4 +56,14 @@
         <description>승인된 연차를 OFBiz EmplLeave 로 등록 (SECA)</description>
         <attribute name="leaveUseId" type="String" mode="IN" optional="false"/>
     </service>
+
+    <!-- 2018.10.15 윤서진 : 연차 법개정(2018.05.29 시행) 대응 일괄 발생 배치 -->
+    <service name="grantFrLeaveBatch" engine="groovy" transaction-timeout="1800"
+            location="component://frhr/groovyScripts/leave/FrLeaveBatchServices.groovy" invoke="grantFrLeaveBatch" auth="true">
+        <description>연차 일괄 발생 배치 (개정법: 1년 미만 월 1일 최대 11일, 1년차 15일 사용분 미차감). 스케줄 FrHrLeaveJobData.xml</description>
+        <attribute name="asOfDate" type="Date" mode="IN" optional="true"/>
+        <attribute name="grantMode" type="String" mode="IN" optional="true"><description>MONTHLY / YEARLY (기록용)</description></attribute>
+        <attribute name="partyId" type="String" mode="IN" optional="true"/>
+        <attribute name="grantCount" type="Long" mode="OUT" optional="true"/>
+    </service>
 </services>
