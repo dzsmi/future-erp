@@ -11,6 +11,10 @@
     <!--  - 3년차부터 2년마다 1일 가산 (15 + (근속년수-1)/2), 최대 25일      -->
     <!--  - 같은 근속차수로 이미 발생한 경우 재발생 불가                     -->
     <!-- ================================================================== -->
+    <!-- 2018.10.19 윤서진 : 2018.05.29 근로기준법 개정(1년 미만 월 1일 최대 11일,
+         1년 미만 사용분 차감 폐지)은 연차 일괄 발생 배치(grantFrLeaveBatch,
+         groovyScripts/leave/FrLeaveBatchServices.groovy)에 반영함.
+         이 수동 발생은 배치로 대체 예정. 대체 전까지 수정하지 말 것 (신규입사 처리에서도 호출) -->
     <simple-method method-name="grantFrLeave" short-description="연차 수동 발생">
         <entity-one entity-name="FrEmplInfo" value-field="emplInfo"/>
         <if-empty field="emplInfo">
@@ -92,6 +96,7 @@
                 <set field="grantDays" value="${groovy: Math.min(25L, 15L + (serviceYears - 1).intdiv(2))}" type="BigDecimal"/>
 
                 <!-- 만 1년 되는 시점 : 1년 미만 기간에 사용한 연차를 15일에서 차감 -->
+                <!-- 2018.10.19 개정법상 차감 안 함 - 배치로 대체 예정 (윤서진) -->
                 <if-compare field="serviceYears" operator="equals" value="1" type="Long">
                     <entity-condition entity-name="FrLeaveUse" list="firstYearUses">
                         <condition-list combine="and">

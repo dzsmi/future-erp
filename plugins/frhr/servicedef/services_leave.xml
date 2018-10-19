@@ -9,6 +9,7 @@
     <service name="grantFrLeave" engine="simple"
             location="component://frhr/minilang/FrLeaveServices.xml" invoke="grantFrLeave" auth="true">
         <description>연차 수동 발생 (발생유형 MANUAL) - 근속기간에 따라 발생일수 계산</description>
+        <!-- 2018.10.19 윤서진 : 배치(grantFrLeaveBatch)로 대체 예정 -->
         <permission-service service-name="frHrPermissionCheck" main-action="CREATE"/>
         <attribute name="partyId" type="String" mode="IN" optional="false"/>
         <attribute name="asOfDate" type="Date" mode="IN" optional="true"/>
