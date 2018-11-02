@@ -132,6 +132,12 @@
         <security https="true" auth="true"/>
         <response name="success" type="view" value="FindFrLeaveGrant"/>
     </request-map>
+
+    <!-- 20181102 윤서진 테스트용 -->
+    <request-map uri="FindFrLeaveGrantNew">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindFrLeaveGrant"/>
+    </request-map>
     <request-map uri="grantFrLeave">
         <security https="true" auth="true"/>
         <event type="service" invoke="grantFrLeave"/>
