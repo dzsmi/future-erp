@@ -80,6 +80,14 @@
         <attribute name="statusId" type="String" mode="IN" optional="false"/>
     </service>
 
+    <!-- 20181119 윤서진 신규 (기존 유지) -->
+    <service name="updateFrPayrollStatusNew" engine="entity-auto" default-entity-name="FrPayroll" invoke="update" auth="true">
+        <description>급여 상태 변경 (계산 → 확정 → 지급)</description>
+        <permission-service service-name="frHrPermissionCheck" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <attribute name="statusId" type="String" mode="IN" optional="false"/>
+    </service>
+
     <!-- ================================================================== -->
     <!-- 4대보험 요율                                                        -->
     <!-- ================================================================== -->

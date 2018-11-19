@@ -4992,6 +4992,20 @@
         <value xml:lang="zh">期末现金余额</value>
         <value xml:lang="zh-TW">期末現金餘額</value>
     </property>
+
+    <!-- 20181119 윤서진 신규 (기존 유지) -->
+    <property key="AccountingEndingCashBalanceNew">
+        <value xml:lang="ar">رصيد النقد النهائي</value>
+        <value xml:lang="de">Kassenbestand</value>
+        <value xml:lang="en">Ending Cash Balance</value>
+        <value xml:lang="fr">Trésorerie de clôture</value>
+        <value xml:lang="hi-IN">अंतिम नकदी शेष</value>
+        <value xml:lang="ja">期末現金残高</value>
+        <value xml:lang="pt">Saldo final de Caixa</value>
+        <value xml:lang="vi">Kết thúc Cân đối tiền mặt</value>
+        <value xml:lang="zh">期末现金余额</value>
+        <value xml:lang="zh-TW">期末現金餘額</value>
+    </property>
     <property key="AccountingEnterGiftCardLink">
         <value xml:lang="ar">أدخل الرقم الفعلي والظاهري للبطاقة والرقم السري للربط بحسابك</value>
         <value xml:lang="de">Geben Sie Ihre Kartennummer (Physikalische und virtuelle) und den Pin-Code an um Sie mit Ihrem Konto zu verknüpfen</value>
