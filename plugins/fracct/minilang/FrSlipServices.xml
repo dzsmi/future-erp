@@ -192,7 +192,8 @@
         </if-empty>
         <if>
             <condition>
-                <if-compare field="apprAmount" operator="less-equals" value="1000000" type="BigDecimal"/>
+                <!-- 2018.11 재무팀 요청 팀장 전결 100만 -> 300만 (정해인) -->
+                <if-compare field="apprAmount" operator="less-equals" value="3000000" type="BigDecimal"/>
             </condition>
             <then>
                 <set field="apprLevelEnumId" value="FRAPPR_TEAM"/>
