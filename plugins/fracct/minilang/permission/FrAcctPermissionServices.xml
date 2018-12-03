@@ -24,6 +24,27 @@
         <field-to-result field="hasPermission"/>
     </simple-method>
 
+    <!-- 2018.12.03 윤서진 신규 (기존 유지) -->
+    <simple-method method-name="fracctUserPermissionCheck2" short-description="FrAcct user permission check">
+        <set field="hasPermission" type="Boolean" value="false"/>
+        <if>
+            <condition>
+                <or>
+                    <if-has-permission permission="FRACCT" action="_VIEW"/>
+                    <if-has-permission permission="FRACCT" action="_ADMIN"/>
+                </or>
+            </condition>
+            <then>
+                <set field="hasPermission" type="Boolean" value="true"/>
+            </then>
+            <else>
+                <property-to-field resource="FrAcctErrorUiLabels" property="FrAcctPermissionError" field="failMessage"/>
+                <field-to-result field="failMessage"/>
+            </else>
+        </if>
+        <field-to-result field="hasPermission"/>
+    </simple-method>
+
     <!-- 재경팀: FRACCT_ADMIN 만 통과 (결재, 결산 마감, 세금계산서, 지급) -->
     <simple-method method-name="fracctAdminPermissionCheck" short-description="FrAcct admin permission check">
         <set field="hasPermission" type="Boolean" value="false"/>

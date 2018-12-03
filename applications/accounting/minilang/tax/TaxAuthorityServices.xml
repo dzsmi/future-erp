@@ -90,6 +90,27 @@ under the License.
         </if>
     </simple-method>
 
+    <!-- 20181203 윤서진 신규 (기존 유지) -->
+    <simple-method method-name="validatePartyTaxIdInlineNew" short-description="validatePartyTaxIdInline">
+        <!-- validate the partyTaxId based on TaxAuthority.taxIdFormatPattern if not empty -->
+        <!-- If the party validated is in the UE, we could to a better job using the SOAP service from http://ec.europa.eu/taxation_customs/vies/faqvies.do#item16 -->
+        <entity-one entity-name="TaxAuthority" value-field="taxAuthority"/>
+        <if>
+            <condition>
+                <and>
+                    <not><if-empty field="taxAuthority.taxIdFormatPattern"/></not>
+                    <not><if-empty field="parameters.partyTaxId"/></not>
+                    <not><if-regexp field="parameters.partyTaxId" expr="${taxAuthority.taxIdFormatPattern}"/></not>
+                </and>
+            </condition>
+            <then>
+                <add-error>
+                    <fail-property resource="AccountingErrorUiLabels" property="AccountingTaxIdInvalidFormat"/>
+                </add-error>
+            </then>
+        </if>
+    </simple-method>
+
     <simple-method method-name="createCustomerTaxAuthInfo" short-description="Create a Customer PartyTaxAuthInfo">
         <script>groovy:
             taxAuthPartyGeoIds = parameters.get("taxAuthPartyGeoIds")
