@@ -17,6 +17,21 @@
         <create-value value-field="attendance"/>
     </simple-method>
 
+    <!-- 2018.12.10 윤서진 신규 (기존 유지) -->
+    <simple-method method-name="createFrAttendance2" short-description="근태 등록">
+        <entity-one entity-name="FrAttendance" value-field="existAttendance"/>
+        <if-not-empty field="existAttendance">
+            <add-error><fail-property resource="FrHrUiLabels" property="FrHrErrorAttendanceExists"/></add-error>
+        </if-not-empty>
+        <check-errors/>
+
+        <make-value entity-name="FrAttendance" value-field="attendance"/>
+        <set-pk-fields map="parameters" value-field="attendance"/>
+        <set-nonpk-fields map="parameters" value-field="attendance"/>
+        <call-simple-method method-name="calcFrWorkHours"/>
+        <create-value value-field="attendance"/>
+    </simple-method>
+
     <simple-method method-name="updateFrAttendance" short-description="근태 수정">
         <entity-one entity-name="FrAttendance" value-field="attendance"/>
         <if-empty field="attendance">
