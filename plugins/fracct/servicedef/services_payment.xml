@@ -43,4 +43,17 @@
         <attribute name="paidDate" type="Timestamp" mode="IN" optional="true"/>
         <attribute name="comments" type="String" mode="IN" optional="true"/>
     </service>
+
+    <!-- 2019.01.21 정해인 : 거래처 지급예정표 (지급기일 = 발행일 + 60일, 재무팀 요청) -->
+    <service name="getFrPaymentSchedule" engine="groovy"
+            location="component://fracct/groovyScripts/payment/FrPaymentScheduleServices.groovy" invoke="getFrPaymentSchedule" auth="true">
+        <description>거래처 지급예정표 조회 (매입 세금계산서 발행일 + 60일 기준)</description>
+        <permission-service service-name="fracctAdminPermissionCheck" main-action="VIEW"/>
+        <attribute name="fromDueDate" type="java.sql.Date" mode="IN" optional="true"/>
+        <attribute name="thruDueDate" type="java.sql.Date" mode="IN" optional="true"/>
+        <attribute name="partyId" type="String" mode="IN" optional="true"/>
+        <attribute name="includePaid" type="String" mode="IN" optional="true"/>
+        <attribute name="scheduleList" type="List" mode="OUT" optional="true"/>
+        <attribute name="totalAmount" type="BigDecimal" mode="OUT" optional="true"/>
+    </service>
 </services>

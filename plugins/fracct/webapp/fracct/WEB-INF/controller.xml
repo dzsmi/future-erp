@@ -172,6 +172,12 @@
         <response name="error" type="view" value="FindFrPaymentPlan"/>
     </request-map>
 
+    <!-- 2019.01.21 정해인 지급예정표 -->
+    <request-map uri="FrPaymentSchedule">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FrPaymentSchedule"/>
+    </request-map>
+
     <!-- ================ Lookup ================ -->
     <request-map uri="LookupGlAccount">
         <security https="true" auth="true"/>
@@ -196,6 +202,7 @@
     <view-map name="FindFrVendorPayTerm" type="screen" page="component://fracct/widget/FrPaymentScreens.xml#FindFrVendorPayTerm"/>
     <view-map name="EditFrVendorPayTerm" type="screen" page="component://fracct/widget/FrPaymentScreens.xml#EditFrVendorPayTerm"/>
     <view-map name="FindFrPaymentPlan" type="screen" page="component://fracct/widget/FrPaymentScreens.xml#FindFrPaymentPlan"/>
+    <view-map name="FrPaymentSchedule" type="screen" page="component://fracct/widget/FrPaymentScreens.xml#FrPaymentSchedule"/>
 
     <view-map name="LookupGlAccount" type="screen" page="component://fracct/widget/LookupScreens.xml#LookupGlAccount"/>
 </site-conf>

@@ -119,4 +119,33 @@
         <field name="dueDate" title="${uiLabelMap.FrAcctDueDate}"><display type="date"/></field>
         <field name="amount" title="${uiLabelMap.CommonAmount}"><display type="currency" currency="KRW"/></field>
     </form>
+
+    <!-- 2019.01.21 정해인 지급예정표 -->
+    <form name="FindFrPaymentSchedule" type="single" target="FrPaymentSchedule"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="fromDueDate" title="${uiLabelMap.FrAcctDueDate} ${uiLabelMap.CommonFrom}"><date-time type="date"/></field>
+        <field name="thruDueDate" title="${uiLabelMap.FrAcctDueDate} ${uiLabelMap.CommonThru}"><date-time type="date"/></field>
+        <field name="partyId" title="${uiLabelMap.FrAcctVendor}"><lookup target-form-name="LookupPartyName"/></field>
+        <field name="includePaid" title="${uiLabelMap.FrAcctIncludePaid}"><check><option key="Y" description=" "/></check></field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+
+    <form name="ListFrPaymentSchedule" type="list" list-name="scheduleList" paginate="false"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <field name="dueDate" title="${uiLabelMap.FrAcctDueDate}"><display type="date"/></field>
+        <field name="partyId" title="${uiLabelMap.FrAcctVendor}">
+            <display-entity entity-name="PartyNameView" key-field-name="partyId" description="${groupName}${lastName}${firstName}"/>
+        </field>
+        <field name="taxInvoiceId" title="${uiLabelMap.FrAcctTaxInvoiceId}" widget-style="buttontext">
+            <hyperlink description="${taxInvoiceId}" target="ViewFrTaxInvoice" also-hidden="false">
+                <parameter param-name="taxInvoiceId"/>
+            </hyperlink>
+        </field>
+        <field name="issueDate" title="${uiLabelMap.FrAcctIssueDate}"><display type="date"/></field>
+        <field name="supplyAmount" title="${uiLabelMap.FrAcctSupplyAmount}"><display type="currency" currency="KRW"/></field>
+        <field name="vatAmount" title="${uiLabelMap.FrAcctVatAmount}"><display type="currency" currency="KRW"/></field>
+        <field name="amount" title="${uiLabelMap.FrAcctTotalAmount}"><display type="currency" currency="KRW"/></field>
+        <field name="paymentPlanId" title="${uiLabelMap.FrAcctPaymentPlanId}"><display/></field>
+        <field name="statusId" title="${uiLabelMap.CommonStatus}"><display-entity entity-name="StatusItem"/></field>
+    </form>
 </forms>

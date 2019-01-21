@@ -19,6 +19,11 @@
             <condition><if-has-permission permission="FRACCT" action="_ADMIN"/></condition>
             <link target="FindFrPaymentPlan"/>
         </menu-item>
+        <!-- 2019.01 정해인 -->
+        <menu-item name="FrPaymentSchedule" title="${uiLabelMap.FrAcctPaymentSchedule}">
+            <condition><if-has-permission permission="FRACCT" action="_ADMIN"/></condition>
+            <link target="FrPaymentSchedule"/>
+        </menu-item>
         <menu-item name="FrVendorPayTerm" title="${uiLabelMap.FrAcctVendorPayTerm}">
             <condition><if-has-permission permission="FRACCT" action="_ADMIN"/></condition>
             <link target="FindFrVendorPayTerm"/>
