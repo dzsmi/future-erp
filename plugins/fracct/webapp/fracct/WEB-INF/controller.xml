@@ -177,6 +177,11 @@
         <security https="true" auth="true"/>
         <response name="success" type="view" value="FrPaymentSchedule"/>
     </request-map>
+    <!-- 2019.01.28 정해인 지급예정표 엑셀(CSV) 다운로드 -->
+    <request-map uri="FrPaymentSchedule.csv">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FrPaymentScheduleCsv"/>
+    </request-map>
 
     <!-- ================ Lookup ================ -->
     <request-map uri="LookupGlAccount">
@@ -203,6 +208,7 @@
     <view-map name="EditFrVendorPayTerm" type="screen" page="component://fracct/widget/FrPaymentScreens.xml#EditFrVendorPayTerm"/>
     <view-map name="FindFrPaymentPlan" type="screen" page="component://fracct/widget/FrPaymentScreens.xml#FindFrPaymentPlan"/>
     <view-map name="FrPaymentSchedule" type="screen" page="component://fracct/widget/FrPaymentScreens.xml#FrPaymentSchedule"/>
+    <view-map name="FrPaymentScheduleCsv" type="screencsv" page="component://fracct/widget/FrPaymentScreens.xml#FrPaymentScheduleCsv" content-type="text/csv" encoding="none"/>
 
     <view-map name="LookupGlAccount" type="screen" page="component://fracct/widget/LookupScreens.xml#LookupGlAccount"/>
 </site-conf>

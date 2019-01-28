@@ -338,6 +338,10 @@
         <value xml:lang="en">Include Paid</value>
         <value xml:lang="ko">지급완료 포함</value>
     </property>
+    <property key="FrAcctExcelDownload">
+        <value xml:lang="en">Excel Download</value>
+        <value xml:lang="ko">엑셀 다운로드</value>
+    </property>
     <property key="FrAcctCount">
         <value xml:lang="en"> items</value>
         <value xml:lang="ko">건</value>

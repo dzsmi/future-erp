@@ -148,4 +148,19 @@
         <field name="paymentPlanId" title="${uiLabelMap.FrAcctPaymentPlanId}"><display/></field>
         <field name="statusId" title="${uiLabelMap.CommonStatus}"><display-entity entity-name="StatusItem"/></field>
     </form>
+
+    <!-- 2019.01.28 정해인 지급예정표 CSV (엑셀) -->
+    <form name="ListFrPaymentScheduleCsv" type="list" list-name="scheduleList" paginate="false" view-size="99999">
+        <field name="dueDate" title="${uiLabelMap.FrAcctDueDate}"><display type="date"/></field>
+        <field name="partyId" title="${uiLabelMap.FrAcctVendor}"><display/></field>
+        <field name="partyName" title="${uiLabelMap.FrAcctVendor}" entry-name="partyId">
+            <display-entity entity-name="PartyNameView" key-field-name="partyId" description="${groupName}${lastName}${firstName}"/>
+        </field>
+        <field name="taxInvoiceNo" title="${uiLabelMap.FrAcctTaxInvoiceNo}"><display/></field>
+        <field name="issueDate" title="${uiLabelMap.FrAcctIssueDate}"><display type="date"/></field>
+        <field name="supplyAmount" title="${uiLabelMap.FrAcctSupplyAmount}"><display/></field>
+        <field name="vatAmount" title="${uiLabelMap.FrAcctVatAmount}"><display/></field>
+        <field name="amount" title="${uiLabelMap.FrAcctTotalAmount}"><display/></field>
+        <field name="statusId" title="${uiLabelMap.CommonStatus}"><display/></field>
+    </form>
 </forms>
