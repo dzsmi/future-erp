@@ -217,6 +217,12 @@
         <value xml:lang="en">Search Closing</value>
         <value xml:lang="ko">마감 조회</value>
     </property>
+
+    <!-- 2019.02.04 정해인 신규 (기존 유지) -->
+    <property key="FrAcctClosePeriodSearchBak">
+        <value xml:lang="en">Search Closing</value>
+        <value xml:lang="ko">마감 조회</value>
+    </property>
     <property key="FrAcctClosePeriodList">
         <value xml:lang="en">Closing Status</value>
         <value xml:lang="ko">마감 현황</value>

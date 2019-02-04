@@ -148,6 +148,23 @@
         <field name="submitButton" title="${uiLabelMap.CommonAdd}"><submit button-type="button"/></field>
     </form>
 
+    <!-- 2019.02.04 정해인 기존 로직 백업 -->
+    <form name="AddFrSlipItemBak" type="single" target="createFrSlipItem"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="slipId"><hidden value="${frSlip.slipId}"/></field>
+        <field name="glAccountId" title="${uiLabelMap.FrAcctGlAccount}" required-field="true"><lookup target-form-name="LookupGlAccount"/></field>
+        <field name="debitCreditFlag" title="${uiLabelMap.FrAcctDebitCredit}">
+            <drop-down allow-empty="false">
+                <option key="D" description="${uiLabelMap.FrAcctDebit}"/>
+                <option key="C" description="${uiLabelMap.FrAcctCredit}"/>
+            </drop-down>
+        </field>
+        <field name="amount" title="${uiLabelMap.CommonAmount}" required-field="true"><text size="15"/></field>
+        <field name="partyId" title="${uiLabelMap.FrAcctVendor}"><lookup target-form-name="LookupPartyName"/></field>
+        <field name="comments" title="${uiLabelMap.FrAcctMemo}"><text size="60" maxlength="255"/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonAdd}"><submit button-type="button"/></field>
+    </form>
+
     <!-- ================ 결재 ================ -->
     <form name="ListFrApprHist" type="list" list-name="apprHists"
         odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table">
