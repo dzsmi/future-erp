@@ -219,7 +219,8 @@
         <check-errors/>
         <set field="healthRate" from-field="healthRateValue.rate"/>
         <set field="employRate" from-field="employRateValue.rate"/>
-        <set field="longtermRate" value="7.38" type="BigDecimal"/>
+        <!-- 2019.02.25 윤서진 : 2019 장기요양 요율 7.38 -> 8.51 -->
+        <set field="longtermRate" value="8.51" type="BigDecimal"/>
         <set field="pensionRate" value="4.5" type="BigDecimal"/>
         <set field="incomeTaxRate" value="3" type="BigDecimal"/>
 
