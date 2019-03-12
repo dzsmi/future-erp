@@ -177,6 +177,9 @@ under the License.
                     return(NumberFormat.getCurrencyInstance(context.get(&quot;locale&quot;)).format(org.apache.ofbiz.accounting.payment.PaymentWorker.getPaymentNotApplied(payment)));}"/>
                 <script location="component://accounting/groovyScripts/payment/ListNotAppliedInvoices.groovy"/>
                 <script location="component://accounting/groovyScripts/payment/ListNotAppliedPayments.groovy"/>
+                <!-- 2019.03.12 기존로직 주석처리
+                <entity-one entity-name="PartyNameView" value-field="partyNameViewTo">
+                -->
                 <entity-one entity-name="PartyNameView" value-field="partyNameViewTo">
                     <field-map field-name="partyId" from-field="payment.partyIdTo"/>
                 </entity-one>
