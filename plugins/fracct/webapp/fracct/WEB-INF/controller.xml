@@ -17,6 +17,12 @@
         <security https="true" auth="true"/>
         <response name="success" type="view" value="FindFrSlip"/>
     </request-map>
+
+    <!-- 2019.04.01 윤서진 테스트용 -->
+    <request-map uri="FindFrSlipOld">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindFrSlip"/>
+    </request-map>
     <request-map uri="EditFrSlip">
         <security https="true" auth="true"/>
         <response name="success" type="view" value="EditFrSlip"/>

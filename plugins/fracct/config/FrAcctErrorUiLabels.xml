@@ -63,6 +63,12 @@
         <value xml:lang="en">Period ${closeYearMonth} is closed. Slips of a closed month cannot be created or changed.</value>
         <value xml:lang="ko">${closeYearMonth} 월은 결산 마감되어 전표를 작성/수정할 수 없습니다.</value>
     </property>
+
+    <!-- 20190401 윤서진 백업 -->
+    <property key="FrAcctPeriodClosedNew">
+        <value xml:lang="en">Period ${closeYearMonth} is closed. Slips of a closed month cannot be created or changed.</value>
+        <value xml:lang="ko">${closeYearMonth} 월은 결산 마감되어 전표를 작성/수정할 수 없습니다.</value>
+    </property>
     <property key="FrAcctPeriodInvalidYearMonth">
         <value xml:lang="en">Year/Month must be in yyyyMM format.</value>
         <value xml:lang="ko">마감년월은 yyyyMM 형식이어야 합니다.</value>
