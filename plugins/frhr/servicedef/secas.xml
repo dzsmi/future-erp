@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 작성: 오픈브릿지시스템즈 김현석 / 2018.07.16 -->
+<!--
+  수정이력
+    2019.04.29  윤서진  인사 오류 수정
+-->
 <service-eca xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/service-eca.xsd">
     <!-- 퇴사 처리 후 OFBiz Employment 종료 -->

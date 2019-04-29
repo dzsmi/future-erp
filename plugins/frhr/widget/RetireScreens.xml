@@ -5,6 +5,9 @@
     <screen name="FindFrRetireSettle">
         <section>
             <actions>
+                <!-- 2019.04.29 기존로직 주석처리
+                <set field="titleProperty" value="FrHrRetireSettleList"/>
+                -->
                 <set field="titleProperty" value="FrHrRetireSettleList"/>
                 <set field="headerItem" value="Retire"/>
                 <set field="tabButtonItem" value="FindFrRetireSettle"/>
