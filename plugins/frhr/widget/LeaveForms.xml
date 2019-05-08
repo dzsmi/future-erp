@@ -22,6 +22,7 @@
     <form name="ListFrLeaveGrant" type="list" list-name="listIt" paginate-target="FindFrLeaveGrant" default-entity-name="FrLeaveGrant"
             odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
         <actions>
+            <!-- 인사팀 확인 후 삭제 예정 -->
             <service service-name="performFind" result-map="result" result-map-list="listIt">
                 <field-map field-name="inputFields" from-field="parameters"/>
                 <field-map field-name="entityName" value="FrLeaveGrant"/>
