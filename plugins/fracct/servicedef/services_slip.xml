@@ -101,6 +101,17 @@
         <attribute name="comments" type="String" mode="IN" optional="false"/>
     </service>
 
+    <!-- 2019.05.13 정해인 : 전표 엑셀(CSV) 일괄 업로드. 업로드 전표 결재선은 대표이사 고정 (재무팀 요청) -->
+    <service name="uploadFrSlipCsv" engine="groovy" transaction-timeout="600"
+            location="component://fracct/groovyScripts/slip/FrSlipUploadServices.groovy" invoke="uploadFrSlipCsv" auth="true">
+        <description>전표 CSV 업로드 → createFrSlip / createFrSlipItem / requestFrSlip 반복 호출, 결재레벨 FRAPPR_CEO 로 변경</description>
+        <permission-service service-name="fracctUserPermissionCheck" main-action="CREATE"/>
+        <attribute name="uploadedFile" type="java.nio.ByteBuffer" mode="IN" optional="false"/>
+        <attribute name="_uploadedFile_fileName" type="String" mode="IN" optional="true"/>
+        <attribute name="_uploadedFile_contentType" type="String" mode="IN" optional="true"/>
+        <attribute name="slipIds" type="List" mode="OUT" optional="true"/>
+    </service>
+
     <!-- ================= 회계 거래 생성 ================= -->
     <service name="postFrSlipAcctgTrans" engine="groovy"
             location="component://fracct/groovyScripts/slip/FrSlipAcctgServices.groovy" invoke="postFrSlipAcctgTrans" auth="true">

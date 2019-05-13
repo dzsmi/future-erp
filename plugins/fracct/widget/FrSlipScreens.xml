@@ -17,6 +17,7 @@
                             <decorator-section name="menu-bar">
                                 <container style="button-bar">
                                     <link target="EditFrSlip" text="${uiLabelMap.FrAcctNewSlip}" style="buttontext create"/>
+                                    <link target="FrSlipUpload" text="${uiLabelMap.FrAcctSlipUpload}" style="buttontext"/>
                                 </container>
                             </decorator-section>
                             <decorator-section name="search-options">
@@ -222,6 +223,26 @@
                     <decorator-section name="body">
                         <screenlet title="${uiLabelMap.FrAcctApprovalPending}">
                             <include-form name="ListFrApprovalPending" location="component://fracct/widget/FrSlipForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <!-- ================ 전표 엑셀 업로드 (2019.05.13 정해인) ================ -->
+    <screen name="FrSlipUpload">
+        <section>
+            <actions>
+                <set field="titleProperty" value="FrAcctSlipUpload"/>
+                <set field="headerItem" value="FrSlip"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonFrAcctDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet title="${uiLabelMap.FrAcctSlipUpload}">
+                            <label text="${uiLabelMap.FrAcctSlipUploadNotice}"/>
+                            <include-form name="FrSlipUpload" location="component://fracct/widget/FrSlipForms.xml"/>
                         </screenlet>
                     </decorator-section>
                 </decorator-screen>

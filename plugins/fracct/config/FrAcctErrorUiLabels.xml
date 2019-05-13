@@ -121,4 +121,9 @@
         <value xml:lang="en">Only planned payments can be completed.</value>
         <value xml:lang="ko">지급예정 상태만 지급완료 처리할 수 있습니다.</value>
     </property>
+    <!-- 2019.05.13 정해인 -->
+    <property key="FrAcctSlipUploadNoFile">
+        <value xml:lang="en">Select a CSV file to upload.</value>
+        <value xml:lang="ko">업로드할 CSV 파일을 선택하세요.</value>
+    </property>
 </resource>

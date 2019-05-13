@@ -29,6 +29,19 @@
         <value xml:lang="en">Find Slips</value>
         <value xml:lang="ko">전표 조회</value>
     </property>
+    <!-- 2019.05.13 정해인 -->
+    <property key="FrAcctSlipUpload">
+        <value xml:lang="en">Slip Upload (Excel)</value>
+        <value xml:lang="ko">전표 엑셀 업로드</value>
+    </property>
+    <property key="FrAcctSlipUploadFile">
+        <value xml:lang="en">CSV File</value>
+        <value xml:lang="ko">CSV 파일</value>
+    </property>
+    <property key="FrAcctSlipUploadNotice">
+        <value xml:lang="en">Columns: slip key, slip date(yyyy-MM-dd), type(RECEIPT/DISBURSE/TRANSFER), dept, description, GL account, D/C, amount, party, memo. Uploaded slips are requested with CEO approval.</value>
+        <value xml:lang="ko">컬럼: 전표키, 전표일자(yyyy-MM-dd), 유형(RECEIPT/DISBURSE/TRANSFER), 부서, 적요, 계정과목, 차대(D/C), 금액, 거래처, 메모. 업로드 전표는 바로 상신되며 결재선은 대표이사입니다.</value>
+    </property>
     <property key="FrAcctNewSlip">
         <value xml:lang="en">New Slip</value>
         <value xml:lang="ko">전표 작성</value>

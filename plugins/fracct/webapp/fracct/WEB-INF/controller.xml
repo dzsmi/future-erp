@@ -23,6 +23,17 @@
         <security https="true" auth="true"/>
         <response name="success" type="view" value="FindFrSlip"/>
     </request-map>
+    <!-- 2019.05.13 정해인 전표 엑셀 업로드 -->
+    <request-map uri="FrSlipUpload">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FrSlipUpload"/>
+    </request-map>
+    <request-map uri="uploadFrSlipCsv">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="uploadFrSlipCsv"/>
+        <response name="success" type="view" value="FindFrSlip"/>
+        <response name="error" type="view" value="FrSlipUpload"/>
+    </request-map>
     <request-map uri="EditFrSlip">
         <security https="true" auth="true"/>
         <response name="success" type="view" value="EditFrSlip"/>
@@ -203,6 +214,7 @@
     <view-map name="EditFrSlipItems" type="screen" page="component://fracct/widget/FrSlipScreens.xml#EditFrSlipItems"/>
     <view-map name="ViewFrSlip" type="screen" page="component://fracct/widget/FrSlipScreens.xml#ViewFrSlip"/>
     <view-map name="FindFrApproval" type="screen" page="component://fracct/widget/FrSlipScreens.xml#FindFrApproval"/>
+    <view-map name="FrSlipUpload" type="screen" page="component://fracct/widget/FrSlipScreens.xml#FrSlipUpload"/>
 
     <view-map name="FindFrClosePeriod" type="screen" page="component://fracct/widget/FrPeriodScreens.xml#FindFrClosePeriod"/>
 

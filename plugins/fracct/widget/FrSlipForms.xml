@@ -223,4 +223,11 @@
         <field name="description" title="${uiLabelMap.FrAcctSlipDescription}"><display/></field>
         <field name="requestedDate" title="${uiLabelMap.FrAcctRequestedDate}"><display type="date-time"/></field>
     </form>
+
+    <!-- 2019.05.13 정해인 전표 엑셀 업로드 -->
+    <form name="FrSlipUpload" type="upload" target="uploadFrSlipCsv"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="uploadedFile" title="${uiLabelMap.FrAcctSlipUploadFile}"><file/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonUpload}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
 </forms>
