@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 작성: 오픈브릿지시스템즈 이소라 / 2018.08.06 -->
+<!--
+  수정이력
+    2019.05.14  윤서진  급여 법개정 대응
+-->
 <screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns="http://ofbiz.apache.org/Widget-Screen" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Screen http://ofbiz.apache.org/dtds/widget-screen.xsd">
     <!-- 급여 미리보기 : 저장 없이 개인별 예상 급여 표시 -->
