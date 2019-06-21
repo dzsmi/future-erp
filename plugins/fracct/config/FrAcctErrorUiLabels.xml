@@ -9,6 +9,12 @@
         <value xml:lang="en">Only the accounting team can do this (FRACCT_ADMIN needed).</value>
         <value xml:lang="ko">재경팀만 처리할 수 있습니다. (FRACCT_ADMIN 필요)</value>
     </property>
+
+    <!-- 2019.06.21 윤서진 테스트용 -->
+    <property key="FrAcctAdminPermissionError2">
+        <value xml:lang="en">Only the accounting team can do this (FRACCT_ADMIN needed).</value>
+        <value xml:lang="ko">재경팀만 처리할 수 있습니다. (FRACCT_ADMIN 필요)</value>
+    </property>
     <property key="FrAcctSlipNotFound">
         <value xml:lang="en">Slip not found.</value>
         <value xml:lang="ko">전표를 찾을 수 없습니다.</value>

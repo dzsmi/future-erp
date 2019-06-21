@@ -1468,6 +1468,20 @@
         <value xml:lang="zh">职位管理</value>
         <value xml:lang="zh-TW">職位管理</value>
     </property>
+
+    <!-- 20190621 윤서진 백업 -->
+    <property key="HumanResEmployeePosition2">
+        <value xml:lang="de">Stellen</value>
+        <value xml:lang="en">Employee Position</value>
+        <value xml:lang="fr">Positions d'employé</value>
+        <value xml:lang="it">Posizione Impiegato</value>
+        <value xml:lang="ja">従業員職位</value>
+        <value xml:lang="pt-BR">Posição do empregado</value>
+        <value xml:lang="th">ตำแหน่งพนักงาน</value>
+        <value xml:lang="vi">Vị trí</value>
+        <value xml:lang="zh">职位管理</value>
+        <value xml:lang="zh-TW">職位管理</value>
+    </property>
     <property key="HumanResEmployeePositionId">
         <value xml:lang="en">EmployeePosition Id</value>
         <value xml:lang="fr">Position d'employé</value>
