@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 작성: 오픈브릿지시스템즈 이소라 / 2018.05.14 -->
+<!--
+  수정이력
+    2019.06.24  정해인  재경 현업 요청 반영
+-->
 <web-app version="3.0">
     <display-name>FutureRetail Accounting</display-name>
     <description>(주)퓨처리테일 재경 플러그인 (fracct)</description>
