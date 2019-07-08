@@ -4,6 +4,7 @@
  *
  *  - 대상 : 급여월 말일 이전 입사, 퇴사일 없는 직원 (퇴사자는 퇴사 처리의 마지막 달 정산으로 지급)
  *  - 기본급 : 입사월이면 calcDailyProrate(기본급 x 근무일수 / 30) 로 일할계산
+ *            → 2019.07 윤서진 : 해당 월 역일 기준(기본급 x 근무일수 / 그 달 일수)으로 변경
  *  - 연장수당 : 해당월 근태 연장시간 합계 x 통상시급(기본급/209) x 1.5
  *  - 상여 : 화면에서 입력한 상여율(%) x 기본급
  *  - 4대보험 : 건강/장기요양/고용 요율은 FrInsuranceRate(급여년도), 국민연금 4.5%
@@ -65,10 +66,13 @@ def calcFrMonthlyPayroll() {
         Long workDays = null
 
         // 중도입사 : 입사일 ~ 말일 일할계산
+        // 2019.07.08 윤서진 : 30일 기준 → 해당 월 역일 기준 (노무팀 요청, 31일 달 입사자 과지급 문제)
         if (emplInfo.hireDate.after(monthStart)) {
             workDays = (monthEnd - emplInfo.hireDate) + 1
-            Map prorateResult = runService("calcDailyProrate", [baseSalary: baseSalary, workDays: workDays])
-            baseAmount = prorateResult.prorateAmount
+            // Map prorateResult = runService("calcDailyProrate", [baseSalary: baseSalary, workDays: workDays])
+            // baseAmount = prorateResult.prorateAmount
+            BigDecimal monthDays = new BigDecimal(ym.lengthOfMonth())
+            baseAmount = (baseSalary * workDays).divide(monthDays, 0, RoundingMode.FLOOR)
         }
 
         // 연장수당
