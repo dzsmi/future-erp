@@ -78,6 +78,49 @@
         </section>
     </screen>
 
+    <!-- 2019.07.25 정해인 백업 -->
+    <screen name="EditFrEmplInfoBak">
+        <section>
+            <actions>
+                <set field="titleProperty" value="FrHrEditEmplInfo"/>
+                <set field="headerItem" value="EmplInfo"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <entity-one entity-name="FrEmplInfo" value-field="emplInfo"/>
+                <entity-one entity-name="Person" value-field="person"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonFrHrDecorator" location="component://frhr/widget/CommonScreens.xml">
+                    <decorator-section name="body">
+                        <screenlet title="${uiLabelMap.FrHrEmplInfo} ${person.lastName}${person.firstName} [${partyId}]">
+                            <include-form name="EditFrEmplInfo" location="component://frhr/widget/EmplInfoForms.xml"/>
+                        </screenlet>
+                        <section>
+                            <condition><not><if-empty field="emplInfo"/></not></condition>
+                            <widgets>
+                                <container style="button-bar">
+                                    <link target="FindFrPayroll" text="${uiLabelMap.FrHrPayrollList}" style="buttontext">
+                                        <parameter param-name="partyId"/>
+                                        <parameter param-name="noConditionFind" value="Y"/>
+                                    </link>
+                                    <link target="FindFrAttendance" text="${uiLabelMap.FrHrAttendance}" style="buttontext">
+                                        <parameter param-name="partyId"/>
+                                        <parameter param-name="noConditionFind" value="Y"/>
+                                    </link>
+                                    <link target="FrLeaveBalance" text="${uiLabelMap.FrHrLeaveBalance}" style="buttontext">
+                                        <parameter param-name="partyId"/>
+                                    </link>
+                                    <link target="/humanres/control/EmployeeProfile" url-mode="inter-app" text="${uiLabelMap.HumanResEmployeeProfile}" style="buttontext">
+                                        <parameter param-name="partyId"/>
+                                    </link>
+                                </container>
+                            </widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
     <screen name="NewFrEmployee">
         <section>
             <actions>

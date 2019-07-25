@@ -29,6 +29,13 @@
         <auto-attributes include="pk" mode="IN" optional="false"/>
     </service>
 
+    <!-- 2019.07.25 정해인 테스트용 -->
+    <service name="deleteFrVendorPayTermBak" default-entity-name="FrVendorPayTerm" engine="entity-auto" invoke="delete" auth="true">
+        <description>거래처 지급조건 삭제</description>
+        <permission-service service-name="fracctAdminPermissionCheck" main-action="DELETE"/>
+        <auto-attributes include="pk" mode="IN" optional="false"/>
+    </service>
+
     <!-- ================= 지급계획 ================= -->
     <service name="createFrPaymentPlanFromTaxInvoice" engine="simple"
             location="component://fracct/minilang/FrPaymentServices.xml" invoke="createFrPaymentPlanFromTaxInvoice" auth="true">
