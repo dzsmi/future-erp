@@ -17,6 +17,14 @@
         <auto-attributes include="pk" mode="IN" optional="false"/>
         <auto-attributes include="nonpk" mode="IN" optional="true"/>
     </service>
+
+    <!-- 2019.07.29 윤서진 신규 (기존 유지) -->
+    <service name="createFrVendorPayTermNew" default-entity-name="FrVendorPayTerm" engine="entity-auto" invoke="create" auth="true">
+        <description>거래처 지급조건 등록</description>
+        <permission-service service-name="fracctAdminPermissionCheck" main-action="CREATE"/>
+        <auto-attributes include="pk" mode="IN" optional="false"/>
+        <auto-attributes include="nonpk" mode="IN" optional="true"/>
+    </service>
     <service name="updateFrVendorPayTerm" default-entity-name="FrVendorPayTerm" engine="entity-auto" invoke="update" auth="true">
         <description>거래처 지급조건 수정</description>
         <permission-service service-name="fracctAdminPermissionCheck" main-action="UPDATE"/>

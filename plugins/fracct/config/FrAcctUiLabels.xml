@@ -369,6 +369,12 @@
         <value xml:lang="en">Due Date</value>
         <value xml:lang="ko">지급기일</value>
     </property>
+
+    <!-- 20190729 윤서진 기존 로직 백업 -->
+    <property key="FrAcctDueDateNew">
+        <value xml:lang="en">Due Date</value>
+        <value xml:lang="ko">지급기일</value>
+    </property>
     <property key="FrAcctPaidDate">
         <value xml:lang="en">Paid Date</value>
         <value xml:lang="ko">지급일시</value>

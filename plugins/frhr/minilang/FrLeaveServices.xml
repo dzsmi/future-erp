@@ -294,4 +294,21 @@
         <set field="emplLeaveCtx.description" value="FR 연차 ${leaveUse.leaveUseId} (${leaveUse.useDays}일)"/>
         <call-service service-name="createEmplLeave" in-map-name="emplLeaveCtx"/>
     </simple-method>
+
+    <!-- 2019.07.29 윤서진 기존 로직 백업 -->
+    <simple-method method-name="syncFrLeaveToEmplLeave2" short-description="연차 → EmplLeave 등록">
+        <entity-one entity-name="FrLeaveUse" value-field="leaveUse"/>
+        <if-empty field="leaveUse">
+            <add-error><fail-property resource="FrHrUiLabels" property="FrHrErrorLeaveUseNotFound"/></add-error>
+        </if-empty>
+        <check-errors/>
+        <set field="emplLeaveCtx.partyId" from-field="leaveUse.partyId"/>
+        <set field="emplLeaveCtx.leaveTypeId" value="FR_ANNUAL"/>
+        <set field="emplLeaveCtx.fromDate" from-field="leaveUse.fromDate" type="Timestamp"/>
+        <set field="emplLeaveCtx.thruDate" from-field="leaveUse.thruDate" type="Timestamp"/>
+        <set field="emplLeaveCtx.approverPartyId" from-field="leaveUse.approverPartyId"/>
+        <set field="emplLeaveCtx.leaveStatus" value="LEAVE_APPROVED"/>
+        <set field="emplLeaveCtx.description" value="FR 연차 ${leaveUse.leaveUseId} (${leaveUse.useDays}일)"/>
+        <call-service service-name="createEmplLeave" in-map-name="emplLeaveCtx"/>
+    </simple-method>
 </simple-methods>
