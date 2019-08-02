@@ -147,6 +147,9 @@
                             </condition>
                             <widgets>
                                 <screenlet title="${uiLabelMap.FrAcctPaymentPlanUpcoming}">
+                                    <!-- 2019.08.02 기존로직 주석처리
+                                    <include-form name="ListFrPaymentPlanDue" location="component://fracct/widget/FrPaymentForms.xml"/>
+                                    -->
                                     <include-form name="ListFrPaymentPlanDue" location="component://fracct/widget/FrPaymentForms.xml"/>
                                 </screenlet>
                             </widgets>
