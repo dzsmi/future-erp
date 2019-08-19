@@ -77,6 +77,25 @@
         <field name="submitButton" title="${uiLabelMap.CommonCreate}"><submit button-type="button"/></field>
     </form>
 
+    <!-- 20190819 윤서진 테스트용 -->
+    <form name="EditFrTaxInvoiceNew" type="single" target="createFrTaxInvoice"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="taxInvoiceTypeEnumId" title="${uiLabelMap.FrAcctTaxInvoiceType}">
+            <drop-down allow-empty="false">
+                <entity-options entity-name="Enumeration" key-field-name="enumId" description="${description}">
+                    <entity-constraint name="enumTypeId" value="FR_TAXINV_TYPE"/>
+                    <entity-order-by field-name="sequenceId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="taxInvoiceNo" title="${uiLabelMap.FrAcctTaxInvoiceNo}"><text size="30" maxlength="60"/></field>
+        <field name="partyId" title="${uiLabelMap.FrAcctVendor}" required-field="true"><lookup target-form-name="LookupPartyName"/></field>
+        <field name="issueDate" title="${uiLabelMap.FrAcctIssueDate}" required-field="true"><date-time type="date"/></field>
+        <field name="supplyAmount" title="${uiLabelMap.FrAcctSupplyAmount}" required-field="true"><text size="15"/></field>
+        <field name="description" title="${uiLabelMap.CommonDescription}"><text size="60" maxlength="255"/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonCreate}"><submit button-type="button"/></field>
+    </form>
+
     <form name="FrTaxInvoiceHeader" type="single" default-map-name="taxInvoice"
         header-row-style="header-row" default-table-style="basic-table">
         <field name="taxInvoiceId" title="${uiLabelMap.FrAcctTaxInvoiceId}" position="1"><display/></field>

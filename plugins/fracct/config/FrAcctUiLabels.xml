@@ -130,6 +130,12 @@
         <value xml:lang="en">Memo</value>
         <value xml:lang="ko">메모</value>
     </property>
+
+    <!-- 20190819 윤서진 기존 로직 백업 -->
+    <property key="FrAcctMemoOld">
+        <value xml:lang="en">Memo</value>
+        <value xml:lang="ko">메모</value>
+    </property>
     <property key="FrAcctBalanceCheck">
         <value xml:lang="en">Debit/Credit Balance</value>
         <value xml:lang="ko">차대 합계 검사</value>
