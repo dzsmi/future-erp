@@ -22,4 +22,38 @@
         </calculate>
         <field-to-result field="prorateAmount"/>
     </simple-method>
+
+    <!-- 20190912 윤서진 테스트용 -->
+    <simple-method method-name="calcDailyProrateOld" short-description="일할계산">
+        <if-compare field="parameters.workDays" operator="less" value="0" type="Long">
+            <add-error><fail-property resource="FrHrUiLabels" property="FrHrErrorInvalidWorkDays"/></add-error>
+        </if-compare>
+        <check-errors/>
+        <calculate field="prorateAmount" type="BigDecimal" decimal-scale="0" rounding-mode="Floor">
+            <calcop operator="divide">
+                <calcop operator="multiply" field="parameters.baseSalary">
+                    <calcop operator="get" field="parameters.workDays"/>
+                </calcop>
+                <number value="30"/>
+            </calcop>
+        </calculate>
+        <field-to-result field="prorateAmount"/>
+    </simple-method>
+
+    <!-- 20190912 윤서진 신규 (기존 유지) -->
+    <simple-method method-name="calcDailyProrateOldOld" short-description="일할계산">
+        <if-compare field="parameters.workDays" operator="less" value="0" type="Long">
+            <add-error><fail-property resource="FrHrUiLabels" property="FrHrErrorInvalidWorkDays"/></add-error>
+        </if-compare>
+        <check-errors/>
+        <calculate field="prorateAmount" type="BigDecimal" decimal-scale="0" rounding-mode="Floor">
+            <calcop operator="divide">
+                <calcop operator="multiply" field="parameters.baseSalary">
+                    <calcop operator="get" field="parameters.workDays"/>
+                </calcop>
+                <number value="30"/>
+            </calcop>
+        </calculate>
+        <field-to-result field="prorateAmount"/>
+    </simple-method>
 </simple-methods>
