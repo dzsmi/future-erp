@@ -101,6 +101,19 @@
         <call-simple-method method-name="recalcFrSlipAmount"/>
     </simple-method>
 
+    <!-- 2019.09.16 정해인 백업 -->
+    <simple-method method-name="deleteFrSlipItemBak" short-description="전표 항목 삭제">
+        <entity-one entity-name="FrSlip" value-field="slip"/>
+        <call-simple-method method-name="checkFrSlipEditable"/>
+
+        <entity-one entity-name="FrSlipItem" value-field="slipItem"/>
+        <if-not-empty field="slipItem">
+            <remove-value value-field="slipItem"/>
+        </if-not-empty>
+
+        <call-simple-method method-name="recalcFrSlipAmount"/>
+    </simple-method>
+
     <!-- 차대구분(D/C)·금액(양수) 검증. checkItem 필드 필요 -->
     <simple-method method-name="validateFrSlipItemInline" short-description="차대구분/금액 검증">
         <if>

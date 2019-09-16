@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 작성: 오픈브릿지시스템즈 김현석 / 2018.03.26 -->
+<!--
+  수정이력
+    2019.09.16  정해인  재경 수정
+-->
 <services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
     <description>FutureRetail Accounting - Monthly Closing Services</description>

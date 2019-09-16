@@ -468,6 +468,12 @@ under the License.
         <description>Delete a InvoiceItemAttribute record</description>
         <auto-attributes include="pk" mode="IN"/>
     </service>
+
+    <!-- 2019.09.16 정해인 오타수정용 신규 -->
+    <service name="deleteInvioceItemAttribute" default-entity-name="InvoiceItemAttribute" engine="entity-auto" invoke="delete" auth="true">
+        <description>Delete a InvoiceItemAttribute record</description>
+        <auto-attributes include="pk" mode="IN"/>
+    </service>
     <service name="createInvoiceTermAttribute" default-entity-name="InvoiceTermAttribute" engine="entity-auto" invoke="create" auth="true">
         <description>Create a InvoiceTermAttribute record</description>
         <auto-attributes include="pk" mode="IN"/>
