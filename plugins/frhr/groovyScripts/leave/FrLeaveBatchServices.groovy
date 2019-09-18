@@ -23,6 +23,7 @@ import org.apache.ofbiz.entity.condition.EntityCondition
 import org.apache.ofbiz.entity.condition.EntityOperator
 
 def grantFrLeaveBatch() {
+    println "########## grantFrLeaveBatch start"
     String module = "FrLeaveBatchServices.groovy"
     LocalDate asOf = parameters.asOfDate ? parameters.asOfDate.toLocalDate() : LocalDate.now()
     Date asOfDate = Date.valueOf(asOf)
