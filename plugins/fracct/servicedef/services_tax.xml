@@ -25,6 +25,26 @@
         <attribute name="paymentPlanId" type="String" mode="OUT" optional="true"/>
     </service>
 
+    <!-- 2019.09.23 윤서진 테스트용 -->
+    <service name="createFrTaxInvoiceOld" default-entity-name="FrTaxInvoice" engine="simple"
+            location="component://fracct/minilang/FrTaxInvoiceServices.xml" invoke="createFrTaxInvoice" auth="true">
+        <description>
+            세금계산서 수기 등록. 부가세/합계는 공급가액으로 계산(입력값 사용 안 함).
+            매입 세금계산서(FRTI_PURCHASE)이면 지급계획(createFrPaymentPlanFromTaxInvoice)을 생성한다.
+        </description>
+        <permission-service service-name="fracctAdminPermissionCheck" main-action="CREATE"/>
+        <attribute name="taxInvoiceTypeEnumId" type="String" mode="IN" optional="false"/>
+        <attribute name="taxInvoiceNo" type="String" mode="IN" optional="true"/>
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+        <attribute name="issueDate" type="java.sql.Date" mode="IN" optional="false"/>
+        <attribute name="supplyAmount" type="BigDecimal" mode="IN" optional="false"/>
+        <attribute name="description" type="String" mode="IN" optional="true"/>
+        <attribute name="taxInvoiceId" type="String" mode="OUT" optional="false"/>
+        <attribute name="vatAmount" type="BigDecimal" mode="OUT" optional="false"/>
+        <attribute name="totalAmount" type="BigDecimal" mode="OUT" optional="false"/>
+        <attribute name="paymentPlanId" type="String" mode="OUT" optional="true"/>
+    </service>
+
     <service name="cancelFrTaxInvoice" engine="simple"
             location="component://fracct/minilang/FrTaxInvoiceServices.xml" invoke="cancelFrTaxInvoice" auth="true">
         <description>세금계산서 취소. 지급예정 지급계획도 함께 취소 (지급완료 건이 있으면 취소 불가)</description>
