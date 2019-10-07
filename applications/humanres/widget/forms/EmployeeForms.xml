@@ -18,6 +18,10 @@
     under the License.
 -->
 
+<!--
+  [퓨처리테일 수정이력] OFBiz 코어 파일 직접 수정
+    2019.10.07  윤서진  직원 상세 사번/직급/직책 노출, 한글 라벨 (업그레이드 시 반영 확인 필요)
+-->
 <forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns="http://ofbiz.apache.org/Widget-Form" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Form http://ofbiz.apache.org/dtds/widget-form.xsd">
     <form name="AddEmployee" type="single" target="createEmployee"
@@ -221,19 +225,25 @@
         <field name="submitButton" title="${uiLabelMap.CommonUpdate}"><submit button-type="button"/></field>
     </form>
     <form name="CurrentEmploymentData" default-map-name="employmentData" type="single">
-        <field name="company" entry-name="employment.partyIdFrom">
+        <!-- 2019.10.07 윤서진 : 사번/직급/입사일 추가, 직책·회사·급여 한글 라벨 -->
+        <field name="frEmplNo" title="${uiLabelMap.HumanResFrEmplNo}" map-name="frEmplInfo" entry-name="emplNo"><display/></field>
+        <field name="frPositionGrade" title="${uiLabelMap.HumanResFrPositionGrade}" map-name="frEmplInfo" entry-name="positionGradeId">
+            <display-entity entity-name="Enumeration" key-field-name="enumId" description="${description}"/>
+        </field>
+        <field name="frHireDate" title="${uiLabelMap.HumanResFrHireDate}" map-name="frEmplInfo" entry-name="hireDate"><display type="date"/></field>
+        <field name="company" title="${uiLabelMap.HumanResFrCompany}" entry-name="employment.partyIdFrom">
             <display-entity entity-name="PartyNameView" key-field-name="partyId" description="${groupName} ">
                 <sub-hyperlink target="/partymgr/control/viewprofile" description="[${employmentData.employment.partyIdFrom}]" target-type="inter-app">
                     <parameter param-name="partyId" from-field="employmentData.employment.partyIdFrom"/>
                 </sub-hyperlink>
             </display-entity>
         </field>
-        <field name="position" entry-name="emplPositionType.emplPositionTypeId">
+        <field name="position" title="${uiLabelMap.HumanResFrPositionTitle}" entry-name="emplPositionType.emplPositionTypeId">
             <hyperlink description="${employmentData.emplPositionType.description} [${employmentData.emplPosition.emplPositionId}]" target="emplPositionView">
                 <parameter param-name="emplPositionId" from-field="employmentData.emplPosition.emplPositionId"/>
             </hyperlink>
         </field>
-        <field name="salary" entry-name="emplPositionRateAmount.rateAmount">
+        <field name="salary" title="${uiLabelMap.HumanResFrSalary}" entry-name="emplPositionRateAmount.rateAmount">
             <display type="currency" currency="${employmentData.emplPositionRateAmount.rateCurrencyUomId}"/>
         </field>
     </form>

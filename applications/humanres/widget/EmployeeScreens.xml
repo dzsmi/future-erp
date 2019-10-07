@@ -18,6 +18,10 @@ specific language governing permissions and limitations
 under the License.
 -->
 
+<!--
+  [퓨처리테일 수정이력] OFBiz 코어 파일 직접 수정
+    2019.10.07  윤서진  직원 상세 사번/직급/직책 노출, 한글 라벨 (업그레이드 시 반영 확인 필요)
+-->
 <screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns="http://ofbiz.apache.org/Widget-Screen" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Screen http://ofbiz.apache.org/dtds/widget-screen.xsd">
     <screen name="FindEmployee">
@@ -303,6 +307,10 @@ under the License.
         <section>
             <actions>
                 <service service-name="getCurrentPartyEmploymentData" auto-field-map="true" result-map="employmentData"/>
+                <!-- 2019.10.07 윤서진 : 퓨처리테일 인사정보(frhr FrEmplInfo) 사번/직급 -->
+                <entity-one entity-name="FrEmplInfo" value-field="frEmplInfo" auto-field-map="false">
+                    <field-map field-name="partyId" from-field="partyId"/>
+                </entity-one>
             </actions>
             <widgets>
                 <screenlet title="${uiLabelMap.HumanResCurrentEmploymentData}">

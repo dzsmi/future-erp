@@ -18,6 +18,10 @@
     specific language governing permissions and limitations
     under the License.
 -->
+<!--
+  [퓨처리테일 수정이력] OFBiz 코어 파일 직접 수정
+    2019.10.07  윤서진  직원 상세 사번/직급/직책 노출, 한글 라벨 (업그레이드 시 반영 확인 필요)
+-->
 <resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/ofbiz-properties.xsd">
     <property key="FormFieldTitle_accountNumber">
         <value xml:lang="en">Account Number</value>
@@ -1153,6 +1157,31 @@
         <value xml:lang="zh">开源软件OFBiz家族的一部分</value>
         <value xml:lang="zh-TW">開源軟體OFBiz家族的一部分</value>
     </property>
+    <!-- 2019.10.07 윤서진 퓨처리테일 인사정보 항목 -->
+    <property key="HumanResFrEmplNo">
+        <value xml:lang="en">Employee No.</value>
+        <value xml:lang="ko">사번</value>
+    </property>
+    <property key="HumanResFrPositionGrade">
+        <value xml:lang="en">Grade</value>
+        <value xml:lang="ko">직급</value>
+    </property>
+    <property key="HumanResFrPositionTitle">
+        <value xml:lang="en">Position</value>
+        <value xml:lang="ko">직책</value>
+    </property>
+    <property key="HumanResFrCompany">
+        <value xml:lang="en">Company</value>
+        <value xml:lang="ko">회사</value>
+    </property>
+    <property key="HumanResFrSalary">
+        <value xml:lang="en">Salary</value>
+        <value xml:lang="ko">급여</value>
+    </property>
+    <property key="HumanResFrHireDate">
+        <value xml:lang="en">Hire Date</value>
+        <value xml:lang="ko">입사일</value>
+    </property>
     <property key="HumanResCurrentEmploymentData">
         <value xml:lang="en">Current Employment information</value>
         <value xml:lang="fr">Informations actuelles sur l'emploi</value>
@@ -1162,6 +1191,7 @@
         <value xml:lang="vi">Thông tin Việc làm hiện tại</value>
         <value xml:lang="zh">当前雇佣关系信息</value>
         <value xml:lang="zh-TW">當前雇佣資訊</value>
+        <value xml:lang="ko">현재 고용 정보</value>
     </property>
     <property key="HumanResEditAgreementEmploymentAppl">
         <value xml:lang="en">Edit Agreement Employment Appl</value>
@@ -1455,6 +1485,7 @@
         <value xml:lang="vi">Id Nhân sự</value>
         <value xml:lang="zh">雇员系统编号</value>
         <value xml:lang="zh-TW">員工團體識別</value>
+        <value xml:lang="ko">직원 ID</value>
     </property>
     <property key="HumanResEmployeePosition">
         <value xml:lang="de">Stellen</value>
@@ -1467,6 +1498,7 @@
         <value xml:lang="vi">Vị trí</value>
         <value xml:lang="zh">职位管理</value>
         <value xml:lang="zh-TW">職位管理</value>
+        <value xml:lang="ko">직책</value>
     </property>
 
     <!-- 20190621 윤서진 백업 -->
@@ -1535,6 +1567,7 @@
         <value xml:lang="vi">Việc làm</value>
         <value xml:lang="zh">部门管理</value>
         <value xml:lang="zh-TW">部門管理</value>
+        <value xml:lang="ko">고용</value>
     </property>
     <property key="HumanResEmploymentApp">
         <value xml:lang="de">Einstellungsmöglichkeiten</value>
@@ -1559,6 +1592,7 @@
         <value xml:lang="vi">Tổ chức nội bộ</value>
         <value xml:lang="zh">组织机构</value>
         <value xml:lang="zh-TW">組織機構</value>
+        <value xml:lang="ko">소속 법인</value>
     </property>
     <property key="HumanResEmploymentPartyIdFromToolTip">
         <value xml:lang="en">Internal Organization Employee works in</value>
@@ -2868,6 +2902,7 @@
         <value xml:lang="vi">Nguyên nhân Ngừng công việc</value>
         <value xml:lang="zh">雇佣关系终止原因编号</value>
         <value xml:lang="zh-TW">雇佣終止原因識別</value>
+        <value xml:lang="ko">퇴직 사유</value>
     </property>
     <property key="HumanResTerminationTypeId">
         <value xml:lang="de">Entlassungsart</value>
