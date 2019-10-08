@@ -80,6 +80,7 @@
     </simple-method>
 
     <!-- 퇴사 처리(processFrRetire) 후 SECA 로 호출 : 진행중인 Employment 종료 -->
+    <!-- 인사팀 확인 후 삭제 예정 -->
     <simple-method method-name="expireFrEmployment" short-description="Employment 종료일 설정">
         <entity-and entity-name="Employment" list="employments" filter-by-date="true">
             <field-map field-name="partyIdTo" from-field="parameters.partyId"/>
