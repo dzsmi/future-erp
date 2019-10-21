@@ -53,6 +53,16 @@
         <check-errors/>
     </simple-method>
 
+    <!-- 20191021 윤서진 테스트용 -->
+    <simple-method method-name="validateCloseYearMonthInlineNew" short-description="마감년월 형식 체크">
+        <if-regexp field="parameters.closeYearMonth" expr="^20[0-9]{2}(0[1-9]|1[0-2])$">
+            <else>
+                <add-error><fail-property resource="FrAcctErrorUiLabels" property="FrAcctPeriodInvalidYearMonth"/></add-error>
+            </else>
+        </if-regexp>
+        <check-errors/>
+    </simple-method>
+
     <!-- 20190802 윤서진 기존 로직 백업 -->
     <simple-method method-name="validateCloseYearMonthInline2" short-description="마감년월 형식 체크">
         <if-regexp field="parameters.closeYearMonth" expr="^20[0-9]{2}(0[1-9]|1[0-2])$">
