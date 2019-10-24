@@ -192,6 +192,12 @@
         <value xml:lang="en">Approve</value>
         <value xml:lang="ko">승인</value>
     </property>
+
+    <!-- 2019.10.24 윤서진 백업 -->
+    <property key="FrAcctApprActionApproveNew">
+        <value xml:lang="en">Approve</value>
+        <value xml:lang="ko">승인</value>
+    </property>
     <property key="FrAcctApprActionReject">
         <value xml:lang="en">Reject</value>
         <value xml:lang="ko">반려</value>
@@ -209,6 +215,12 @@
         <value xml:lang="ko">결재 의견</value>
     </property>
     <property key="FrAcctRequestedDate">
+        <value xml:lang="en">Requested Date</value>
+        <value xml:lang="ko">상신일시</value>
+    </property>
+
+    <!-- 2019.10.24 윤서진 신규 (기존 유지) -->
+    <property key="FrAcctRequestedDate2">
         <value xml:lang="en">Requested Date</value>
         <value xml:lang="ko">상신일시</value>
     </property>
