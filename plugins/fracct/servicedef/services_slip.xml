@@ -75,6 +75,14 @@
         <attribute name="apprLevelEnumId" type="String" mode="OUT" optional="false"/>
     </service>
 
+    <!-- 2019.11.29 윤서진 신규 (기존 유지) -->
+    <service name="getFrApprLevel2" engine="simple"
+            location="component://fracct/minilang/FrSlipServices.xml" invoke="getFrApprLevel" auth="true">
+        <description>금액에 해당하는 결재레벨 조회 (determineApprLevel 사용)</description>
+        <attribute name="amount" type="BigDecimal" mode="IN" optional="false"/>
+        <attribute name="apprLevelEnumId" type="String" mode="OUT" optional="false"/>
+    </service>
+
     <service name="requestFrSlip" engine="simple"
             location="component://fracct/minilang/FrSlipServices.xml" invoke="requestFrSlip" auth="true">
         <description>전표 상신: 차대 일치 검사 후 결재레벨 결정, 상태 FRSLIP_REQUESTED</description>

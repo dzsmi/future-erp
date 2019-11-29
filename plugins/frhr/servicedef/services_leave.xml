@@ -33,6 +33,14 @@
         <permission-service service-name="frHrPermissionCheck" main-action="UPDATE"/>
         <attribute name="leaveUseId" type="String" mode="IN" optional="false"/>
     </service>
+
+    <!-- 2019.11.29 윤서진 신규 (기존 유지) -->
+    <service name="approveFrLeaveUse2" engine="simple"
+            location="component://frhr/minilang/FrLeaveServices.xml" invoke="approveFrLeaveUse" auth="true">
+        <description>연차 사용 승인</description>
+        <permission-service service-name="frHrPermissionCheck" main-action="UPDATE"/>
+        <attribute name="leaveUseId" type="String" mode="IN" optional="false"/>
+    </service>
     <service name="rejectFrLeaveUse" engine="simple"
             location="component://frhr/minilang/FrLeaveServices.xml" invoke="rejectFrLeaveUse" auth="true">
         <description>연차 사용 반려</description>
