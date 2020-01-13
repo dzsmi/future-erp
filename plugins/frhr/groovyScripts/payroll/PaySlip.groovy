@@ -5,6 +5,7 @@
 
 import org.apache.ofbiz.entity.GenericValue
 
+println "########## PaySlip.groovy start"
 payrollId = parameters.payrollId
 if (payrollId) {
     GenericValue payroll = from("FrPayroll").where(payrollId: payrollId).queryOne()
