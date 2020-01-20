@@ -201,6 +201,28 @@
         <response name="success" type="view" value="ViewFrRetireSettle"/>
     </request-map>
 
+  <!-- 근태2 -->
+  <request-map uri="Attend2List"><security https="true" auth="true"/><response name="success" type="view" value="Attend2List"/></request-map>
+  <request-map uri="saveAttend2">
+    <security https="true" auth="true"/>
+    <event type="service" invoke="saveAttend2"/>
+    <response name="success" type="view" value="Attend2List"/>
+    <response name="error" type="view" value="Attend2List"/>
+  </request-map>
+  <request-map uri="Ot2Request"><security https="true" auth="true"/><response name="success" type="view" value="Ot2Request"/></request-map>
+  <request-map uri="requestOt2">
+    <security https="true" auth="true"/>
+    <event type="service" invoke="requestOt2"/>
+    <response name="success" type="view" value="Ot2Request"/>
+    <response name="error" type="view" value="Ot2Request"/>
+  </request-map>
+  <request-map uri="cancelOt2">
+    <security https="true" auth="true"/>
+    <event type="service" invoke="cancelOt2"/>
+    <response name="success" type="view" value="Ot2Request"/>
+    <response name="error" type="view" value="Ot2Request"/>
+  </request-map>
+
     <!-- View Mappings -->
     <view-map name="main" type="screen" page="component://frhr/widget/CommonScreens.xml#FrHrMain"/>
 
@@ -217,6 +239,8 @@
 
     <view-map name="FindFrAttendance" type="screen" page="component://frhr/widget/AttendanceScreens.xml#FindFrAttendance"/>
     <view-map name="EditFrAttendance" type="screen" page="component://frhr/widget/AttendanceScreens.xml#EditFrAttendance"/>
+  <view-map name="Attend2List" type="screen" page="component://frhr/widget/Attend2Screens.xml#Attend2List"/>
+  <view-map name="Ot2Request" type="screen" page="component://frhr/widget/Attend2Screens.xml#Ot2Request"/>
 
     <view-map name="FindFrLeaveGrant" type="screen" page="component://frhr/widget/LeaveScreens.xml#FindFrLeaveGrant"/>
     <view-map name="FindFrLeaveUse" type="screen" page="component://frhr/widget/LeaveScreens.xml#FindFrLeaveUse"/>

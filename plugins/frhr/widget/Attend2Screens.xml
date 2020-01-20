@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://ofbiz.apache.org/Widget-Screen" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Screen http://ofbiz.apache.org/dtds/widget-screen.xsd">
+
+  <!-- 근태2 출퇴근 -->
+  <screen name="Attend2List">
+    <section>
+      <actions>
+        <set field="titleProperty" value="FrHrAttendance"/>
+        <set field="headerItem" value="Attendance"/>
+        <set field="att2Id" from-field="parameters.att2Id"/>
+        <entity-one entity-name="FrAttend2" value-field="att2"/>
+      </actions>
+      <widgets>
+        <decorator-screen name="CommonFrHrDecorator" location="component://frhr/widget/CommonScreens.xml">
+          <decorator-section name="body">
+            <screenlet title="출퇴근 등록">
+              <label text="휴게: 4시간 초과 30분, 8시간 초과 1시간 / 토,일,공휴일은 휴일근로"/>
+              <include-form name="EditAttend2" location="component://frhr/widget/Attend2Forms.xml"/>
+            </screenlet>
+            <screenlet title="근태 조회">
+              <include-form name="FindAttend2" location="component://frhr/widget/Attend2Forms.xml"/>
+            </screenlet>
+            <include-form name="ListAttend2" location="component://frhr/widget/Attend2Forms.xml"/>
+          </decorator-section>
+        </decorator-screen>
+      </widgets>
+    </section>
+  </screen>
+
+  <!-- 연장근로 신청 -->
+  <screen name="Ot2Request">
+    <section>
+      <actions>
+        <set field="titleProperty" value="FrHrAttendance"/>
+        <set field="headerItem" value="Attendance"/>
+      </actions>
+      <widgets>
+        <decorator-screen name="CommonFrHrDecorator" location="component://frhr/widget/CommonScreens.xml">
+          <decorator-section name="body">
+            <screenlet title="연장근로 신청">
+              <label text="평일 연장근로는 주(월~일) 12시간을 넘게 신청할 수 없습니다."/>
+              <include-form name="Ot2RequestForm" location="component://frhr/widget/Attend2Forms.xml"/>
+            </screenlet>
+            <screenlet title="신청 내역">
+              <include-form name="ListOt2" location="component://frhr/widget/Attend2Forms.xml"/>
+            </screenlet>
+          </decorator-section>
+        </decorator-screen>
+      </widgets>
+    </section>
+  </screen>
+</screens>

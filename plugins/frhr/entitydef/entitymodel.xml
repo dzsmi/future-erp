@@ -190,4 +190,36 @@
 			<key-map field-name="partyId"/>
 		</relation>
 	</entity>
+
+    <!-- 근태2 (주52시간) -->
+    <entity entity-name="FrAttend2" package-name="com.futureretail.frhr.attend2" title="근태2 일별">
+        <field name="att2Id" type="id"></field>
+        <field name="partyId" type="id"></field>
+        <field name="attDate" type="date"></field>
+        <field name="inTime" type="date-time"></field>
+        <field name="outTime" type="date-time"></field>
+        <field name="workHr" type="fixed-point"><description>근무시간(휴게제외)</description></field>
+        <field name="otHr" type="fixed-point"><description>평일연장</description></field>
+        <field name="holiHr" type="fixed-point"><description>휴일근로</description></field>
+        <field name="holidayYn" type="indicator"></field>
+        <field name="att2Type" type="id"><description>NORMAL / LEAVE / BIZTRIP / ABSENT</description></field>
+        <field name="memo" type="description"></field>
+        <prim-key field="att2Id"/>
+        <relation type="one-nofk" rel-entity-name="Party"><key-map field-name="partyId"/></relation>
+    </entity>
+    <entity entity-name="FrAttend2Ot" package-name="com.futureretail.frhr.attend2" title="연장근로 신청">
+        <field name="otReqId" type="id"></field>
+        <field name="partyId" type="id"></field>
+        <field name="otDate" type="date"></field>
+        <field name="otType" type="id"><description>WEEKDAY / HOLIDAY</description></field>
+        <field name="startTime" type="date-time"></field>
+        <field name="endTime" type="date-time"></field>
+        <field name="otHr" type="fixed-point"></field>
+        <field name="reason" type="description"></field>
+        <field name="reqStatus" type="id"><description>REQ / APPR / REJ</description></field>
+        <field name="apprPartyId" type="id"></field>
+        <field name="apprDate" type="date-time"></field>
+        <prim-key field="otReqId"/>
+        <relation type="one-nofk" rel-entity-name="Party"><key-map field-name="partyId"/></relation>
+    </entity>
 </entitymodel>

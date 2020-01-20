@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://ofbiz.apache.org/Widget-Form" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Form http://ofbiz.apache.org/dtds/widget-form.xsd">
+
+  <form name="EditAttend2" type="single" target="saveAttend2" default-map-name="att2" default-table-style="basic-table">
+    <field name="att2Id"><hidden/></field>
+    <field name="partyId" title="직원" required-field="true"><lookup target-form-name="LookupPerson"/></field>
+    <field name="attDate" title="근무일" required-field="true"><date-time type="date"/></field>
+    <field name="inTime" title="출근"><date-time type="timestamp"/></field>
+    <field name="outTime" title="퇴근"><date-time type="timestamp"/></field>
+    <field name="att2Type" title="구분">
+      <drop-down allow-empty="false">
+        <option key="NORMAL" description="정상"/>
+        <option key="BIZTRIP" description="출장"/>
+        <option key="LEAVE" description="연차"/>
+        <option key="ABSENT" description="결근"/>
+      </drop-down>
+    </field>
+    <field name="holidayYn" title="공휴일">
+      <drop-down allow-empty="true"><option key="Y" description="공휴일"/></drop-down>
+    </field>
+    <field name="memo" title="비고"><text size="40"/></field>
+    <field name="submitButton" title="저장" widget-style="smallSubmit"><submit button-type="button"/></field>
+  </form>
+
+  <form name="FindAttend2" type="single" target="Attend2List" default-entity-name="FrAttend2" default-table-style="basic-table">
+    <field name="noConditionFind"><hidden value="Y"/></field>
+    <field name="partyId" title="직원"><lookup target-form-name="LookupPerson"/></field>
+    <field name="attDate" title="근무일"><date-find type="date"/></field>
+    <field name="searchButton" title="조회" widget-style="smallSubmit"><submit button-type="button"/></field>
+  </form>
+
+  <form name="ListAttend2" type="list" list-name="listIt" paginate-target="Attend2List" default-entity-name="FrAttend2"
+    odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+    <actions>
+      <service service-name="performFind" result-map="result" result-map-list="listIt">
+        <field-map field-name="inputFields" from-field="parameters"/>
+        <field-map field-name="entityName" value="FrAttend2"/>
+        <field-map field-name="orderBy" value="-attDate|partyId"/>
+        <field-map field-name="viewIndex" from-field="viewIndex"/>
+        <field-map field-name="viewSize" from-field="viewSize"/>
+      </service>
+    </actions>
+    <field name="attDate" title="근무일"><display/></field>
+    <field name="partyId" title="직원"><display-entity entity-name="Person" description="${lastName}${firstName}"/></field>
+    <field name="att2Type" title="구분"><display/></field>
+    <field name="holidayYn" title="휴일"><display/></field>
+    <field name="inTime" title="출근"><display/></field>
+    <field name="outTime" title="퇴근"><display/></field>
+    <field name="workHr" title="근무"><display/></field>
+    <field name="otHr" title="연장"><display/></field>
+    <field name="holiHr" title="휴일근로"><display/></field>
+    <field name="editLink" title=" " widget-style="buttontext">
+      <hyperlink description="수정" target="Attend2List"><parameter param-name="att2Id"/></hyperlink>
+    </field>
+  </form>
+
+  <form name="Ot2RequestForm" type="single" target="requestOt2" default-table-style="basic-table">
+    <field name="partyId" title="직원" required-field="true"><lookup target-form-name="LookupPerson"/></field>
+    <field name="otDate" title="연장근로일" required-field="true"><date-time type="date"/></field>
+    <field name="startTime" title="시작" required-field="true"><date-time type="timestamp"/></field>
+    <field name="endTime" title="종료" required-field="true"><date-time type="timestamp"/></field>
+    <field name="holidayYn" title="공휴일">
+      <drop-down allow-empty="true"><option key="Y" description="공휴일"/></drop-down>
+    </field>
+    <field name="reason" title="사유"><text size="60"/></field>
+    <field name="submitButton" title="신청" widget-style="smallSubmit"><submit button-type="button"/></field>
+  </form>
+
+  <form name="ListOt2" type="list" list-name="listIt" paginate-target="Ot2Request" default-entity-name="FrAttend2Ot"
+    odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+    <actions>
+      <service service-name="performFind" result-map="result" result-map-list="listIt">
+        <field-map field-name="inputFields" from-field="parameters"/>
+        <field-map field-name="entityName" value="FrAttend2Ot"/>
+        <field-map field-name="orderBy" value="-otDate|partyId"/>
+        <field-map field-name="noConditionFind" value="Y"/>
+        <field-map field-name="viewIndex" from-field="viewIndex"/>
+        <field-map field-name="viewSize" from-field="viewSize"/>
+      </service>
+    </actions>
+    <field name="otDate" title="일자"><display/></field>
+    <field name="partyId" title="직원"><display-entity entity-name="Person" description="${lastName}${firstName}"/></field>
+    <field name="otType" title="구분"><display/></field>
+    <field name="startTime" title="시작"><display/></field>
+    <field name="endTime" title="종료"><display/></field>
+    <field name="otHr" title="시간"><display/></field>
+    <field name="reason" title="사유"><display/></field>
+    <field name="reqStatus" title="상태"><display/></field>
+    <field name="cancelLink" title=" " widget-style="buttontext" use-when="&quot;REQ&quot;.equals(reqStatus)">
+      <hyperlink description="취소" target="cancelOt2" link-type="hidden-form" request-confirmation="true"><parameter param-name="otReqId"/></hyperlink>
+    </field>
+  </form>
+</forms>

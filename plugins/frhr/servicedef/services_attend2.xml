@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+  <description>근태2 - 주52시간</description>
+  <version>2.0</version>
+
+  <!-- 출퇴근 -->
+  <service name="saveAttend2" engine="groovy" location="component://frhr/groovyScripts/attend2/Attend2Services.groovy" invoke="saveAttend2" auth="true">
+    <description>출퇴근 저장 (근무/연장/휴일 시간 계산)</description>
+    <attribute name="att2Id" type="String" mode="INOUT" optional="true"/>
+    <attribute name="partyId" type="String" mode="IN" optional="false"/>
+    <attribute name="attDate" type="java.sql.Date" mode="IN" optional="false"/>
+    <attribute name="inTime" type="Timestamp" mode="IN" optional="true"/>
+    <attribute name="outTime" type="Timestamp" mode="IN" optional="true"/>
+    <attribute name="holidayYn" type="String" mode="IN" optional="true"/>
+    <attribute name="att2Type" type="String" mode="IN" optional="true"/>
+    <attribute name="memo" type="String" mode="IN" optional="true"/>
+  </service>
+
+  <!-- 연장근로 신청 -->
+  <service name="requestOt2" engine="groovy" location="component://frhr/groovyScripts/attend2/Attend2Services.groovy" invoke="requestOt2" auth="true">
+    <description>연장근로 신청 - 주 12시간 초과 체크</description>
+    <attribute name="partyId" type="String" mode="IN" optional="false"/>
+    <attribute name="otDate" type="java.sql.Date" mode="IN" optional="false"/>
+    <attribute name="startTime" type="Timestamp" mode="IN" optional="false"/>
+    <attribute name="endTime" type="Timestamp" mode="IN" optional="false"/>
+    <attribute name="holidayYn" type="String" mode="IN" optional="true"/>
+    <attribute name="reason" type="String" mode="IN" optional="true"/>
+    <attribute name="otReqId" type="String" mode="OUT" optional="true"/>
+    <attribute name="weekOtHr" type="BigDecimal" mode="OUT" optional="true"/>
+  </service>
+  <service name="cancelOt2" engine="groovy" location="component://frhr/groovyScripts/attend2/Attend2Services.groovy" invoke="cancelOt2" auth="true">
+    <attribute name="otReqId" type="String" mode="IN" optional="false"/>
+  </service>
+</services>
