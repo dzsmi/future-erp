@@ -216,6 +216,13 @@
     <response name="success" type="view" value="Ot2Request"/>
     <response name="error" type="view" value="Ot2Request"/>
   </request-map>
+  <request-map uri="Ot2Approve"><security https="true" auth="true"/><response name="success" type="view" value="Ot2Approve"/></request-map>
+  <request-map uri="approveOt2">
+    <security https="true" auth="true"/>
+    <event type="service" invoke="approveOt2"/>
+    <response name="success" type="view" value="Ot2Approve"/>
+    <response name="error" type="view" value="Ot2Approve"/>
+  </request-map>
   <request-map uri="cancelOt2">
     <security https="true" auth="true"/>
     <event type="service" invoke="cancelOt2"/>
@@ -241,6 +248,7 @@
     <view-map name="EditFrAttendance" type="screen" page="component://frhr/widget/AttendanceScreens.xml#EditFrAttendance"/>
   <view-map name="Attend2List" type="screen" page="component://frhr/widget/Attend2Screens.xml#Attend2List"/>
   <view-map name="Ot2Request" type="screen" page="component://frhr/widget/Attend2Screens.xml#Ot2Request"/>
+  <view-map name="Ot2Approve" type="screen" page="component://frhr/widget/Attend2Screens.xml#Ot2Approve"/>
 
     <view-map name="FindFrLeaveGrant" type="screen" page="component://frhr/widget/LeaveScreens.xml#FindFrLeaveGrant"/>
     <view-map name="FindFrLeaveUse" type="screen" page="component://frhr/widget/LeaveScreens.xml#FindFrLeaveUse"/>

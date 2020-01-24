@@ -133,3 +133,16 @@ def cancelOt2() {
   ot.remove()
   return success()
 }
+
+def approveOt2() {
+  def ot = from("FrAttend2Ot").where("otReqId", parameters.otReqId).queryOne()
+  if (ot == null) return error("신청건 없음")
+  if (!"REQ".equals(ot.reqStatus)) return error("신청 상태만 승인/반려 가능")
+  if (!["APPR", "REJ"].contains(parameters.reqStatus)) return error("상태값 오류 " + parameters.reqStatus)
+  ot.reqStatus = parameters.reqStatus
+  ot.apprPartyId = userLogin?.partyId
+  ot.apprDate = UtilDateTime.nowTimestamp()
+  ot.store()
+  println "ot2 approve >>> " + ot.otReqId + " " + ot.reqStatus
+  return success()
+}

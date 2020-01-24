@@ -32,4 +32,12 @@
   <service name="cancelOt2" engine="groovy" location="component://frhr/groovyScripts/attend2/Attend2Services.groovy" invoke="cancelOt2" auth="true">
     <attribute name="otReqId" type="String" mode="IN" optional="false"/>
   </service>
+
+  <!-- 승인 -->
+  <service name="approveOt2" engine="groovy" location="component://frhr/groovyScripts/attend2/Attend2Services.groovy" invoke="approveOt2" auth="true">
+    <description>연장근로 승인/반려</description>
+    <permission-service service-name="frHrPermissionCheck" main-action="UPDATE"/>
+    <attribute name="otReqId" type="String" mode="IN" optional="false"/>
+    <attribute name="reqStatus" type="String" mode="IN" optional="false"><description>APPR / REJ</description></attribute>
+  </service>
 </services>
