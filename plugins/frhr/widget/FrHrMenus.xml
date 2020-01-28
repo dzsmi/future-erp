@@ -6,7 +6,8 @@
         <menu-item name="main" title="${uiLabelMap.CommonMain}"><link target="main"/></menu-item>
         <menu-item name="EmplInfo" title="${uiLabelMap.FrHrEmplInfo}"><link target="FindFrEmplInfo"/></menu-item>
         <menu-item name="Payroll" title="${uiLabelMap.FrHrPayroll}"><link target="FindFrPayroll"/></menu-item>
-        <menu-item name="Attendance" title="${uiLabelMap.FrHrAttendance}"><link target="FindFrAttendance"/></menu-item>
+        <!-- <menu-item name="Attendance" title="${uiLabelMap.FrHrAttendance}"><link target="FindFrAttendance"/></menu-item> -->
+        <menu-item name="Attendance" title="${uiLabelMap.FrHrAttendance}"><link target="Attend2List"/></menu-item>
         <menu-item name="Leave" title="${uiLabelMap.FrHrLeave}"><link target="FindFrLeaveUse"/></menu-item>
         <menu-item name="Retire" title="${uiLabelMap.FrHrRetire}"><link target="FindFrRetireSettle"/></menu-item>
         <menu-item name="InsuranceRate" title="${uiLabelMap.FrHrInsuranceRate}">
@@ -40,4 +41,13 @@
             <link target="FrRetireProcess"/>
         </menu-item>
     </menu>
+
+  <menu name="Attend2TabBar" default-selected-style="selected" type="simple" menu-container-style="button-bar tab-bar" selected-menuitem-context-field-name="tabButtonItem">
+    <menu-item name="Attend2List" title="출퇴근"><link target="Attend2List"/></menu-item>
+    <menu-item name="Ot2Request" title="연장근로 신청"><link target="Ot2Request"/></menu-item>
+    <menu-item name="Ot2Approve" title="연장근로 승인">
+      <condition><if-has-permission permission="FRHR" action="_UPDATE"/></condition>
+      <link target="Ot2Approve"/>
+    </menu-item>
+  </menu>
 </menus>
