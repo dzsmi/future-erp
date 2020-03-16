@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 윤서진 / 2020.03.16 -->
+<!-- 2020년 4대보험 근로자 부담 요율 (%) - 2020.01.01 적용 -->
+<!-- 고용보험 실업급여는 2019.10.01부터 0.8 (2019년 10~12월분은 소급 미반영) -->
+<entity-engine-xml>
+    <FrInsuranceRate rateYear="2020" insuranceType="HEALTH" rate="3.335" description="건강보험 (보수월액 대비)"/>
+    <FrInsuranceRate rateYear="2020" insuranceType="LONGTERM" rate="10.25" description="장기요양보험 (건강보험료 대비)"/>
+    <FrInsuranceRate rateYear="2020" insuranceType="PENSION" rate="4.5" description="국민연금 (기준소득월액 대비)"/>
+    <FrInsuranceRate rateYear="2020" insuranceType="EMPLOY" rate="0.8" description="고용보험 실업급여 (보수총액 대비)"/>
+</entity-engine-xml>

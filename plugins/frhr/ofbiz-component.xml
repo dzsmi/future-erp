@@ -19,6 +19,7 @@
     <entity-resource type="data" reader-name="seed" loader="main" location="data/FrHrSecurityPermissionSeedData.xml"/>
     <entity-resource type="data" reader-name="seed" loader="main" location="data/FrHrInsuranceRateData.xml"/>
     <entity-resource type="data" reader-name="seed" loader="main" location="data/FrHrInsuranceRateData2019.xml"/>
+    <entity-resource type="data" reader-name="seed" loader="main" location="data/FrHrInsuranceRateData2020.xml"/>
     <!-- 2018.10.15 윤서진 연차 배치 스케줄 -->
     <entity-resource type="data" reader-name="seed-initial" loader="main" location="data/FrHrLeaveJobData.xml"/>
 
