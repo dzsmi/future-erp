@@ -102,6 +102,12 @@
         <value xml:lang="en">Seq</value>
         <value xml:lang="ko">순번</value>
     </property>
+
+    <!-- 2020.03.16 윤서진 테스트용 -->
+    <property key="FrAcctSeqNew">
+        <value xml:lang="en">Seq</value>
+        <value xml:lang="ko">순번</value>
+    </property>
     <property key="FrAcctGlAccount">
         <value xml:lang="en">GL Account</value>
         <value xml:lang="ko">계정과목</value>
