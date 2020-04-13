@@ -221,6 +221,24 @@
         <store-value value-field="leaveUse"/>
     </simple-method>
 
+    <!-- 2020.04.13 홍성민 백업 -->
+    <simple-method method-name="rejectFrLeaveUseTest" short-description="연차 사용 반려">
+        <entity-one entity-name="FrLeaveUse" value-field="leaveUse"/>
+        <if-empty field="leaveUse">
+            <add-error><fail-property resource="FrHrUiLabels" property="FrHrErrorLeaveUseNotFound"/></add-error>
+        </if-empty>
+        <check-errors/>
+        <if-compare field="leaveUse.statusId" operator="not-equals" value="FRLU_REQUESTED">
+            <add-error><fail-property resource="FrHrUiLabels" property="FrHrErrorLeaveUseNotRequested"/></add-error>
+        </if-compare>
+        <check-errors/>
+
+        <set field="leaveUse.statusId" value="FRLU_REJECTED"/>
+        <set field="leaveUse.approverPartyId" from-field="userLogin.partyId"/>
+        <now-timestamp field="leaveUse.approvedDate"/>
+        <store-value value-field="leaveUse"/>
+    </simple-method>
+
     <!-- ================================================================== -->
     <!-- 연차 잔여 조회 : 해당년도 발생 합계 - 승인 사용 - 신청중            -->
     <!-- ================================================================== -->

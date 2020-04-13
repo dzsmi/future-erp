@@ -16,6 +16,7 @@ import org.apache.ofbiz.entity.GenericValue
 import org.apache.ofbiz.service.ServiceUtil
 
 def uploadFrSlipCsv() {
+    println "### uploadFrSlipCsv 진입 : " + parameters
     String module = "FrSlipUploadServices.groovy"
     ByteBuffer buf = parameters.uploadedFile
     if (buf == null) {
