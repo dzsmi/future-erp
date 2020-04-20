@@ -427,4 +427,37 @@
         <value xml:lang="en">Days from tax invoice issue date</value>
         <value xml:lang="ko">세금계산서 발행일 기준 지급일수</value>
     </property>
+    <!-- 2020.04.20 정해인 예상 결재선 미리보기 -->
+    <property key="FrAcctApprPreview">
+        <value xml:lang="en">Expected Approval Line</value>
+        <value xml:lang="ko">예상 결재선</value>
+    </property>
+    <property key="FrAcctApprPreviewAmount">
+        <value xml:lang="en">Amount</value>
+        <value xml:lang="ko">금액</value>
+    </property>
+    <property key="FrAcctApprPreviewLine">
+        <value xml:lang="en">Approval Line</value>
+        <value xml:lang="ko">결재선</value>
+    </property>
+    <property key="FrAcctApprPreviewButton">
+        <value xml:lang="en">Preview</value>
+        <value xml:lang="ko">결재선 확인</value>
+    </property>
+    <property key="FrAcctApprPreviewNotice">
+        <value xml:lang="en">Up to 5,000,000 KRW: team leader / up to 50,000,000 KRW: division head / over: CEO</value>
+        <value xml:lang="ko">500만원 이하 팀장 전결, 5,000만원 이하 본부장, 5,000만원 초과 대표이사 결재</value>
+    </property>
+    <property key="FrAcctApprTeam">
+        <value xml:lang="en">Team Leader</value>
+        <value xml:lang="ko">팀장</value>
+    </property>
+    <property key="FrAcctApprDiv">
+        <value xml:lang="en">Division Head</value>
+        <value xml:lang="ko">본부장</value>
+    </property>
+    <property key="FrAcctApprCeo">
+        <value xml:lang="en">CEO</value>
+        <value xml:lang="ko">대표이사</value>
+    </property>
 </resource>

@@ -81,6 +81,14 @@
         <field name="submitButton" title="${uiLabelMap.CommonUpdate}" use-when="frSlip!=null"><submit button-type="button"/></field>
     </form>
 
+    <!-- 2020.04.20 정해인 예상 결재선 미리보기 (금액 입력) -->
+    <form name="FrSlipApprPreview" type="single" target="EditFrSlipItems"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="slipId"><hidden value="${parameters.slipId}"/></field>
+        <field name="previewAmount" title="${uiLabelMap.FrAcctApprPreviewAmount}"><text size="15" default-value="${previewAmount}"/></field>
+        <field name="previewButton" title="${uiLabelMap.FrAcctApprPreviewButton}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+
     <form name="FrSlipHeader" type="single" default-map-name="frSlip"
         header-row-style="header-row" default-table-style="basic-table">
         <field name="slipId" title="${uiLabelMap.FrAcctSlipId}" position="1"><display/></field>

@@ -87,6 +87,8 @@
                     <order-by field-name="slipItemSeqId"/>
                 </entity-and>
                 <script location="component://fracct/groovyScripts/slip/FrSlipBalance.groovy"/>
+                <!-- 2020.04.20 정해인 예상 결재선 미리보기 -->
+                <script location="component://fracct/groovyScripts/slip/FrSlipApprPreview.groovy"/>
             </actions>
             <widgets>
                 <decorator-screen name="CommonFrSlipDecorator" location="${parameters.mainDecoratorLocation}">
@@ -114,6 +116,11 @@
                         </section>
                         <screenlet title="${uiLabelMap.FrAcctBalanceCheck}">
                             <platform-specific><html><html-template location="component://fracct/template/slip/FrSlipBalance.ftl"/></html></platform-specific>
+                        </screenlet>
+                        <screenlet title="${uiLabelMap.FrAcctApprPreview}">
+                            <include-form name="FrSlipApprPreview" location="component://fracct/widget/FrSlipForms.xml"/>
+                            <label style="h3" text="${uiLabelMap.FrAcctApprPreviewAmount} : ${previewAmountText} / ${uiLabelMap.FrAcctApprPreviewLine} : ${previewApprLine}"/>
+                            <label text="${uiLabelMap.FrAcctApprPreviewNotice}"/>
                         </screenlet>
                     </decorator-section>
                 </decorator-screen>
