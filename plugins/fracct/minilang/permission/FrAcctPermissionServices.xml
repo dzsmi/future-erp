@@ -58,6 +58,19 @@
         <field-to-result field="hasPermission"/>
     </simple-method>
 
+    <!-- 20200504 홍성민 테스트용 -->
+    <simple-method method-name="fracctAdminPermissionCheckTest" short-description="FrAcct admin permission check">
+        <set field="hasPermission" type="Boolean" value="false"/>
+        <if-has-permission permission="FRACCT" action="_ADMIN">
+            <set field="hasPermission" type="Boolean" value="true"/>
+            <else>
+                <property-to-field resource="FrAcctErrorUiLabels" property="FrAcctAdminPermissionError" field="failMessage"/>
+                <field-to-result field="failMessage"/>
+            </else>
+        </if-has-permission>
+        <field-to-result field="hasPermission"/>
+    </simple-method>
+
     <!-- 2019.05.29 윤서진 신규 (기존 유지) -->
     <simple-method method-name="fracctAdminPermissionCheckOld" short-description="FrAcct admin permission check">
         <set field="hasPermission" type="Boolean" value="false"/>
