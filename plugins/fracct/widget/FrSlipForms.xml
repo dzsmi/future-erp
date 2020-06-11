@@ -59,6 +59,37 @@
         <on-event-update-area event-type="paginate" area-id="search-results" area-target="FrSlipSearchResults"/>
     </form>
 
+    <!-- 20200611 홍성민 기존 로직 백업 -->
+    <form name="ListFrSlip2" type="list" list-name="listIt" paginate-target="FindFrSlip"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <set field="parameters.sortField" from-field="parameters.sortField" default-value="-slipDate"/>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="FrSlip"/>
+                <field-map field-name="orderBy" from-field="parameters.sortField"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="slipId" title="${uiLabelMap.FrAcctSlipId}" widget-style="buttontext" sort-field="true">
+            <hyperlink description="${slipId}" target="ViewFrSlip" also-hidden="false">
+                <parameter param-name="slipId"/>
+            </hyperlink>
+        </field>
+        <field name="slipTypeEnumId" title="${uiLabelMap.FrAcctSlipType}"><display-entity entity-name="Enumeration" key-field-name="enumId"/></field>
+        <field name="slipDate" title="${uiLabelMap.FrAcctSlipDate}" sort-field="true"><display type="date"/></field>
+        <field name="deptPartyId" title="${uiLabelMap.FrAcctDept}">
+            <display-entity entity-name="PartyNameView" key-field-name="partyId" description="${groupName}${lastName}${firstName}"/>
+        </field>
+        <field name="amount" title="${uiLabelMap.FrAcctSlipAmount}" sort-field="true"><display type="currency" currency="KRW"/></field>
+        <field name="statusId" title="${uiLabelMap.CommonStatus}"><display-entity entity-name="StatusItem"/></field>
+        <field name="apprLevelEnumId" title="${uiLabelMap.FrAcctApprLevel}"><display-entity entity-name="Enumeration" key-field-name="enumId"/></field>
+        <field name="description" title="${uiLabelMap.FrAcctSlipDescription}"><display/></field>
+        <field name="acctgTransId" title="${uiLabelMap.FrAcctAcctgTransId}"><display/></field>
+        <on-event-update-area event-type="paginate" area-id="search-results" area-target="FrSlipSearchResults"/>
+    </form>
+
     <!-- ================ 전표 헤더 ================ -->
     <form name="EditFrSlip" type="single" target="updateFrSlip" default-map-name="frSlip"
         header-row-style="header-row" default-table-style="basic-table">

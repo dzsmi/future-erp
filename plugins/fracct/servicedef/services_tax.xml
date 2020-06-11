@@ -51,4 +51,12 @@
         <permission-service service-name="fracctAdminPermissionCheck" main-action="UPDATE"/>
         <attribute name="taxInvoiceId" type="String" mode="IN" optional="false"/>
     </service>
+
+    <!-- 2020.06.11 홍성민 백업 -->
+    <service name="cancelFrTaxInvoice2" engine="simple"
+            location="component://fracct/minilang/FrTaxInvoiceServices.xml" invoke="cancelFrTaxInvoice" auth="true">
+        <description>세금계산서 취소. 지급예정 지급계획도 함께 취소 (지급완료 건이 있으면 취소 불가)</description>
+        <permission-service service-name="fracctAdminPermissionCheck" main-action="UPDATE"/>
+        <attribute name="taxInvoiceId" type="String" mode="IN" optional="false"/>
+    </service>
 </services>
