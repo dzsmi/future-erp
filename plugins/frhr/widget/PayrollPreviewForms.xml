@@ -9,4 +9,13 @@
         <field name="bonusPercent" title="${uiLabelMap.FrHrBonusPercent}"><text size="5"/></field>
         <field name="submitButton" title="${uiLabelMap.FrHrPayrollPreview}" widget-style="smallSubmit"><submit button-type="button"/></field>
     </form>
+
+    <!-- 20200625 홍성민 테스트용 -->
+    <form name="FrPayrollPreviewFind2" type="single" target="FrPayrollPreview"
+            header-row-style="header-row" default-table-style="basic-table">
+        <field name="partyId" title="${uiLabelMap.FrHrEmployee}" required-field="true"><lookup target-form-name="LookupPerson"/></field>
+        <field name="payYearMonth" title="${uiLabelMap.FrHrPayYearMonth}" tooltip="yyyyMM"><text size="6" maxlength="6" default-value="${payYearMonth}"/></field>
+        <field name="bonusPercent" title="${uiLabelMap.FrHrBonusPercent}"><text size="5"/></field>
+        <field name="submitButton" title="${uiLabelMap.FrHrPayrollPreview}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
 </forms>
