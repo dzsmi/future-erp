@@ -86,4 +86,57 @@
       </widgets>
     </section>
   </screen>
+
+  <!-- 재택근무 -->
+  <screen name="Wfh2Request">
+    <section>
+      <actions>
+        <set field="titleProperty" value="FrHrAttendance"/>
+        <set field="headerItem" value="Attendance"/>
+        <set field="tabButtonItem" value="Wfh2Request"/>
+      </actions>
+      <widgets>
+        <decorator-screen name="CommonFrHrDecorator" location="component://frhr/widget/CommonScreens.xml">
+          <decorator-section name="pre-body">
+            <include-menu name="Attend2TabBar" location="component://frhr/widget/FrHrMenus.xml"/>
+          </decorator-section>
+          <decorator-section name="body">
+            <screenlet title="재택근무 신청">
+              <include-form name="Wfh2RequestForm" location="component://frhr/widget/Attend2Forms.xml"/>
+            </screenlet>
+            <screenlet title="재택근무 내역">
+              <include-form name="ListWfh2" location="component://frhr/widget/Attend2Forms.xml"/>
+            </screenlet>
+          </decorator-section>
+        </decorator-screen>
+      </widgets>
+    </section>
+  </screen>
+
+  <screen name="Wfh2Approve">
+    <section>
+      <actions>
+        <set field="titleProperty" value="FrHrAttendance"/>
+        <set field="headerItem" value="Attendance"/>
+        <set field="tabButtonItem" value="Wfh2Approve"/>
+        <set field="reqStatus" from-field="parameters.reqStatus" default-value="REQ"/>
+        <entity-and entity-name="FrAttend2Wfh" list="wfhList">
+          <field-map field-name="reqStatus" from-field="reqStatus"/>
+          <order-by field-name="fromDate"/>
+        </entity-and>
+      </actions>
+      <widgets>
+        <decorator-screen name="CommonFrHrDecorator" location="component://frhr/widget/CommonScreens.xml">
+          <decorator-section name="pre-body">
+            <include-menu name="Attend2TabBar" location="component://frhr/widget/FrHrMenus.xml"/>
+          </decorator-section>
+          <decorator-section name="body">
+            <screenlet title="재택근무 승인">
+              <include-form name="ListWfh2Approve" location="component://frhr/widget/Attend2Forms.xml"/>
+            </screenlet>
+          </decorator-section>
+        </decorator-screen>
+      </widgets>
+    </section>
+  </screen>
 </screens>

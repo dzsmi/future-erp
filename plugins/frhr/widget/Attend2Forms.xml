@@ -124,4 +124,58 @@
       </hyperlink>
     </field>
   </form>
+
+  <!-- 재택근무 -->
+  <form name="Wfh2RequestForm" type="single" target="requestWfh2" default-table-style="basic-table">
+    <field name="partyId" title="직원" required-field="true"><lookup target-form-name="LookupPerson"/></field>
+    <field name="fromDate" title="시작일" required-field="true"><date-time type="date"/></field>
+    <field name="thruDate" title="종료일" required-field="true"><date-time type="date"/></field>
+    <field name="workPlace" title="근무장소"><text size="40"/></field>
+    <field name="reason" title="사유"><text size="60"/></field>
+    <field name="submitButton" title="신청" widget-style="smallSubmit"><submit button-type="button"/></field>
+  </form>
+
+  <form name="ListWfh2" type="list" list-name="listIt" paginate-target="Wfh2Request" default-entity-name="FrAttend2Wfh"
+    odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+    <actions>
+      <service service-name="performFind" result-map="result" result-map-list="listIt">
+        <field-map field-name="inputFields" from-field="parameters"/>
+        <field-map field-name="entityName" value="FrAttend2Wfh"/>
+        <field-map field-name="orderBy" value="-fromDate|partyId"/>
+        <field-map field-name="noConditionFind" value="Y"/>
+        <field-map field-name="viewIndex" from-field="viewIndex"/>
+        <field-map field-name="viewSize" from-field="viewSize"/>
+      </service>
+    </actions>
+    <field name="partyId" title="직원"><display-entity entity-name="Person" description="${lastName}${firstName}"/></field>
+    <field name="fromDate" title="시작일"><display/></field>
+    <field name="thruDate" title="종료일"><display/></field>
+    <field name="wfhDays" title="일수"><display/></field>
+    <field name="workPlace" title="근무장소"><display/></field>
+    <field name="reason" title="사유"><display/></field>
+    <field name="reqStatus" title="상태"><display/></field>
+  </form>
+
+  <form name="ListWfh2Approve" type="list" list-name="wfhList" default-table-style="basic-table hover-bar"
+    odd-row-style="alternate-row" header-row-style="header-row-2">
+    <field name="partyId" title="직원"><display-entity entity-name="Person" description="${lastName}${firstName}"/></field>
+    <field name="fromDate" title="시작일"><display/></field>
+    <field name="thruDate" title="종료일"><display/></field>
+    <field name="wfhDays" title="일수"><display/></field>
+    <field name="workPlace" title="근무장소"><display/></field>
+    <field name="reason" title="사유"><display/></field>
+    <field name="reqStatus" title="상태"><display/></field>
+    <field name="approveLink" title=" " widget-style="buttontext" use-when="&quot;REQ&quot;.equals(reqStatus)">
+      <hyperlink description="승인" target="approveWfh2" link-type="hidden-form">
+        <parameter param-name="wfhReqId"/>
+        <parameter param-name="reqStatus" value="APPR"/>
+      </hyperlink>
+    </field>
+    <field name="rejectLink" title=" " widget-style="buttontext" use-when="&quot;REQ&quot;.equals(reqStatus)">
+      <hyperlink description="반려" target="approveWfh2" link-type="hidden-form" request-confirmation="true">
+        <parameter param-name="wfhReqId"/>
+        <parameter param-name="reqStatus" value="REJ"/>
+      </hyperlink>
+    </field>
+  </form>
 </forms>

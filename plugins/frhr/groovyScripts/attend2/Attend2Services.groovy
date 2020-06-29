@@ -146,3 +146,46 @@ def approveOt2() {
   println "ot2 approve >>> " + ot.otReqId + " " + ot.reqStatus
   return success()
 }
+
+// 재택근무 신청
+def requestWfh2() {
+  LocalDate f = parameters.fromDate.toLocalDate()
+  LocalDate t = parameters.thruDate.toLocalDate()
+  if (t.isBefore(f)) return error("종료일이 시작일보다 빠릅니다.")
+  def dup = from("FrAttend2Wfh").where(EntityCondition.makeCondition([
+      EntityCondition.makeCondition("partyId", EntityOperator.EQUALS, parameters.partyId),
+      EntityCondition.makeCondition("reqStatus", EntityOperator.IN, ["REQ", "APPR"]),
+      EntityCondition.makeCondition("fromDate", EntityOperator.LESS_THAN_EQUAL_TO, parameters.thruDate),
+      EntityCondition.makeCondition("thruDate", EntityOperator.GREATER_THAN_EQUAL_TO, parameters.fromDate)
+    ], EntityOperator.AND)).queryFirst()
+  if (dup) return error("이미 신청된 기간입니다. (" + dup.fromDate + "~" + dup.thruDate + ")")
+
+  def wfh = delegator.makeValue("FrAttend2Wfh")
+  wfh.wfhReqId = delegator.getNextSeqId("FrAttend2Wfh")
+  wfh.partyId = parameters.partyId
+  wfh.fromDate = parameters.fromDate
+  wfh.thruDate = parameters.thruDate
+  wfh.wfhDays = java.time.temporal.ChronoUnit.DAYS.between(f, t) + 1
+  wfh.workPlace = parameters.workPlace ?: "자택"
+  wfh.reason = parameters.reason
+  wfh.reqStatus = "REQ"
+  wfh.create()
+  println "wfh req >>> " + wfh
+
+  def result = success("재택근무 신청 완료")
+  result.wfhReqId = wfh.wfhReqId
+  return result
+}
+
+def approveWfh2() {
+  def ot = from("FrAttend2Wfh").where("wfhReqId", parameters.wfhReqId).queryOne()
+  if (ot == null) return error("신청건 없음")
+  if (!"REQ".equals(ot.reqStatus)) return error("신청 상태만 승인/반려 가능")
+  if (!["APPR", "REJ"].contains(parameters.reqStatus)) return error("상태값 오류 " + parameters.reqStatus)
+  ot.reqStatus = parameters.reqStatus
+  ot.apprPartyId = userLogin?.partyId
+  ot.apprDate = UtilDateTime.nowTimestamp()
+  ot.store()
+  println "ot2 approve >>> " + ot.wfhReqId + " " + ot.reqStatus
+  return success()
+}

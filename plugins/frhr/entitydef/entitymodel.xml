@@ -222,4 +222,19 @@
         <prim-key field="otReqId"/>
         <relation type="one-nofk" rel-entity-name="Party"><key-map field-name="partyId"/></relation>
     </entity>
+    <!-- 재택근무 -->
+    <entity entity-name="FrAttend2Wfh" package-name="com.futureretail.frhr.attend2" title="재택근무 신청">
+        <field name="wfhReqId" type="id"></field>
+        <field name="partyId" type="id"></field>
+        <field name="fromDate" type="date"></field>
+        <field name="thruDate" type="date"></field>
+        <field name="wfhDays" type="numeric"></field>
+        <field name="workPlace" type="description"></field>
+        <field name="reason" type="description"></field>
+        <field name="reqStatus" type="id"><description>REQ / APPR / REJ</description></field>
+        <field name="apprPartyId" type="id"></field>
+        <field name="apprDate" type="date-time"></field>
+        <prim-key field="wfhReqId"/>
+        <relation type="one-nofk" rel-entity-name="Party"><key-map field-name="partyId"/></relation>
+    </entity>
 </entitymodel>

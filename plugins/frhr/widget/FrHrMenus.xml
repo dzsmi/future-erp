@@ -49,5 +49,10 @@
       <condition><if-has-permission permission="FRHR" action="_UPDATE"/></condition>
       <link target="Ot2Approve"/>
     </menu-item>
+    <menu-item name="Wfh2Request" title="재택근무"><link target="Wfh2Request"/></menu-item>
+    <menu-item name="Wfh2Approve" title="재택근무 승인">
+      <condition><if-has-permission permission="FRHR" action="_UPDATE"/></condition>
+      <link target="Wfh2Approve"/>
+    </menu-item>
   </menu>
 </menus>
