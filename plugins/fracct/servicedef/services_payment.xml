@@ -75,4 +75,17 @@
         <attribute name="scheduleList" type="List" mode="OUT" optional="true"/>
         <attribute name="totalAmount" type="BigDecimal" mode="OUT" optional="true"/>
     </service>
+
+    <!-- 2020.07.27 홍성민 신규 (기존 유지) -->
+    <service name="getFrPaymentSchedule2" engine="groovy"
+            location="component://fracct/groovyScripts/payment/FrPaymentScheduleServices.groovy" invoke="getFrPaymentSchedule" auth="true">
+        <description>거래처 지급예정표 조회 (매입 세금계산서 발행일 + 60일 기준)</description>
+        <permission-service service-name="fracctAdminPermissionCheck" main-action="VIEW"/>
+        <attribute name="fromDueDate" type="java.sql.Date" mode="IN" optional="true"/>
+        <attribute name="thruDueDate" type="java.sql.Date" mode="IN" optional="true"/>
+        <attribute name="partyId" type="String" mode="IN" optional="true"/>
+        <attribute name="includePaid" type="String" mode="IN" optional="true"/>
+        <attribute name="scheduleList" type="List" mode="OUT" optional="true"/>
+        <attribute name="totalAmount" type="BigDecimal" mode="OUT" optional="true"/>
+    </service>
 </services>
