@@ -143,6 +143,7 @@ def calcFrMonthlyPayroll() {
  * FrInsuranceRate 에서 해당년도 요율(%) 조회
  */
 def getInsuranceRate(Long rateYear, String insuranceType) {
+    Debug.logInfo("===== getInsuranceRate =====", "")
     GenericValue rateValue = from("FrInsuranceRate").where(rateYear: rateYear, insuranceType: insuranceType).cache().queryOne()
     return rateValue?.rate
 }
