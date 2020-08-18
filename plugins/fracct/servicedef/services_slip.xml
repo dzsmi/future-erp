@@ -42,6 +42,19 @@
         <override name="amount" optional="false"/>
     </service>
 
+    <!-- 20200818 홍성민 오타수정용 신규 -->
+    <service name="createFrSlpItem" default-entity-name="FrSlipItem" engine="simple"
+            location="component://fracct/minilang/FrSlipServices.xml" invoke="createFrSlipItem" auth="true">
+        <description>전표 항목(차변/대변) 추가</description>
+        <permission-service service-name="fracctUserPermissionCheck" main-action="CREATE"/>
+        <auto-attributes include="nonpk" mode="IN" optional="true"/>
+        <attribute name="slipId" type="String" mode="IN" optional="false"/>
+        <attribute name="slipItemSeqId" type="String" mode="OUT" optional="false"/>
+        <override name="glAccountId" optional="false"/>
+        <override name="debitCreditFlag" optional="false"/>
+        <override name="amount" optional="false"/>
+    </service>
+
     <service name="updateFrSlipItem" default-entity-name="FrSlipItem" engine="simple"
             location="component://fracct/minilang/FrSlipServices.xml" invoke="updateFrSlipItem" auth="true">
         <description>전표 항목 수정</description>
