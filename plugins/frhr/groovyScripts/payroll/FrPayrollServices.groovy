@@ -144,6 +144,7 @@ def calcFrMonthlyPayroll() {
  */
 def getInsuranceRate(Long rateYear, String insuranceType) {
     Debug.logInfo("===== getInsuranceRate =====", "")
+    Debug.logInfo("===== getInsuranceRate =====", "")
     GenericValue rateValue = from("FrInsuranceRate").where(rateYear: rateYear, insuranceType: insuranceType).cache().queryOne()
     return rateValue?.rate
 }
