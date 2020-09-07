@@ -24,6 +24,7 @@ import org.apache.ofbiz.entity.util.EntityUtil
 
 import java.sql.Timestamp
 
+println "########## CommissionReport.groovy start"
 if ("Y".equals(parameters.isSearch)) {
     fromDate = parameters.fromDate
     thruDate = parameters.thruDate
