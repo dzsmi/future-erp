@@ -237,4 +237,20 @@
         <prim-key field="wfhReqId"/>
         <relation type="one-nofk" rel-entity-name="Party"><key-map field-name="partyId"/></relation>
     </entity>
+    <!-- 월 근태 마감 -->
+    <entity entity-name="FrAttend2Close" package-name="com.futureretail.frhr.attend2" title="월 근태 마감 집계">
+        <field name="closeYm" type="id"><description>yyyyMM</description></field>
+        <field name="partyId" type="id"></field>
+        <field name="workDays" type="numeric"></field>
+        <field name="otHrOld" type="fixed-point"><description>FrAttendance 연장</description></field>
+        <field name="otHrNew" type="fixed-point"><description>FrAttend2 평일연장</description></field>
+        <field name="holiHr" type="fixed-point"><description>FrAttend2 휴일근로</description></field>
+        <field name="otHrTotal" type="fixed-point"></field>
+        <field name="hourlyWage" type="currency-amount"></field>
+        <field name="otPayAmt" type="currency-amount"><description>연장+휴일 수당</description></field>
+        <field name="closeDate" type="date-time"></field>
+        <prim-key field="closeYm"/>
+        <prim-key field="partyId"/>
+        <relation type="one-nofk" rel-entity-name="Party"><key-map field-name="partyId"/></relation>
+    </entity>
 </entitymodel>

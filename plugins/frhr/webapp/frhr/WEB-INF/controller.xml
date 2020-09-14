@@ -237,6 +237,13 @@
     <response name="success" type="view" value="Wfh2Approve"/>
     <response name="error" type="view" value="Wfh2Approve"/>
   </request-map>
+  <request-map uri="Attend2Close"><security https="true" auth="true"/><response name="success" type="view" value="Attend2Close"/></request-map>
+  <request-map uri="closeAttend2Month">
+    <security https="true" auth="true"/>
+    <event type="service" invoke="closeAttend2Month"/>
+    <response name="success" type="view" value="Attend2Close"/>
+    <response name="error" type="view" value="Attend2Close"/>
+  </request-map>
   <request-map uri="cancelOt2">
     <security https="true" auth="true"/>
     <event type="service" invoke="cancelOt2"/>
@@ -265,6 +272,7 @@
   <view-map name="Ot2Approve" type="screen" page="component://frhr/widget/Attend2Screens.xml#Ot2Approve"/>
   <view-map name="Wfh2Request" type="screen" page="component://frhr/widget/Attend2Screens.xml#Wfh2Request"/>
   <view-map name="Wfh2Approve" type="screen" page="component://frhr/widget/Attend2Screens.xml#Wfh2Approve"/>
+  <view-map name="Attend2Close" type="screen" page="component://frhr/widget/Attend2Screens.xml#Attend2Close"/>
 
     <view-map name="FindFrLeaveGrant" type="screen" page="component://frhr/widget/LeaveScreens.xml#FindFrLeaveGrant"/>
     <view-map name="FindFrLeaveUse" type="screen" page="component://frhr/widget/LeaveScreens.xml#FindFrLeaveUse"/>

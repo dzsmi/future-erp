@@ -54,5 +54,9 @@
       <condition><if-has-permission permission="FRHR" action="_UPDATE"/></condition>
       <link target="Wfh2Approve"/>
     </menu-item>
+    <menu-item name="Attend2Close" title="월 마감">
+      <condition><if-has-permission permission="FRHR" action="_ADMIN"/></condition>
+      <link target="Attend2Close"/>
+    </menu-item>
   </menu>
 </menus>

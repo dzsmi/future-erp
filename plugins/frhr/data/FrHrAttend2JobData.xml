@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 월 근태 마감 배치 매월 1일 04:00 (전월분) -->
+<entity-engine-xml>
+  <RecurrenceRule recurrenceRuleId="FR_ATT2_CLOSE" frequency="MONTHLY" intervalNumber="1" countNumber="-1" byMonthDayList="1"/>
+  <RecurrenceInfo recurrenceInfoId="FR_ATT2_CLOSE" startDateTime="2020-10-01 04:00:00.000" recurrenceRuleId="FR_ATT2_CLOSE" recurrenceCount="0"/>
+  <JobSandbox jobId="FR_ATT2_CLOSE" jobName="월 근태 마감" runTime="2020-10-01 04:00:00.000" serviceName="closeAttend2Month"
+    poolId="pool" runAsUser="system" recurrenceInfoId="FR_ATT2_CLOSE" statusId="SERVICE_PENDING" maxRecurrenceCount="-1"/>
+</entity-engine-xml>

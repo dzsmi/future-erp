@@ -178,4 +178,36 @@
       </hyperlink>
     </field>
   </form>
+
+  <!-- 월 근태 마감 -->
+  <form name="RunAttend2Close" type="single" target="closeAttend2Month" default-table-style="basic-table">
+    <field name="closeYm" title="마감월(yyyyMM)"><text size="6" maxlength="6"/></field>
+    <field name="partyId" title="직원"><lookup target-form-name="LookupPerson"/></field>
+    <field name="submitButton" title="마감 실행" widget-style="smallSubmit"><submit button-type="button"/></field>
+  </form>
+  <form name="FindAttend2Close" type="single" target="Attend2Close" default-table-style="basic-table">
+    <field name="noConditionFind"><hidden value="Y"/></field>
+    <field name="closeYm" title="마감월"><text size="6"/></field>
+    <field name="searchButton" title="조회" widget-style="smallSubmit"><submit button-type="button"/></field>
+  </form>
+  <form name="ListAttend2Close" type="list" list-name="listIt" paginate-target="Attend2Close" default-entity-name="FrAttend2Close"
+    odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+    <actions>
+      <service service-name="performFind" result-map="result" result-map-list="listIt">
+        <field-map field-name="inputFields" from-field="parameters"/>
+        <field-map field-name="entityName" value="FrAttend2Close"/>
+        <field-map field-name="orderBy" value="-closeYm|partyId"/>
+        <field-map field-name="viewIndex" from-field="viewIndex"/>
+        <field-map field-name="viewSize" from-field="viewSize"/>
+      </service>
+    </actions>
+    <field name="closeYm" title="마감월"><display/></field>
+    <field name="partyId" title="직원"><display-entity entity-name="Person" description="${lastName}${firstName}"/></field>
+    <field name="workDays" title="근무일수"><display/></field>
+    <field name="otHrTotal" title="연장"><display/></field>
+    <field name="holiHr" title="휴일"><display/></field>
+    <field name="hourlyWage" title="시급"><display type="currency" currency="KRW"/></field>
+    <field name="otPayAmt" title="수당"><display type="currency" currency="KRW"/></field>
+    <field name="closeDate" title="마감일시"><display/></field>
+  </form>
 </forms>
