@@ -11,6 +11,7 @@
     <!--  4) FrRetireSettle 저장                                             -->
     <!--  * Employment 종료는 SECA(expireFrEmployment)                       -->
     <!-- ================================================================== -->
+    <!-- XXX 전환기간 임시 -->
     <simple-method method-name="processFrRetire" short-description="퇴사 처리">
         <entity-one entity-name="FrEmplInfo" value-field="emplInfo"/>
         <if-empty field="emplInfo">
