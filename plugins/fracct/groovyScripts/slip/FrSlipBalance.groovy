@@ -6,6 +6,7 @@
 
 import org.apache.ofbiz.service.ServiceUtil
 
+println "########## FrSlipBalance.groovy start"
 slipId = parameters.slipId ?: context.slipId
 if (slipId) {
     Map balance = dispatcher.runSync('checkFrSlipBalance', [slipId: slipId, userLogin: userLogin])
