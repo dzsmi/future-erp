@@ -296,6 +296,61 @@
         <field-to-result field="remainDays"/>
     </simple-method>
 
+    <!-- 2020.10.22 윤서진 테스트용 -->
+    <simple-method method-name="getFrLeaveBalanceOld" short-description="연차 잔여 조회">
+        <set field="grantYear" from-field="parameters.grantYear"/>
+        <if-empty field="grantYear">
+            <set field="grantYear" value="${groovy: java.time.LocalDate.now().getYear()}" type="Long"/>
+        </if-empty>
+        <set field="yearStartDate" value="${groovy: java.sql.Date.valueOf(java.time.LocalDate.of(grantYear.intValue(), 1, 1))}" type="Date"/>
+        <set field="yearEndDate" value="${groovy: java.sql.Date.valueOf(java.time.LocalDate.of(grantYear.intValue(), 12, 31))}" type="Date"/>
+
+        <entity-and entity-name="FrLeaveGrant" list="leaveGrants">
+            <field-map field-name="partyId" from-field="parameters.partyId"/>
+            <field-map field-name="grantYear" from-field="grantYear"/>
+        </entity-and>
+        <set field="grantedDays" value="0" type="BigDecimal"/>
+        <iterate list="leaveGrants" entry="leaveGrant">
+            <calculate field="grantedDays" type="BigDecimal">
+                <calcop operator="add" field="grantedDays"><calcop operator="get" field="leaveGrant.grantDays"/></calcop>
+            </calculate>
+        </iterate>
+
+        <entity-condition entity-name="FrLeaveUse" list="leaveUses">
+            <condition-list combine="and">
+                <condition-expr field-name="partyId" from-field="parameters.partyId"/>
+                <condition-expr field-name="fromDate" operator="greater-equals" from-field="yearStartDate"/>
+                <condition-expr field-name="fromDate" operator="less-equals" from-field="yearEndDate"/>
+                <condition-expr field-name="statusId" operator="not-equals" value="FRLU_REJECTED"/>
+            </condition-list>
+        </entity-condition>
+        <set field="usedDays" value="0" type="BigDecimal"/>
+        <set field="requestedDays" value="0" type="BigDecimal"/>
+        <iterate list="leaveUses" entry="leaveUse">
+            <if-compare field="leaveUse.statusId" operator="equals" value="FRLU_APPROVED">
+                <calculate field="usedDays" type="BigDecimal">
+                    <calcop operator="add" field="usedDays"><calcop operator="get" field="leaveUse.useDays"/></calcop>
+                </calculate>
+                <else>
+                    <calculate field="requestedDays" type="BigDecimal">
+                        <calcop operator="add" field="requestedDays"><calcop operator="get" field="leaveUse.useDays"/></calcop>
+                    </calculate>
+                </else>
+            </if-compare>
+        </iterate>
+
+        <calculate field="remainDays" type="BigDecimal">
+            <calcop operator="subtract" field="grantedDays">
+                <calcop operator="get" field="usedDays"/>
+                <calcop operator="get" field="requestedDays"/>
+            </calcop>
+        </calculate>
+        <field-to-result field="grantedDays"/>
+        <field-to-result field="usedDays"/>
+        <field-to-result field="requestedDays"/>
+        <field-to-result field="remainDays"/>
+    </simple-method>
+
     <!-- 승인된 연차를 OFBiz EmplLeave 에 등록 (approveFrLeaveUse SECA) -->
     <simple-method method-name="syncFrLeaveToEmplLeave" short-description="연차 → EmplLeave 등록">
         <entity-one entity-name="FrLeaveUse" value-field="leaveUse"/>
