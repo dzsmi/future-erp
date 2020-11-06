@@ -12,6 +12,7 @@ import org.apache.ofbiz.entity.GenericValue
 import org.apache.ofbiz.entity.util.EntityUtilProperties
 
 def postFrSlipAcctgTrans() {
+    println "### postFrSlipAcctgTrans 진입 : " + parameters
     Debug.logInfo("===== postFrSlipAcctgTrans =====", "")
     GenericValue slip = from('FrSlip').where('slipId', parameters.slipId).queryOne()
     if (!slip) {
