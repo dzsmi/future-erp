@@ -32,6 +32,9 @@
     <screen name="FrPayrollCalc">
         <section>
             <actions>
+                <!-- 2020.11.11 사용안함
+                <set field="titleProperty" value="FrHrPayrollCalc"/>
+                -->
                 <set field="titleProperty" value="FrHrPayrollCalc"/>
                 <set field="headerItem" value="Payroll"/>
                 <set field="tabButtonItem" value="FrPayrollCalc"/>
