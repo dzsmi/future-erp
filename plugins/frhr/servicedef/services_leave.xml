@@ -15,6 +15,9 @@
         <attribute name="asOfDate" type="Date" mode="IN" optional="true"/>
         <attribute name="remarks" type="String" mode="IN" optional="true"/>
         <attribute name="leaveGrantId" type="String" mode="OUT" optional="true"/>
+        <!-- 2020.11.19 기존로직 주석처리
+        <attribute name="grantDays" type="BigDecimal" mode="OUT" optional="true"/>
+        -->
         <attribute name="grantDays" type="BigDecimal" mode="OUT" optional="true"/>
     </service>
     <service name="createFrLeaveUse" engine="simple"
