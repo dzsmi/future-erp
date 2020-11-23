@@ -557,4 +557,29 @@
         <value xml:lang="en">Only requested leave can be approved or rejected.</value>
         <value xml:lang="ko">신청 상태인 건만 승인/반려할 수 있습니다.</value>
     </property>
+    <!-- 2020.11.23 윤서진 연차 사용촉진 -->
+    <property key="FrHrLeavePromote">
+        <value xml:lang="en">Annual Leave Promotion</value>
+        <value xml:lang="ko">연차 사용촉진</value>
+    </property>
+    <property key="FrHrLeavePromoteTarget">
+        <value xml:lang="en">Promotion Targets</value>
+        <value xml:lang="ko">사용촉진 대상자</value>
+    </property>
+    <property key="FrHrLeavePromoteNotice">
+        <value xml:lang="en">Employees with remaining annual leave granted by the leave batch (granted - used).</value>
+        <value xml:lang="ko">연차 배치 발생분 기준 잔여 연차(발생 - 사용)가 남은 재직자입니다. 대상자에게 잔여일수를 통보하고 사용시기 지정을 요청하세요.</value>
+    </property>
+    <property key="FrHrLeavePromote1st">
+        <value xml:lang="en">1st Notice</value>
+        <value xml:lang="ko">1차 촉진</value>
+    </property>
+    <property key="FrHrLeavePromote2nd">
+        <value xml:lang="en">2nd Notice</value>
+        <value xml:lang="ko">2차 촉진</value>
+    </property>
+    <property key="FrHrLeavePromoteMinRemain">
+        <value xml:lang="en">Min. Remaining Days</value>
+        <value xml:lang="ko">최소 잔여일수</value>
+    </property>
 </resource>

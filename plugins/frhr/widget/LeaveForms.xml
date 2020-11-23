@@ -129,4 +129,28 @@
         <field name="remainDays" title="${uiLabelMap.FrHrRemainDays}"><display/></field>
         <field name="expectGrantDays" title="${uiLabelMap.FrHrExpectGrantDays}" tooltip="${expectBaseDate}"><display/></field>
     </form>
+
+    <!-- 2020.11.23 윤서진 연차 사용촉진 대상 -->
+    <form name="FindFrLeavePromote" type="single" target="FrLeavePromote"
+            header-row-style="header-row" default-table-style="basic-table">
+        <field name="partyId" title="${uiLabelMap.FrHrEmployee}"><lookup target-form-name="LookupPerson"/></field>
+        <field name="grantYear" title="${uiLabelMap.FrHrGrantYear}"><text size="4" maxlength="4" default-value="${grantYear}"/></field>
+        <field name="minRemainDays" title="${uiLabelMap.FrHrLeavePromoteMinRemain}"><text size="4" default-value="${minRemainDays}"/></field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+
+    <form name="ListFrLeavePromote" type="list" list-name="promoteList"
+            odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <field name="emplNo" title="${uiLabelMap.FrHrEmplNo}"><display/></field>
+        <field name="partyId" title="${uiLabelMap.FrHrEmployee}">
+            <display-entity entity-name="Person" description="${lastName}${firstName}"/>
+        </field>
+        <field name="departmentId" title="${uiLabelMap.FrHrDepartment}">
+            <display-entity entity-name="PartyGroup" key-field-name="partyId" description="${groupName}"/>
+        </field>
+        <field name="hireDate" title="${uiLabelMap.FrHrHireDate}"><display/></field>
+        <field name="grantDays" title="${uiLabelMap.FrHrGrantDays}"><display/></field>
+        <field name="usedDays" title="${uiLabelMap.FrHrUsedDays}"><display/></field>
+        <field name="remainDays" title="${uiLabelMap.FrHrRemainDays}"><display/></field>
+    </form>
 </forms>

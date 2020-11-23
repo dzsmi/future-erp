@@ -180,6 +180,11 @@
         <security https="true" auth="true"/>
         <response name="success" type="view" value="FrLeaveBalance"/>
     </request-map>
+    <!-- 2020.11.23 윤서진 연차 사용촉진 대상 -->
+    <request-map uri="FrLeavePromote">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FrLeavePromote"/>
+    </request-map>
 
     <!-- ===================== 퇴직 정산 ===================== -->
     <request-map uri="FindFrRetireSettle">
@@ -278,6 +283,7 @@
     <view-map name="FindFrLeaveUse" type="screen" page="component://frhr/widget/LeaveScreens.xml#FindFrLeaveUse"/>
     <view-map name="EditFrLeaveUse" type="screen" page="component://frhr/widget/LeaveScreens.xml#EditFrLeaveUse"/>
     <view-map name="FrLeaveBalance" type="screen" page="component://frhr/widget/LeaveScreens.xml#FrLeaveBalance"/>
+    <view-map name="FrLeavePromote" type="screen" page="component://frhr/widget/LeaveScreens.xml#FrLeavePromote"/>
 
     <view-map name="FindFrRetireSettle" type="screen" page="component://frhr/widget/RetireScreens.xml#FindFrRetireSettle"/>
     <view-map name="FrRetireProcess" type="screen" page="component://frhr/widget/RetireScreens.xml#FrRetireProcess"/>

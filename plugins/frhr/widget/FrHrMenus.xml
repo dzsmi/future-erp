@@ -31,6 +31,10 @@
         <menu-item name="FindFrLeaveUse" title="${uiLabelMap.FrHrLeaveUse}"><link target="FindFrLeaveUse"/></menu-item>
         <menu-item name="FindFrLeaveGrant" title="${uiLabelMap.FrHrLeaveGrant}"><link target="FindFrLeaveGrant"/></menu-item>
         <menu-item name="FrLeaveBalance" title="${uiLabelMap.FrHrLeaveBalance}"><link target="FrLeaveBalance"/></menu-item>
+        <menu-item name="FrLeavePromote" title="${uiLabelMap.FrHrLeavePromote}">
+            <condition><if-has-permission permission="FRHR" action="_ADMIN"/></condition>
+            <link target="FrLeavePromote"/>
+        </menu-item>
     </menu>
 
     <menu name="FrRetireTabBar" default-selected-style="selected" type="simple" menu-container-style="button-bar tab-bar"

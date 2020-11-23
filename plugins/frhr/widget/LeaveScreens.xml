@@ -125,4 +125,33 @@
             </widgets>
         </section>
     </screen>
+
+    <!-- 2020.11.23 윤서진 연차 사용촉진 대상 조회 -->
+    <screen name="FrLeavePromote">
+        <section>
+            <actions>
+                <set field="titleProperty" value="FrHrLeavePromote"/>
+                <set field="headerItem" value="Leave"/>
+                <set field="tabButtonItem" value="FrLeavePromote"/>
+                <script location="component://frhr/groovyScripts/leave/LeavePromoteList.groovy"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonFrHrDecorator" location="component://frhr/widget/CommonScreens.xml">
+                    <decorator-section name="pre-body">
+                        <include-menu name="FrLeaveTabBar" location="component://frhr/widget/FrHrMenus.xml"/>
+                    </decorator-section>
+                    <decorator-section name="body">
+                        <screenlet title="${uiLabelMap.FrHrLeavePromote}">
+                            <label text="${uiLabelMap.FrHrLeavePromoteNotice}"/>
+                            <label text="${uiLabelMap.FrHrLeavePromote1st} : ${promote1From} ~ ${promote1Thru} / ${uiLabelMap.FrHrLeavePromote2nd} : ~ ${promote2Thru}"/>
+                            <include-form name="FindFrLeavePromote" location="component://frhr/widget/LeaveForms.xml"/>
+                        </screenlet>
+                        <screenlet title="${grantYear} ${uiLabelMap.FrHrLeavePromoteTarget} (${promoteCount})">
+                            <include-form name="ListFrLeavePromote" location="component://frhr/widget/LeaveForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
 </screens>
