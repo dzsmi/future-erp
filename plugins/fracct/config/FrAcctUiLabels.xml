@@ -288,6 +288,12 @@
         <value xml:lang="en">Open</value>
         <value xml:lang="ko">미마감</value>
     </property>
+
+    <!-- 2020.12.08 홍성민 백업 -->
+    <property key="FrAcctOpenNew">
+        <value xml:lang="en">Open</value>
+        <value xml:lang="ko">미마감</value>
+    </property>
     <property key="FrAcctClosedBy">
         <value xml:lang="en">Closed By</value>
         <value xml:lang="ko">마감자</value>
