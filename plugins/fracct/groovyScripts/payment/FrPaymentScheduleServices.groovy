@@ -9,6 +9,7 @@ import org.apache.ofbiz.entity.condition.EntityCondition
 import org.apache.ofbiz.entity.condition.EntityOperator
 
 def getFrPaymentSchedule() {
+    println "### getFrPaymentSchedule 진입 : " + parameters
     LocalDate fromDue = parameters.fromDueDate ? parameters.fromDueDate.toLocalDate() : LocalDate.now()
     LocalDate thruDue = parameters.thruDueDate ? parameters.thruDueDate.toLocalDate() : fromDue.plusDays(60)
 
