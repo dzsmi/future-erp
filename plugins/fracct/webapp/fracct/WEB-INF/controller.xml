@@ -194,6 +194,12 @@
         <security https="true" auth="true"/>
         <response name="success" type="view" value="FrPaymentSchedule"/>
     </request-map>
+
+    <!-- 20201222 홍성민 기존 로직 백업 -->
+    <request-map uri="FrPaymentScheduleNew">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FrPaymentSchedule"/>
+    </request-map>
     <!-- 2019.01.28 정해인 지급예정표 엑셀(CSV) 다운로드 -->
     <request-map uri="FrPaymentSchedule.csv">
         <security https="true" auth="true"/>
