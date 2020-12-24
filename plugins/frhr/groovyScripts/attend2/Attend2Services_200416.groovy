@@ -24,6 +24,7 @@ def hours(Timestamp from, Timestamp to) {
  * 평일 8시간 넘는 부분 = otHr, 휴일은 전부 holiHr
  */
 def saveAttend2() {
+    println "### saveAttend2 진입 : " + parameters
   def att2 = null
   if (parameters.att2Id) {
     att2 = from("FrAttend2").where("att2Id", parameters.att2Id).queryOne()

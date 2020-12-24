@@ -13,6 +13,7 @@ import org.apache.ofbiz.base.util.UtilFormatOut
 import org.apache.ofbiz.base.util.UtilProperties
 import org.apache.ofbiz.base.util.UtilValidate
 
+println "########## FrSlipApprPreview.groovy start"
 BigDecimal previewAmount = null
 if (UtilValidate.isNotEmpty(parameters.previewAmount)) {
     try {
