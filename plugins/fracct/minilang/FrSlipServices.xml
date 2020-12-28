@@ -23,6 +23,7 @@
         <field-to-result field="newEntity.slipId" result-name="slipId"/>
     </simple-method>
 
+    <!-- 법개정 시 같이 수정 필요!! -->
     <simple-method method-name="updateFrSlip" short-description="전표 헤더 수정">
         <entity-one entity-name="FrSlip" value-field="slip"/>
         <call-simple-method method-name="checkFrSlipEditable"/>

@@ -481,6 +481,12 @@
         <value xml:lang="en">Last Month Pay</value>
         <value xml:lang="ko">마지막달 일할급여</value>
     </property>
+
+    <!-- 20201228 윤서진 기존 로직 백업 -->
+    <property key="FrHrLastMonthPayNew">
+        <value xml:lang="en">Last Month Pay</value>
+        <value xml:lang="ko">마지막달 일할급여</value>
+    </property>
     <property key="FrHrLastMonthDeduction">
         <value xml:lang="en">Last Month Deduction</value>
         <value xml:lang="ko">마지막달 공제액</value>
