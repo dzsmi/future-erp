@@ -21,6 +21,18 @@
         <attribute name="slipDate" type="java.sql.Date" mode="IN" optional="true"/>
     </service>
 
+    <!-- 20210127 송태호 기존 로직 백업 -->
+    <service name="checkFrClosePeriodOld" engine="simple"
+            location="component://fracct/minilang/FrClosePeriodServices.xml" invoke="checkFrClosePeriod" auth="true">
+        <description>
+            전표일자의 년월이 마감(FrClosePeriod.isClosed=Y)되었으면 오류.
+            secas.xml 에서 전표 생성/수정 서비스 invoke 시점에 호출된다.
+            slipDate 가 없으면 slipId 로 저장된 전표일자를 조회하여 체크한다.
+        </description>
+        <attribute name="slipId" type="String" mode="IN" optional="true"/>
+        <attribute name="slipDate" type="java.sql.Date" mode="IN" optional="true"/>
+    </service>
+
     <!-- 20201106 홍성민 오타수정용 신규 -->
     <service name="checkFrClosePeroid" engine="simple"
             location="component://fracct/minilang/FrClosePeriodServices.xml" invoke="checkFrClosePeriod" auth="true">
