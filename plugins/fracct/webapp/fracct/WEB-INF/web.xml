@@ -3,6 +3,7 @@
 <!--
   수정이력
     2019.06.24  정해인  재경 현업 요청 반영
+    2021.01.28  정해인  재경 오류 수정
 -->
 <web-app version="3.0">
     <display-name>FutureRetail Accounting</display-name>
