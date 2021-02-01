@@ -55,6 +55,32 @@
         </section>
     </screen>
 
+    <!-- 20210201 송태호 백업 -->
+    <screen name="EditFrAttendanceOld">
+        <section>
+            <actions>
+                <set field="titleProperty" value="FrHrEditAttendance"/>
+                <set field="headerItem" value="Attendance"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <set field="workDate" from-field="parameters.workDate" type="Date"/>
+                <entity-one entity-name="FrAttendance" value-field="attendance" auto-field-map="false">
+                    <field-map field-name="partyId" from-field="partyId"/>
+                    <field-map field-name="workDate" from-field="workDate"/>
+                </entity-one>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonFrHrDecorator" location="component://frhr/widget/CommonScreens.xml">
+                    <decorator-section name="body">
+                        <screenlet title="${uiLabelMap.FrHrEditAttendance}">
+                            <label text="${uiLabelMap.FrHrAttendanceNotice}"/>
+                            <include-form name="EditFrAttendance" location="component://frhr/widget/AttendanceForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
     <!-- 20180823 박준영 기존 로직 백업 -->
     <screen name="EditFrAttendanceCopy">
         <section>
