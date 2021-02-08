@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: (주)핀링크 송태호 / 2021.02.08 -->
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>FutureRetail Accounting - Corporate Card Services</description>
+    <vendor>FinLink</vendor>
+    <version>1.0</version>
+
+    <!-- ================= 카드 마스터 ================= -->
+    <service name="createFrCardMaster" default-entity-name="FrCardMaster" engine="entity-auto" invoke="create" auth="true">
+        <description>법인카드 등록</description>
+        <permission-service service-name="fracctAdminPermissionCheck" main-action="CREATE"/>
+        <auto-attributes include="pk" mode="IN" optional="false"/>
+        <auto-attributes include="nonpk" mode="IN" optional="true"/>
+    </service>
+    <service name="updateFrCardMaster" default-entity-name="FrCardMaster" engine="entity-auto" invoke="update" auth="true">
+        <description>법인카드 수정</description>
+        <permission-service service-name="fracctAdminPermissionCheck" main-action="UPDATE"/>
+        <auto-attributes include="pk" mode="IN" optional="false"/>
+        <auto-attributes include="nonpk" mode="IN" optional="true"/>
+    </service>
+
+    <!-- ================= 승인내역 수신 ================= -->
+    <service name="receiveFrCardTxFile" engine="groovy" transaction-timeout="1800"
+            location="component://fracct/groovyScripts/card/FrCardRecvServices.groovy" invoke="receiveFrCardTxFile" auth="false">
+        <description>
+            카드사 승인내역 파일(fracct.card.recvDir 의 CARD_yyyyMMdd*.csv) 적재 → FrCardTx / FrCardRecvFile.
+            처리한 파일은 fracct.card.doneDir 로 이동. 스케줄 FR_CARD_RECV (data/FrCardJobData.xml)
+        </description>
+        <attribute name="recvFileIds" type="List" mode="OUT" optional="true"/>
+    </service>
+
+    <service name="uploadFrCardTxFile" engine="groovy" transaction-timeout="600"
+            location="component://fracct/groovyScripts/card/FrCardRecvServices.groovy" invoke="uploadFrCardTxFile" auth="true">
+        <description>카드사 승인내역 파일 화면 업로드 (재수신용, 형식은 receiveFrCardTxFile 과 동일)</description>
+        <permission-service service-name="fracctAdminPermissionCheck" main-action="CREATE"/>
+        <attribute name="uploadedFile" type="java.nio.ByteBuffer" mode="IN" optional="false"/>
+        <attribute name="_uploadedFile_fileName" type="String" mode="IN" optional="true"/>
+        <attribute name="_uploadedFile_contentType" type="String" mode="IN" optional="true"/>
+        <attribute name="fileCharset" type="String" mode="IN" optional="true"/>
+        <attribute name="recvFileIds" type="List" mode="OUT" optional="true"/>
+    </service>
+</services>

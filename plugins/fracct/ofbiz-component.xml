@@ -7,6 +7,7 @@
 <!--
     (주)퓨처리테일 재경 플러그인 (fracct)
     - 전표 작성/상신/결재, 결산 마감, 세금계산서, 거래처 지급조건, 지급계획
+    - 법인카드 사용내역 연동 (2021.02 핀링크)
 -->
 <ofbiz-component name="fracct"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -21,6 +22,9 @@
     <entity-resource type="data" reader-name="seed" loader="main" location="data/FrAcctTypeData.xml"/>
     <entity-resource type="data" reader-name="seed" loader="main" location="data/FrAcctSecurityPermissionSeedData.xml"/>
     <entity-resource type="data" reader-name="seed-initial" loader="main" location="data/FrAcctOrgData.xml"/>
+    <!-- 2021.02 법인카드 연동 -->
+    <entity-resource type="data" reader-name="seed" loader="main" location="data/FrCardData.xml"/>
+    <entity-resource type="data" reader-name="seed-initial" loader="main" location="data/FrCardJobData.xml"/>
 
     <!-- service -->
     <service-resource type="model" loader="main" location="servicedef/services_perm.xml"/>
@@ -28,6 +32,7 @@
     <service-resource type="model" loader="main" location="servicedef/services_period.xml"/>
     <service-resource type="model" loader="main" location="servicedef/services_tax.xml"/>
     <service-resource type="model" loader="main" location="servicedef/services_payment.xml"/>
+    <service-resource type="model" loader="main" location="servicedef/services_card.xml"/>
     <service-resource type="eca" loader="main" location="servicedef/secas.xml"/>
 
     <!-- webapp -->

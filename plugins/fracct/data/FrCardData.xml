@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: (주)핀링크 송태호 / 2021.02.08 -->
+<!-- 법인카드 사용내역 상태 -->
+<entity-engine-xml>
+    <StatusType description="FR 법인카드 사용내역" hasTable="N" parentTypeId="" statusTypeId="FR_CARDTX_STATUS"/>
+    <StatusItem description="수신" sequenceId="01" statusCode="RECEIVED" statusId="FRCT_RECEIVED" statusTypeId="FR_CARDTX_STATUS"/>
+    <StatusItem description="전표생성" sequenceId="05" statusCode="POSTED" statusId="FRCT_POSTED" statusTypeId="FR_CARDTX_STATUS"/>
+    <StatusItem description="승인취소" sequenceId="09" statusCode="CANCELLED" statusId="FRCT_CANCELLED" statusTypeId="FR_CARDTX_STATUS"/>
+    <StatusValidChange statusId="FRCT_RECEIVED" statusIdTo="FRCT_POSTED" transitionName="전표생성"/>
+    <StatusValidChange statusId="FRCT_RECEIVED" statusIdTo="FRCT_CANCELLED" transitionName="승인취소"/>
+</entity-engine-xml>

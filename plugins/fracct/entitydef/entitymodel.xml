@@ -16,6 +16,7 @@
   <!--  - com.futureretail.fracct.period                         -->
   <!--  - com.futureretail.fracct.tax                            -->
   <!--  - com.futureretail.fracct.payment                        -->
+  <!--  - com.futureretail.fracct.card                           -->
   <!-- ========================================================= -->
 
 
@@ -217,6 +218,90 @@
         </relation>
         <index name="FRPP_DUE_IDX">
             <index-field name="dueDate"/>
+        </index>
+    </entity>
+
+  <!-- ========================================================= -->
+  <!-- com.futureretail.fracct.card  (2021.02 법인카드 연동 - 핀링크 송태호) -->
+  <!-- ========================================================= -->
+
+    <entity entity-name="FrCardMaster"
+            package-name="com.futureretail.fracct.card"
+            title="FutureRetail Corporate Card">
+        <field name="cardNo" type="id-long"><description>카드번호 (카드사 파일과 같은 마스킹 형식 1234-****-****-5678)</description></field>
+        <field name="cardAlias" type="name"><description>카드 별칭</description></field>
+        <field name="holderPartyId" type="id"><description>사용자(소지자) partyId</description></field>
+        <field name="deptPartyId" type="id"><description>사용 부서 partyId</description></field>
+        <field name="expenseGlAccountId" type="id"><description>기본 비용 계정 (없으면 fracct.card.gl.expense)</description></field>
+        <field name="useYn" type="indicator"><description>사용여부 Y/N</description></field>
+        <field name="comments" type="comment"></field>
+        <prim-key field="cardNo"/>
+        <relation type="one" fk-name="FRCARD_HOLDER" title="Holder" rel-entity-name="Party">
+            <key-map field-name="holderPartyId" rel-field-name="partyId"/>
+        </relation>
+        <relation type="one" fk-name="FRCARD_DEPT" title="Dept" rel-entity-name="Party">
+            <key-map field-name="deptPartyId" rel-field-name="partyId"/>
+        </relation>
+        <relation type="one" fk-name="FRCARD_GLACT" title="Expense" rel-entity-name="GlAccount">
+            <key-map field-name="expenseGlAccountId" rel-field-name="glAccountId"/>
+        </relation>
+    </entity>
+
+    <entity entity-name="FrCardRecvFile"
+            package-name="com.futureretail.fracct.card"
+            title="FutureRetail Corporate Card Receive File">
+        <field name="recvFileId" type="id"></field>
+        <field name="fileName" type="name"><description>수신 파일명</description></field>
+        <field name="recvDate" type="date-time"><description>수신(적재) 일시</description></field>
+        <field name="totalCnt" type="numeric"><description>데이터 건수 (헤더 제외)</description></field>
+        <field name="insertCnt" type="numeric"><description>신규 적재</description></field>
+        <field name="cancelCnt" type="numeric"><description>취소 반영</description></field>
+        <field name="skipCnt" type="numeric"><description>중복/원승인 없음 건너뜀</description></field>
+        <field name="errorCnt" type="numeric"><description>형식 오류</description></field>
+        <field name="resultMsg" type="very-long"><description>오류 행 메시지</description></field>
+        <field name="recvByUserLogin" type="id-vlong"></field>
+        <prim-key field="recvFileId"/>
+    </entity>
+
+    <entity entity-name="FrCardTx"
+            package-name="com.futureretail.fracct.card"
+            title="FutureRetail Corporate Card Transaction">
+        <field name="cardTxId" type="id"></field>
+        <field name="cardNo" type="id-long"><description>카드번호 (마스킹)</description></field>
+        <field name="approvalNo" type="id"><description>카드사 승인번호</description></field>
+        <field name="txDate" type="date-time"><description>승인일시</description></field>
+        <field name="merchantName" type="name"><description>가맹점명</description></field>
+        <field name="merchantBizNo" type="id"><description>가맹점 사업자번호</description></field>
+        <field name="mccName" type="name"><description>업종명 (카드사 분류)</description></field>
+        <field name="mccCode" type="id"><description>업종코드 (카드사 분류)</description></field>
+        <field name="supplyAmount" type="currency-amount"><description>공급가액</description></field>
+        <field name="vatAmount" type="currency-amount"><description>부가세</description></field>
+        <field name="amount" type="currency-amount"><description>승인금액</description></field>
+        <field name="cancelYn" type="indicator"><description>카드사 승인취소 수신 여부</description></field>
+        <field name="statusId" type="id"><description>FR_CARDTX_STATUS</description></field>
+        <field name="acctgTransId" type="id"><description>자동 생성된 회계 거래</description></field>
+        <field name="recvFileId" type="id"><description>수신 파일</description></field>
+        <field name="receivedDate" type="date-time"></field>
+        <field name="lastUpdatedByUserLogin" type="id-vlong"></field>
+        <prim-key field="cardTxId"/>
+        <relation type="one" fk-name="FRCARDTX_CARD" rel-entity-name="FrCardMaster">
+            <key-map field-name="cardNo"/>
+        </relation>
+        <relation type="one" fk-name="FRCARDTX_STTS" rel-entity-name="StatusItem">
+            <key-map field-name="statusId"/>
+        </relation>
+        <relation type="one" fk-name="FRCARDTX_ATRANS" rel-entity-name="AcctgTrans">
+            <key-map field-name="acctgTransId"/>
+        </relation>
+        <relation type="one" fk-name="FRCARDTX_FILE" rel-entity-name="FrCardRecvFile">
+            <key-map field-name="recvFileId"/>
+        </relation>
+        <index name="FRCARDTX_APPR_IDX" unique="true">
+            <index-field name="cardNo"/>
+            <index-field name="approvalNo"/>
+        </index>
+        <index name="FRCARDTX_DATE_IDX">
+            <index-field name="txDate"/>
         </index>
     </entity>
 

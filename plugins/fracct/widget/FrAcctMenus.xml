@@ -28,6 +28,11 @@
             <condition><if-has-permission permission="FRACCT" action="_ADMIN"/></condition>
             <link target="FindFrVendorPayTerm"/>
         </menu-item>
+        <!-- 2021.02 법인카드 -->
+        <menu-item name="FrCardTx" title="${uiLabelMap.FrAcctCard}">
+            <condition><if-has-permission permission="FRACCT" action="_ADMIN"/></condition>
+            <link target="FindFrCardTx"/>
+        </menu-item>
     </menu>
 
     <menu name="FrSlipTabBar" extends="CommonTabBarMenu" extends-resource="component://common/widget/CommonMenus.xml"
@@ -47,5 +52,13 @@
                 <parameter param-name="slipId"/>
             </link>
         </menu-item>
+    </menu>
+
+    <!-- 2021.02 법인카드 탭 -->
+    <menu name="FrCardTabBar" extends="CommonTabBarMenu" extends-resource="component://common/widget/CommonMenus.xml"
+        default-menu-item-name="FindFrCardTx" selected-menuitem-context-field-name="tabButtonItem">
+        <menu-item name="FindFrCardTx" title="${uiLabelMap.FrAcctCardTx}"><link target="FindFrCardTx"/></menu-item>
+        <menu-item name="FrCardTxUpload" title="${uiLabelMap.FrAcctCardTxUpload}"><link target="FrCardTxUpload"/></menu-item>
+        <menu-item name="FindFrCardMaster" title="${uiLabelMap.FrAcctCardMaster}"><link target="FindFrCardMaster"/></menu-item>
     </menu>
 </menus>

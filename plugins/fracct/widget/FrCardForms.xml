@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: (주)핀링크 송태호 / 2021.02.08 -->
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://ofbiz.apache.org/Widget-Form" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Form http://ofbiz.apache.org/dtds/widget-form.xsd">
+
+    <!-- ================ 사용내역 ================ -->
+    <form name="FindFrCardTxOptions" type="single" target="FindFrCardTx" default-entity-name="FrCardTx"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="noConditionFind"><hidden value="Y"/></field>
+        <field name="cardNo" title="${uiLabelMap.FrAcctCardNo}">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="FrCardMaster" key-field-name="cardNo" description="${cardNo} ${cardAlias}">
+                    <entity-order-by field-name="cardNo"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="txDate" title="${uiLabelMap.FrAcctCardTxDate}"><date-find type="date"/></field>
+        <field name="merchantName" title="${uiLabelMap.FrAcctCardMerchant}"><text-find ignore-case="true"/></field>
+        <field name="mccName" title="${uiLabelMap.FrAcctCardMcc}"><text-find ignore-case="true"/></field>
+        <field name="statusId" title="${uiLabelMap.CommonStatus}">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="StatusItem" description="${description}">
+                    <entity-constraint name="statusTypeId" value="FR_CARDTX_STATUS"/>
+                    <entity-order-by field-name="sequenceId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+
+    <form name="ListFrCardTx" type="list" list-name="listIt" paginate-target="FindFrCardTx"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <set field="parameters.sortField" from-field="parameters.sortField" default-value="-txDate"/>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="FrCardTx"/>
+                <field-map field-name="orderBy" from-field="parameters.sortField"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="cardTxId" title="${uiLabelMap.FrAcctCardTxId}"><display/></field>
+        <field name="cardNo" title="${uiLabelMap.FrAcctCardNo}"><display/></field>
+        <field name="txDate" title="${uiLabelMap.FrAcctCardTxDate}" sort-field="true"><display type="date-time"/></field>
+        <field name="approvalNo" title="${uiLabelMap.FrAcctCardApprovalNo}"><display/></field>
+        <field name="merchantName" title="${uiLabelMap.FrAcctCardMerchant}"><display/></field>
+        <field name="mccName" title="${uiLabelMap.FrAcctCardMcc}"><display/></field>
+        <field name="supplyAmount" title="${uiLabelMap.FrAcctSupplyAmount}"><display type="currency" currency="KRW"/></field>
+        <field name="vatAmount" title="${uiLabelMap.FrAcctVatAmount}"><display type="currency" currency="KRW"/></field>
+        <field name="amount" title="${uiLabelMap.FrAcctCardAmount}" sort-field="true"><display type="currency" currency="KRW"/></field>
+        <field name="cancelYn" title="${uiLabelMap.FrAcctCardCancelYn}"><display/></field>
+        <field name="statusId" title="${uiLabelMap.CommonStatus}"><display-entity entity-name="StatusItem"/></field>
+        <field name="acctgTransId" title="${uiLabelMap.FrAcctCardAcctgTransId}"><display/></field>
+    </form>
+
+    <!-- ================ 파일 업로드 / 수신 이력 ================ -->
+    <form name="FrCardTxUpload" type="upload" target="uploadFrCardTxFile"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="uploadedFile" title="${uiLabelMap.FrAcctCardTxFile}"><file/></field>
+        <field name="fileCharset" title="${uiLabelMap.FrAcctCardFileCharset}">
+            <drop-down allow-empty="false">
+                <option key="MS949" description="MS949 (카드사 원본)"/>
+                <option key="UTF-8" description="UTF-8"/>
+            </drop-down>
+        </field>
+        <field name="submitButton" title="${uiLabelMap.CommonUpload}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+
+    <form name="ListFrCardRecvFile" type="list" list-name="recvFiles"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table">
+        <field name="recvFileId" title="${uiLabelMap.FrAcctCardRecvFileId}"><display/></field>
+        <field name="fileName" title="${uiLabelMap.FrAcctCardTxFile}"><display/></field>
+        <field name="recvDate" title="${uiLabelMap.FrAcctCardRecvDate}"><display type="date-time"/></field>
+        <field name="totalCnt" title="${uiLabelMap.FrAcctCardTotalCnt}"><display/></field>
+        <field name="insertCnt" title="${uiLabelMap.FrAcctCardInsertCnt}"><display/></field>
+        <field name="cancelCnt" title="${uiLabelMap.FrAcctCardCancelCnt}"><display/></field>
+        <field name="skipCnt" title="${uiLabelMap.FrAcctCardSkipCnt}"><display/></field>
+        <field name="errorCnt" title="${uiLabelMap.FrAcctCardErrorCnt}"><display/></field>
+        <field name="resultMsg" title="${uiLabelMap.CommonMessage}"><display/></field>
+        <field name="recvByUserLogin" title="${uiLabelMap.FrAcctCreatedBy}"><display/></field>
+    </form>
+
+    <!-- ================ 카드 마스터 ================ -->
+    <form name="ListFrCardMaster" type="list" list-name="cardMasters" target="updateFrCardMaster"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table">
+        <field name="cardNo" title="${uiLabelMap.FrAcctCardNo}"><display/></field>
+        <field name="cardAlias" title="${uiLabelMap.FrAcctCardAlias}"><text size="20"/></field>
+        <field name="holderPartyId" title="${uiLabelMap.FrAcctCardHolder}"><lookup target-form-name="LookupPartyName"/></field>
+        <field name="deptPartyId" title="${uiLabelMap.FrAcctDept}"><lookup target-form-name="LookupPartyName"/></field>
+        <field name="expenseGlAccountId" title="${uiLabelMap.FrAcctCardExpenseGl}"><lookup target-form-name="LookupGlAccount"/></field>
+        <field name="useYn" title="${uiLabelMap.FrAcctCardUseYn}">
+            <drop-down allow-empty="false"><option key="Y"/><option key="N"/></drop-down>
+        </field>
+        <field name="submitButton" title="${uiLabelMap.CommonUpdate}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+
+    <form name="AddFrCardMaster" type="single" target="createFrCardMaster"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="cardNo" title="${uiLabelMap.FrAcctCardNo}" tooltip="1234-****-****-5678" required-field="true"><text size="25" maxlength="30"/></field>
+        <field name="cardAlias" title="${uiLabelMap.FrAcctCardAlias}"><text size="30"/></field>
+        <field name="holderPartyId" title="${uiLabelMap.FrAcctCardHolder}"><lookup target-form-name="LookupPartyName"/></field>
+        <field name="deptPartyId" title="${uiLabelMap.FrAcctDept}"><lookup target-form-name="LookupPartyName"/></field>
+        <field name="expenseGlAccountId" title="${uiLabelMap.FrAcctCardExpenseGl}"><lookup target-form-name="LookupGlAccount"/></field>
+        <field name="useYn"><hidden value="Y"/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonCreate}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+</forms>

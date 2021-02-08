@@ -206,6 +206,38 @@
         <response name="success" type="view" value="FrPaymentScheduleCsv"/>
     </request-map>
 
+    <!-- ================ 법인카드 (2021.02 핀링크 송태호) ================ -->
+    <request-map uri="FindFrCardTx">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindFrCardTx"/>
+    </request-map>
+    <request-map uri="FrCardTxUpload">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FrCardTxUpload"/>
+    </request-map>
+    <request-map uri="uploadFrCardTxFile">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="uploadFrCardTxFile"/>
+        <response name="success" type="view" value="FrCardTxUpload"/>
+        <response name="error" type="view" value="FrCardTxUpload"/>
+    </request-map>
+    <request-map uri="FindFrCardMaster">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindFrCardMaster"/>
+    </request-map>
+    <request-map uri="createFrCardMaster">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createFrCardMaster"/>
+        <response name="success" type="view" value="FindFrCardMaster"/>
+        <response name="error" type="view" value="FindFrCardMaster"/>
+    </request-map>
+    <request-map uri="updateFrCardMaster">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updateFrCardMaster"/>
+        <response name="success" type="view" value="FindFrCardMaster"/>
+        <response name="error" type="view" value="FindFrCardMaster"/>
+    </request-map>
+
     <!-- ================ Lookup ================ -->
     <request-map uri="LookupGlAccount">
         <security https="true" auth="true"/>
@@ -233,6 +265,10 @@
     <view-map name="FindFrPaymentPlan" type="screen" page="component://fracct/widget/FrPaymentScreens.xml#FindFrPaymentPlan"/>
     <view-map name="FrPaymentSchedule" type="screen" page="component://fracct/widget/FrPaymentScreens.xml#FrPaymentSchedule"/>
     <view-map name="FrPaymentScheduleCsv" type="screencsv" page="component://fracct/widget/FrPaymentScreens.xml#FrPaymentScheduleCsv" content-type="text/csv" encoding="none"/>
+
+    <view-map name="FindFrCardTx" type="screen" page="component://fracct/widget/FrCardScreens.xml#FindFrCardTx"/>
+    <view-map name="FrCardTxUpload" type="screen" page="component://fracct/widget/FrCardScreens.xml#FrCardTxUpload"/>
+    <view-map name="FindFrCardMaster" type="screen" page="component://fracct/widget/FrCardScreens.xml#FindFrCardMaster"/>
 
     <view-map name="LookupGlAccount" type="screen" page="component://fracct/widget/LookupScreens.xml#LookupGlAccount"/>
 </site-conf>
