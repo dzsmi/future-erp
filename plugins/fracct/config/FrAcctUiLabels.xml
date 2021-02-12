@@ -587,4 +587,17 @@
         <value xml:lang="en">In Use</value>
         <value xml:lang="ko">사용여부</value>
     </property>
+    <!-- 2021.02.12 법인카드 사용 제한 검사 -->
+    <property key="FrAcctCardViolation">
+        <value xml:lang="en">Violation</value>
+        <value xml:lang="ko">위반사유</value>
+    </property>
+    <property key="FrAcctCardRestrictCheck">
+        <value xml:lang="en">Re-check Restrictions</value>
+        <value xml:lang="ko">사용제한 재검사</value>
+    </property>
+    <property key="FrAcctCardRestrictCheckConfirm">
+        <value xml:lang="en">Re-check all received card transactions?</value>
+        <value xml:lang="ko">수신 상태인 전체 사용내역을 다시 검사합니다. 계속하시겠습니까?</value>
+    </property>
 </resource>

@@ -3,6 +3,7 @@
  * 법인카드 승인내역 수신
  *  - receiveFrCardTxFile : 수신 디렉토리(fracct.card.recvDir)의 CARD_yyyyMMdd*.csv 일괄 적재 (스케줄 FR_CARD_RECV, 매일 07:00)
  *  - uploadFrCardTxFile  : 화면에서 파일 직접 업로드 (재수신, 누락분 보정용)
+ *  - 적재 후 사용 제한 검사(checkFrCardTxRestrict) 호출 (2021.02.12)
  *
  * 카드사 파일 형식 (샘플 : data/card/FrCardTxSample.csv, 샘플은 UTF-8 / 실제 파일은 MS949)
  *  첫 줄 헤더, 콤마 구분, 금액 콤마 없음
@@ -45,6 +46,7 @@ def receiveFrCardTxFile() {
     List recvFileIds = []
     for (File f : files) {
         Map recv = storeFrCardTxText(f.getText(charset), f.name)
+        run service: "checkFrCardTxRestrict", with: [recvFileId: recv.recvFileId]
         recvFileIds.add(recv.recvFileId)
         Debug.logInfo("법인카드 수신 ${f.name} : ${recv}", module)
         if (doneDir) {
@@ -71,6 +73,7 @@ def uploadFrCardTxFile() {
     if (text.startsWith("﻿")) text = text.substring(1)
 
     Map recv = storeFrCardTxText(text, parameters._uploadedFile_fileName ?: "upload.csv")
+    run service: "checkFrCardTxRestrict", with: [recvFileId: recv.recvFileId]
     Map result = success(UtilProperties.getMessage("FrAcctUiLabels", "FrAcctCardRecvResult", recv, locale))
     result.recvFileIds = [recv.recvFileId]
     return result

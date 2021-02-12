@@ -51,6 +51,7 @@
         <field name="amount" title="${uiLabelMap.FrAcctCardAmount}" sort-field="true"><display type="currency" currency="KRW"/></field>
         <field name="cancelYn" title="${uiLabelMap.FrAcctCardCancelYn}"><display/></field>
         <field name="statusId" title="${uiLabelMap.CommonStatus}"><display-entity entity-name="StatusItem"/></field>
+        <field name="violationReason" title="${uiLabelMap.FrAcctCardViolation}"><display/></field>
         <field name="acctgTransId" title="${uiLabelMap.FrAcctCardAcctgTransId}"><display/></field>
     </form>
 

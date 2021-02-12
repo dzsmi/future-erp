@@ -30,6 +30,12 @@
                 <decorator-screen name="CommonFrCardDecorator">
                     <decorator-section name="body">
                         <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="menu-bar">
+                                <container style="button-bar">
+                                    <link target="checkFrCardTxRestrict" text="${uiLabelMap.FrAcctCardRestrictCheck}" style="buttontext"
+                                        link-type="hidden-form" request-confirmation="true" confirmation-message="${uiLabelMap.FrAcctCardRestrictCheckConfirm}"/>
+                                </container>
+                            </decorator-section>
                             <decorator-section name="search-options">
                                 <include-form name="FindFrCardTxOptions" location="component://fracct/widget/FrCardForms.xml"/>
                             </decorator-section>

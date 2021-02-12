@@ -221,6 +221,12 @@
         <response name="success" type="view" value="FrCardTxUpload"/>
         <response name="error" type="view" value="FrCardTxUpload"/>
     </request-map>
+    <request-map uri="checkFrCardTxRestrict">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="checkFrCardTxRestrict"/>
+        <response name="success" type="view" value="FindFrCardTx"/>
+        <response name="error" type="view" value="FindFrCardTx"/>
+    </request-map>
     <request-map uri="FindFrCardMaster">
         <security https="true" auth="true"/>
         <response name="success" type="view" value="FindFrCardMaster"/>

@@ -4,8 +4,15 @@
 <entity-engine-xml>
     <StatusType description="FR 법인카드 사용내역" hasTable="N" parentTypeId="" statusTypeId="FR_CARDTX_STATUS"/>
     <StatusItem description="수신" sequenceId="01" statusCode="RECEIVED" statusId="FRCT_RECEIVED" statusTypeId="FR_CARDTX_STATUS"/>
+    <StatusItem description="소명필요" sequenceId="02" statusCode="EXPLAIN_REQ" statusId="FRCT_EXPLAIN_REQ" statusTypeId="FR_CARDTX_STATUS"/>
+    <StatusItem description="소명완료" sequenceId="03" statusCode="EXPLAINED" statusId="FRCT_EXPLAINED" statusTypeId="FR_CARDTX_STATUS"/>
     <StatusItem description="전표생성" sequenceId="05" statusCode="POSTED" statusId="FRCT_POSTED" statusTypeId="FR_CARDTX_STATUS"/>
     <StatusItem description="승인취소" sequenceId="09" statusCode="CANCELLED" statusId="FRCT_CANCELLED" statusTypeId="FR_CARDTX_STATUS"/>
     <StatusValidChange statusId="FRCT_RECEIVED" statusIdTo="FRCT_POSTED" transitionName="전표생성"/>
     <StatusValidChange statusId="FRCT_RECEIVED" statusIdTo="FRCT_CANCELLED" transitionName="승인취소"/>
+    <!-- 2021.02.12 사용 제한 검사 -->
+    <StatusValidChange statusId="FRCT_RECEIVED" statusIdTo="FRCT_EXPLAIN_REQ" transitionName="소명요청"/>
+    <StatusValidChange statusId="FRCT_EXPLAIN_REQ" statusIdTo="FRCT_EXPLAINED" transitionName="소명"/>
+    <StatusValidChange statusId="FRCT_EXPLAIN_REQ" statusIdTo="FRCT_CANCELLED" transitionName="승인취소"/>
+    <StatusValidChange statusId="FRCT_EXPLAINED" statusIdTo="FRCT_POSTED" transitionName="전표생성"/>
 </entity-engine-xml>

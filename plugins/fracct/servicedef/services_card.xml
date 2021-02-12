@@ -40,4 +40,18 @@
         <attribute name="fileCharset" type="String" mode="IN" optional="true"/>
         <attribute name="recvFileIds" type="List" mode="OUT" optional="true"/>
     </service>
+
+    <!-- ================= 사용 제한 검사 (2021.02.12) ================= -->
+    <service name="checkFrCardTxRestrict" engine="groovy"
+            location="component://fracct/groovyScripts/card/FrCardRestrictServices.groovy" invoke="checkFrCardTxRestrict" auth="false">
+        <description>
+            수신(FRCT_RECEIVED) 건 사용 제한 검사 : 주말(토/일), 심야(23~06시), 제한 업종(Groovy RESTRICT_MCC_LIST)
+            위반 시 FRCT_EXPLAIN_REQ(소명필요) + violationReason 기록. 수신 서비스 적재 후 호출.
+            cardTxId / recvFileId 가 없으면 전체 수신 건 검사.
+        </description>
+        <attribute name="cardTxId" type="String" mode="IN" optional="true"/>
+        <attribute name="recvFileId" type="String" mode="IN" optional="true"/>
+        <attribute name="checkCnt" type="Integer" mode="OUT" optional="true"/>
+        <attribute name="violateCnt" type="Integer" mode="OUT" optional="true"/>
+    </service>
 </services>
