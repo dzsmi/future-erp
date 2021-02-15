@@ -76,4 +76,37 @@
         <set field="taxInvoice.statusId" value="FRTI_CANCELLED"/>
         <store-value value-field="taxInvoice"/>
     </simple-method>
+
+    <!-- 2021.02.15 송태호 백업 -->
+    <simple-method method-name="cancelFrTaxInvoiceOld" short-description="세금계산서 취소">
+        <entity-one entity-name="FrTaxInvoice" value-field="taxInvoice"/>
+        <if-empty field="taxInvoice">
+            <add-error><fail-property resource="FrAcctErrorUiLabels" property="FrAcctTaxInvoiceNotFound"/></add-error>
+            <check-errors/>
+        </if-empty>
+        <if-compare field="taxInvoice.statusId" operator="not-equals" value="FRTI_REGISTERED">
+            <add-error><fail-property resource="FrAcctErrorUiLabels" property="FrAcctTaxInvoiceNotCancellable"/></add-error>
+            <check-errors/>
+        </if-compare>
+
+        <entity-and entity-name="FrPaymentPlan" list="paymentPlans">
+            <field-map field-name="taxInvoiceId" from-field="taxInvoice.taxInvoiceId"/>
+        </entity-and>
+        <iterate list="paymentPlans" entry="paymentPlan">
+            <if-compare field="paymentPlan.statusId" operator="equals" value="FRPP_PAID">
+                <add-error><fail-property resource="FrAcctErrorUiLabels" property="FrAcctTaxInvoiceAlreadyPaid"/></add-error>
+            </if-compare>
+        </iterate>
+        <check-errors/>
+
+        <iterate list="paymentPlans" entry="paymentPlan">
+            <if-compare field="paymentPlan.statusId" operator="equals" value="FRPP_PLANNED">
+                <set field="paymentPlan.statusId" value="FRPP_CANCELLED"/>
+                <store-value value-field="paymentPlan"/>
+            </if-compare>
+        </iterate>
+
+        <set field="taxInvoice.statusId" value="FRTI_CANCELLED"/>
+        <store-value value-field="taxInvoice"/>
+    </simple-method>
 </simple-methods>
