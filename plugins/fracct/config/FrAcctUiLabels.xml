@@ -600,4 +600,13 @@
         <value xml:lang="en">Re-check all received card transactions?</value>
         <value xml:lang="ko">수신 상태인 전체 사용내역을 다시 검사합니다. 계속하시겠습니까?</value>
     </property>
+    <!-- 2021.02.15 법인카드 자동전표 -->
+    <property key="FrAcctCardCreateAcctgTrans">
+        <value xml:lang="en">Create Acctg Trans</value>
+        <value xml:lang="ko">자동전표 생성</value>
+    </property>
+    <property key="FrAcctCardCreateAcctgTransConfirm">
+        <value xml:lang="en">Create accounting transactions for received/explained card transactions?</value>
+        <value xml:lang="ko">수신·소명완료 사용내역의 회계 거래를 생성합니다. (매일 07:30 자동 실행) 계속하시겠습니까?</value>
+    </property>
 </resource>

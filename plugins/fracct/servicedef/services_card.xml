@@ -54,4 +54,17 @@
         <attribute name="checkCnt" type="Integer" mode="OUT" optional="true"/>
         <attribute name="violateCnt" type="Integer" mode="OUT" optional="true"/>
     </service>
+
+    <!-- ================= 자동전표 (2021.02.15) ================= -->
+    <service name="createFrCardAcctgTransBatch" engine="groovy" transaction-timeout="1800"
+            location="component://fracct/groovyScripts/card/FrCardAcctgServices.groovy" invoke="createFrCardAcctgTransBatch" auth="false">
+        <description>
+            법인카드 사용내역(FRCT_RECEIVED / FRCT_EXPLAINED, 승인취소 제외) → 코어 createAcctgTrans / createAcctgTransEntry 로 회계 거래 생성.
+            거래일 = 승인일시, 차) 비용·부가세대급금 / 대) 미지급금. 생성 후 FRCT_POSTED + acctgTransId 연결.
+            스케줄 FR_CARD_SLIP (data/FrCardJobData.xml)
+        </description>
+        <attribute name="cardTxId" type="String" mode="IN" optional="true"/>
+        <attribute name="postedCnt" type="Integer" mode="OUT" optional="true"/>
+        <attribute name="errorList" type="List" mode="OUT" optional="true"/>
+    </service>
 </services>

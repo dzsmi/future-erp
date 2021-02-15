@@ -4,10 +4,17 @@
   법인카드 승인내역 파일 수신 스케줄
     - 매일 07:00 : 카드사 전일 승인내역 파일(CARD_yyyyMMdd.csv)을 fracct.card.recvDir 에서 읽어 FrCardTx 적재
     - 카드사 파일은 06:00 전후 SFTP 로 내려옴 (핀링크 중계 서버 → 퓨처리테일 ERP 서버)
+  법인카드 자동전표 스케줄 (2021.02.15)
+    - 매일 07:30 : 수신/소명완료 건 회계 거래 생성 (createFrCardAcctgTransBatch)
 -->
 <entity-engine-xml>
     <RecurrenceRule recurrenceRuleId="FR_CARD_RECV" frequency="DAILY" intervalNumber="1" countNumber="-1"/>
     <RecurrenceInfo recurrenceInfoId="FR_CARD_RECV" startDateTime="2021-02-15 07:00:00.000" recurrenceRuleId="FR_CARD_RECV" recurrenceCount="0"/>
     <JobSandbox jobId="FR_CARD_RECV" jobName="법인카드 승인내역 수신" runTime="2021-02-15 07:00:00.000" serviceName="receiveFrCardTxFile"
             poolId="pool" runAsUser="system" recurrenceInfoId="FR_CARD_RECV" statusId="SERVICE_PENDING" maxRecurrenceCount="-1"/>
+
+    <RecurrenceRule recurrenceRuleId="FR_CARD_SLIP" frequency="DAILY" intervalNumber="1" countNumber="-1"/>
+    <RecurrenceInfo recurrenceInfoId="FR_CARD_SLIP" startDateTime="2021-02-16 07:30:00.000" recurrenceRuleId="FR_CARD_SLIP" recurrenceCount="0"/>
+    <JobSandbox jobId="FR_CARD_SLIP" jobName="법인카드 자동전표" runTime="2021-02-16 07:30:00.000" serviceName="createFrCardAcctgTransBatch"
+            poolId="pool" runAsUser="system" recurrenceInfoId="FR_CARD_SLIP" statusId="SERVICE_PENDING" maxRecurrenceCount="-1"/>
 </entity-engine-xml>

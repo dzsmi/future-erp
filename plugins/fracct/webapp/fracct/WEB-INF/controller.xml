@@ -227,6 +227,12 @@
         <response name="success" type="view" value="FindFrCardTx"/>
         <response name="error" type="view" value="FindFrCardTx"/>
     </request-map>
+    <request-map uri="createFrCardAcctgTransBatch">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createFrCardAcctgTransBatch"/>
+        <response name="success" type="view" value="FindFrCardTx"/>
+        <response name="error" type="view" value="FindFrCardTx"/>
+    </request-map>
     <request-map uri="FindFrCardMaster">
         <security https="true" auth="true"/>
         <response name="success" type="view" value="FindFrCardMaster"/>

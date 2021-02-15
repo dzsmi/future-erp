@@ -34,6 +34,8 @@
                                 <container style="button-bar">
                                     <link target="checkFrCardTxRestrict" text="${uiLabelMap.FrAcctCardRestrictCheck}" style="buttontext"
                                         link-type="hidden-form" request-confirmation="true" confirmation-message="${uiLabelMap.FrAcctCardRestrictCheckConfirm}"/>
+                                    <link target="createFrCardAcctgTransBatch" text="${uiLabelMap.FrAcctCardCreateAcctgTrans}" style="buttontext"
+                                        link-type="hidden-form" request-confirmation="true" confirmation-message="${uiLabelMap.FrAcctCardCreateAcctgTransConfirm}"/>
                                 </container>
                             </decorator-section>
                             <decorator-section name="search-options">
