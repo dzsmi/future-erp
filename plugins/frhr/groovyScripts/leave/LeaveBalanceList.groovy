@@ -7,6 +7,7 @@ import org.apache.ofbiz.entity.GenericValue
 import org.apache.ofbiz.entity.condition.EntityCondition
 import org.apache.ofbiz.entity.condition.EntityOperator
 
+println "########## LeaveBalanceList.groovy start"
 Long grantYear = parameters.grantYear ? (parameters.grantYear as Long) : (Calendar.getInstance().get(Calendar.YEAR) as Long)
 context.grantYear = grantYear
 
