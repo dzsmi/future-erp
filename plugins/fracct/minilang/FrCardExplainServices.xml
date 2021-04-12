@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 정해인 / 2021.04.12 -->
+<simple-methods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://ofbiz.apache.org/Simple-Method" xsi:schemaLocation="http://ofbiz.apache.org/Simple-Method http://ofbiz.apache.org/dtds/simple-methods.xsd">
+
+    <!-- 법인카드 사용 소명
+         소명필요(FRCT_EXPLAIN_REQ) 건만 가능, 소명 내용 필수.
+         소명완료(FRCT_EXPLAINED) 건은 다음 자동전표 배치(createFrCardAcctgTransBatch)에서 회계 거래 생성 -->
+    <simple-method method-name="explainFrCardTx" short-description="법인카드 사용 소명">
+        <entity-one entity-name="FrCardTx" value-field="cardTx"/>
+        <if-empty field="cardTx">
+            <add-error><fail-property resource="FrAcctErrorUiLabels" property="FrAcctCardTxNotFound"/></add-error>
+            <check-errors/>
+        </if-empty>
+        <if-compare field="cardTx.statusId" operator="not-equals" value="FRCT_EXPLAIN_REQ">
+            <add-error><fail-property resource="FrAcctErrorUiLabels" property="FrAcctCardTxNotExplainReq"/></add-error>
+        </if-compare>
+        <if-empty field="parameters.explainText">
+            <add-error><fail-property resource="FrAcctErrorUiLabels" property="FrAcctCardExplainTextEmpty"/></add-error>
+        </if-empty>
+        <check-errors/>
+
+        <now-timestamp field="nowTimestamp"/>
+        <set field="cardTx.explainText" from-field="parameters.explainText"/>
+        <set field="cardTx.explainedByUserLogin" from-field="userLogin.userLoginId"/>
+        <set field="cardTx.explainedDate" from-field="nowTimestamp"/>
+        <set field="cardTx.statusId" value="FRCT_EXPLAINED"/>
+        <set field="cardTx.lastUpdatedByUserLogin" from-field="userLogin.userLoginId"/>
+        <store-value value-field="cardTx"/>
+    </simple-method>
+</simple-methods>

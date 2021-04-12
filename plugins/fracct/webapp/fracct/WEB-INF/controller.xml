@@ -233,6 +233,17 @@
         <response name="success" type="view" value="FindFrCardTx"/>
         <response name="error" type="view" value="FindFrCardTx"/>
     </request-map>
+    <!-- 2021.04.12 정해인 법인카드 소명 -->
+    <request-map uri="FrCardExplain">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FrCardExplain"/>
+    </request-map>
+    <request-map uri="explainFrCardTx">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="explainFrCardTx"/>
+        <response name="success" type="view" value="FrCardExplain"/>
+        <response name="error" type="view" value="FrCardExplain"/>
+    </request-map>
     <request-map uri="FindFrCardMaster">
         <security https="true" auth="true"/>
         <response name="success" type="view" value="FindFrCardMaster"/>
@@ -280,6 +291,7 @@
 
     <view-map name="FindFrCardTx" type="screen" page="component://fracct/widget/FrCardScreens.xml#FindFrCardTx"/>
     <view-map name="FrCardTxUpload" type="screen" page="component://fracct/widget/FrCardScreens.xml#FrCardTxUpload"/>
+    <view-map name="FrCardExplain" type="screen" page="component://fracct/widget/FrCardScreens.xml#FrCardExplain"/>
     <view-map name="FindFrCardMaster" type="screen" page="component://fracct/widget/FrCardScreens.xml#FindFrCardMaster"/>
 
     <view-map name="LookupGlAccount" type="screen" page="component://fracct/widget/LookupScreens.xml#LookupGlAccount"/>

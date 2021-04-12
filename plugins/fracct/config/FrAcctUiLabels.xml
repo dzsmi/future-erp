@@ -609,4 +609,25 @@
         <value xml:lang="en">Create accounting transactions for received/explained card transactions?</value>
         <value xml:lang="ko">수신·소명완료 사용내역의 회계 거래를 생성합니다. (매일 07:30 자동 실행) 계속하시겠습니까?</value>
     </property>
+    <!-- 2021.04.12 정해인 법인카드 소명 -->
+    <property key="FrAcctCardExplain">
+        <value xml:lang="en">Card Usage Explanation</value>
+        <value xml:lang="ko">법인카드 소명</value>
+    </property>
+    <property key="FrAcctCardExplainNotice">
+        <value xml:lang="en">Transactions on weekends, late night (23:00-06:00) or restricted merchants need an explanation before the accounting entry is created.</value>
+        <value xml:lang="ko">주말, 심야(23시~06시), 사용제한 업종(유흥주점/단란주점/골프장/안마시술소) 사용 건은 소명 후 전표가 생성됩니다.</value>
+    </property>
+    <property key="FrAcctCardExplainText">
+        <value xml:lang="en">Explanation</value>
+        <value xml:lang="ko">소명 내용</value>
+    </property>
+    <property key="FrAcctCardDoExplain">
+        <value xml:lang="en">Submit</value>
+        <value xml:lang="ko">소명</value>
+    </property>
+    <property key="FrAcctCardShowAll">
+        <value xml:lang="en">Show All</value>
+        <value xml:lang="ko">전체 보기</value>
+    </property>
 </resource>

@@ -280,6 +280,10 @@
         <field name="cancelYn" type="indicator"><description>카드사 승인취소 수신 여부</description></field>
         <field name="statusId" type="id"><description>FR_CARDTX_STATUS</description></field>
         <field name="violationReason" type="description"><description>사용 제한 위반 사유 (checkFrCardTxRestrict 가 기록, 예: 주말,심야,제한업종(노래방))</description></field>
+        <!-- 2021.04.12 정해인 소명 -->
+        <field name="explainText" type="very-long"><description>소명 내용</description></field>
+        <field name="explainedByUserLogin" type="id-vlong"><description>소명자</description></field>
+        <field name="explainedDate" type="date-time"><description>소명일시</description></field>
         <field name="acctgTransId" type="id"><description>자동 생성된 회계 거래</description></field>
         <field name="recvFileId" type="id"><description>수신 파일</description></field>
         <field name="receivedDate" type="date-time"></field>

@@ -28,6 +28,8 @@
             <condition><if-has-permission permission="FRACCT" action="_ADMIN"/></condition>
             <link target="FindFrVendorPayTerm"/>
         </menu-item>
+        <!-- 2021.04 정해인 법인카드 소명 (현업 사용자) -->
+        <menu-item name="FrCardExplain" title="${uiLabelMap.FrAcctCardExplain}"><link target="FrCardExplain"/></menu-item>
         <!-- 2021.02 법인카드 -->
         <menu-item name="FrCardTx" title="${uiLabelMap.FrAcctCard}">
             <condition><if-has-permission permission="FRACCT" action="_ADMIN"/></condition>
@@ -60,5 +62,6 @@
         <menu-item name="FindFrCardTx" title="${uiLabelMap.FrAcctCardTx}"><link target="FindFrCardTx"/></menu-item>
         <menu-item name="FrCardTxUpload" title="${uiLabelMap.FrAcctCardTxUpload}"><link target="FrCardTxUpload"/></menu-item>
         <menu-item name="FindFrCardMaster" title="${uiLabelMap.FrAcctCardMaster}"><link target="FindFrCardMaster"/></menu-item>
+        <menu-item name="FrCardExplain" title="${uiLabelMap.FrAcctCardExplain}"><link target="FrCardExplain"><parameter param-name="showAll" value="Y"/></link></menu-item>
     </menu>
 </menus>

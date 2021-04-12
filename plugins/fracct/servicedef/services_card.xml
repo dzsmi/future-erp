@@ -67,4 +67,13 @@
         <attribute name="postedCnt" type="Integer" mode="OUT" optional="true"/>
         <attribute name="errorList" type="List" mode="OUT" optional="true"/>
     </service>
+
+    <!-- 2021.04.12 정해인 법인카드 소명 -->
+    <service name="explainFrCardTx" engine="simple"
+            location="component://fracct/minilang/FrCardExplainServices.xml" invoke="explainFrCardTx" auth="true">
+        <description>법인카드 사용 소명 (소명필요 → 소명완료)</description>
+        <permission-service service-name="fracctUserPermissionCheck" main-action="UPDATE"/>
+        <attribute name="cardTxId" type="String" mode="IN" optional="false"/>
+        <attribute name="explainText" type="String" mode="IN" optional="true"/>
+    </service>
 </services>

@@ -106,4 +106,28 @@
         <field name="useYn"><hidden value="Y"/></field>
         <field name="submitButton" title="${uiLabelMap.CommonCreate}" widget-style="smallSubmit"><submit button-type="button"/></field>
     </form>
+
+    <!-- ================ 소명 (2021.04.12 정해인) ================ -->
+    <form name="FindFrCardExplain" type="single" target="FrCardExplain"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="cardNo" title="${uiLabelMap.FrAcctCardNo}"><text size="25"/></field>
+        <field name="showAll" title="${uiLabelMap.FrAcctCardShowAll}"><check><option key="Y" description=" "/></check></field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+
+    <form name="ListFrCardExplain" type="list" list-name="explainList" target="explainFrCardTx"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table">
+        <field name="cardTxId"><hidden/></field>
+        <field name="cardNo" title="${uiLabelMap.FrAcctCardNo}"><display/></field>
+        <field name="txDate" title="${uiLabelMap.FrAcctCardTxDate}"><display type="date-time"/></field>
+        <field name="merchantName" title="${uiLabelMap.FrAcctCardMerchant}"><display/></field>
+        <field name="mccName" title="${uiLabelMap.FrAcctCardMcc}"><display/></field>
+        <field name="amount" title="${uiLabelMap.FrAcctCardAmount}"><display type="currency" currency="KRW"/></field>
+        <field name="dispReason" title="${uiLabelMap.FrAcctCardViolation}"><display/></field>
+        <field name="statusId" title="${uiLabelMap.CommonStatus}"><display-entity entity-name="StatusItem"/></field>
+        <field name="explainText" title="${uiLabelMap.FrAcctCardExplainText}" use-when="&quot;FRCT_EXPLAIN_REQ&quot;.equals(statusId)"><text size="40" maxlength="500"/></field>
+        <field name="explainText" title="${uiLabelMap.FrAcctCardExplainText}" use-when="!&quot;FRCT_EXPLAIN_REQ&quot;.equals(statusId)"><display/></field>
+        <field name="submitButton" title="${uiLabelMap.FrAcctCardDoExplain}" use-when="&quot;FRCT_EXPLAIN_REQ&quot;.equals(statusId)" widget-style="smallSubmit"><submit button-type="button"/></field>
+        <field name="submitButton" title=" " use-when="!&quot;FRCT_EXPLAIN_REQ&quot;.equals(statusId)"><display/></field>
+    </form>
 </forms>
