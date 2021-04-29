@@ -71,6 +71,9 @@ under the License.
                 </entity-options>
             </drop-down>
         </field>
+        <!-- 2021.04.29 현업요청으로 제외
+        <field name="submitButton" title="${uiLabelMap.CommonSubmit}" widget-style="smallSubmit">
+        -->
         <field name="submitButton" title="${uiLabelMap.CommonSubmit}" widget-style="smallSubmit">
             <submit button-type="button"/>
         </field>
