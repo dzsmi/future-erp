@@ -32,4 +32,11 @@
         <permission-service service-name="frHrPermissionCheck" main-action="DELETE"/>
         <auto-attributes mode="IN" include="pk" optional="false"/>
     </service>
+
+    <!-- 2021.05.04 송태호 테스트용 -->
+    <service name="deleteFrAttendanceOld" engine="entity-auto" default-entity-name="FrAttendance" invoke="delete" auth="true">
+        <description>근태 삭제</description>
+        <permission-service service-name="frHrPermissionCheck" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
 </services>
