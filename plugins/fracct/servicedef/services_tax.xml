@@ -17,6 +17,9 @@
         <attribute name="taxInvoiceNo" type="String" mode="IN" optional="true"/>
         <attribute name="partyId" type="String" mode="IN" optional="false"/>
         <attribute name="issueDate" type="java.sql.Date" mode="IN" optional="false"/>
+        <!-- 2021.05.20 사용안함
+        <attribute name="supplyAmount" type="BigDecimal" mode="IN" optional="false"/>
+        -->
         <attribute name="supplyAmount" type="BigDecimal" mode="IN" optional="false"/>
         <attribute name="description" type="String" mode="IN" optional="true"/>
         <attribute name="taxInvoiceId" type="String" mode="OUT" optional="false"/>

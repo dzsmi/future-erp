@@ -25,6 +25,9 @@
 
     <!-- 20200911 홍성민 백업 -->
     <simple-method method-name="calcDailyProrateTmp" short-description="일할계산">
+        <!-- 2021.05.20 임시 주석
+        <if-compare field="parameters.workDays" operator="less" value="0" type="Long">
+        -->
         <if-compare field="parameters.workDays" operator="less" value="0" type="Long">
             <add-error><fail-property resource="FrHrUiLabels" property="FrHrErrorInvalidWorkDays"/></add-error>
         </if-compare>
