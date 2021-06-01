@@ -65,4 +65,12 @@
     <attribute name="partyId" type="String" mode="IN" optional="true"/>
     <attribute name="closeCount" type="Integer" mode="OUT" optional="true"/>
   </service>
+
+  <!-- 20210601 정해인 기존 로직 백업 -->
+  <service name="closeAttend2MonthOld" engine="groovy" location="component://frhr/groovyScripts/attend2/Attend2CloseBatch.groovy" invoke="closeAttend2Month" auth="true" transaction-timeout="1800">
+    <description>월 근태 마감 - 연장/휴일근로 집계, 수당 계산</description>
+    <attribute name="closeYm" type="String" mode="IN" optional="true"><description>yyyyMM, 없으면 전월</description></attribute>
+    <attribute name="partyId" type="String" mode="IN" optional="true"/>
+    <attribute name="closeCount" type="Integer" mode="OUT" optional="true"/>
+  </service>
 </services>
