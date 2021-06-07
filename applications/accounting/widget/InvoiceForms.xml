@@ -677,6 +677,21 @@ under the License.
         <field name="submitButton" title="${uiLabelMap.CommonSubmit}"><submit button-type="button"/></field>
     </form>
 
+    <!-- 20210607 송태호 백업 -->
+    <form name="LookupInvoicesStatusLegacy" type="single" target="BillingAccountInvoices" title=""
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="billingAccountId"><hidden/></field>
+        <field name="statusId" title="${uiLabelMap.CommonStatus}">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="StatusItem">
+                    <entity-constraint name="statusTypeId" operator="equals" value="INVOICE_STATUS"/>
+                    <entity-order-by field-name="sequenceId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="submitButton" title="${uiLabelMap.CommonSubmit}"><submit button-type="button"/></field>
+    </form>
+
     <form name="ListInvoicePaymentInfo" type="list" list-name="invoicePaymentInfoList"
         odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
         <actions>
