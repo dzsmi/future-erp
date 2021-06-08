@@ -5,6 +5,9 @@
 
     <!-- 현업 사용자: FRACCT_VIEW 또는 FRACCT_ADMIN 이 있으면 통과 (전표 작성/수정/상신, 조회) -->
     <simple-method method-name="fracctUserPermissionCheck" short-description="FrAcct user permission check">
+        <!-- 2021.06.08 현업요청으로 제외
+        <set field="hasPermission" type="Boolean" value="false"/>
+        -->
         <set field="hasPermission" type="Boolean" value="false"/>
         <if>
             <condition>
