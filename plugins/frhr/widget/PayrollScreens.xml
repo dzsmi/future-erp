@@ -2,6 +2,7 @@
 <!-- 작성: 오픈브릿지시스템즈 이소라 / 2018.06.11 -->
 <screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns="http://ofbiz.apache.org/Widget-Screen" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Screen http://ofbiz.apache.org/dtds/widget-screen.xsd">
+    <!-- FIXME 임시처리 -->
     <screen name="FindFrPayroll">
         <section>
             <actions>

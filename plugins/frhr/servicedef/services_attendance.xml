@@ -17,6 +17,19 @@
         </auto-attributes>
         <override name="attendTypeId" optional="false"/>
     </service>
+
+    <!-- 2021.06.17 송태호 백업 -->
+    <service name="createFrAttendanceLegacy" engine="simple"
+            location="component://frhr/minilang/FrAttendanceServices.xml" invoke="createFrAttendance" auth="true">
+        <description>근태 등록 (출퇴근 시각으로 근무시간/연장시간 계산)</description>
+        <permission-service service-name="frHrPermissionCheck" main-action="CREATE"/>
+        <auto-attributes entity-name="FrAttendance" mode="IN" include="pk" optional="false"/>
+        <auto-attributes entity-name="FrAttendance" mode="IN" include="nonpk" optional="true">
+            <exclude field-name="workHours"/>
+            <exclude field-name="overtimeHours"/>
+        </auto-attributes>
+        <override name="attendTypeId" optional="false"/>
+    </service>
     <service name="updateFrAttendance" engine="simple"
             location="component://frhr/minilang/FrAttendanceServices.xml" invoke="updateFrAttendance" auth="true">
         <description>근태 수정 (근무시간/연장시간 재계산)</description>
