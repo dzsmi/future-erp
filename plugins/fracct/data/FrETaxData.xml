@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: (주)핀링크 송태호 / 2021.06.21 -->
+<!-- 전자세금계산서 : 작성중 → (ASP 발행) → 등록 -->
+<entity-engine-xml>
+    <StatusItem description="작성중(전자)" sequenceId="00" statusCode="DRAFT" statusId="FRTI_DRAFT" statusTypeId="FR_TAXINV_STATUS"/>
+    <StatusValidChange statusId="FRTI_DRAFT" statusIdTo="FRTI_REGISTERED" transitionName="전자발행"/>
+    <StatusValidChange statusId="FRTI_DRAFT" statusIdTo="FRTI_CANCELLED" transitionName="취소"/>
+</entity-engine-xml>

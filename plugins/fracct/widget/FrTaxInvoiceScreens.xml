@@ -16,6 +16,8 @@
                             <decorator-section name="menu-bar">
                                 <container style="button-bar">
                                     <link target="EditFrTaxInvoice" text="${uiLabelMap.FrAcctNewTaxInvoice}" style="buttontext create"/>
+                                    <!-- 2021.06 전자세금계산서 -->
+                                    <link target="EditFrETaxInvoice" text="${uiLabelMap.FrAcctNewETaxInvoice}" style="buttontext create"/>
                                 </container>
                             </decorator-section>
                             <decorator-section name="search-options">

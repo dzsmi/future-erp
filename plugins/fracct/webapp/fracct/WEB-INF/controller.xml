@@ -149,6 +149,42 @@
         <response name="error" type="view" value="ViewFrTaxInvoice"/>
     </request-map>
 
+    <!-- ================ 전자세금계산서 (2021.06 핀링크 송태호) ================ -->
+    <request-map uri="EditFrETaxInvoice">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="EditFrETaxInvoice"/>
+    </request-map>
+    <request-map uri="createFrETaxInvoice">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createFrETaxInvoice"/>
+        <response name="success" type="request-redirect" value="ViewFrETaxInvoice">
+            <redirect-parameter name="taxInvoiceId"/>
+        </response>
+        <response name="error" type="view" value="EditFrETaxInvoice"/>
+    </request-map>
+    <request-map uri="ViewFrETaxInvoice">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="ViewFrETaxInvoice"/>
+    </request-map>
+    <request-map uri="addFrETaxInvoiceItem">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="addFrETaxInvoiceItem"/>
+        <response name="success" type="view" value="ViewFrETaxInvoice"/>
+        <response name="error" type="view" value="ViewFrETaxInvoice"/>
+    </request-map>
+    <request-map uri="removeFrETaxInvoiceItem">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="removeFrETaxInvoiceItem"/>
+        <response name="success" type="view" value="ViewFrETaxInvoice"/>
+        <response name="error" type="view" value="ViewFrETaxInvoice"/>
+    </request-map>
+    <request-map uri="issueFrETaxInvoice">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="issueFrETaxInvoice"/>
+        <response name="success" type="view" value="ViewFrETaxInvoice"/>
+        <response name="error" type="view" value="ViewFrETaxInvoice"/>
+    </request-map>
+
     <!-- ================ 거래처 지급조건 ================ -->
     <request-map uri="FindFrVendorPayTerm">
         <security https="true" auth="true"/>
@@ -282,6 +318,9 @@
     <view-map name="FindFrTaxInvoice" type="screen" page="component://fracct/widget/FrTaxInvoiceScreens.xml#FindFrTaxInvoice"/>
     <view-map name="EditFrTaxInvoice" type="screen" page="component://fracct/widget/FrTaxInvoiceScreens.xml#EditFrTaxInvoice"/>
     <view-map name="ViewFrTaxInvoice" type="screen" page="component://fracct/widget/FrTaxInvoiceScreens.xml#ViewFrTaxInvoice"/>
+
+    <view-map name="EditFrETaxInvoice" type="screen" page="component://fracct/widget/FrETaxScreens.xml#EditFrETaxInvoice"/>
+    <view-map name="ViewFrETaxInvoice" type="screen" page="component://fracct/widget/FrETaxScreens.xml#ViewFrETaxInvoice"/>
 
     <view-map name="FindFrVendorPayTerm" type="screen" page="component://fracct/widget/FrPaymentScreens.xml#FindFrVendorPayTerm"/>
     <view-map name="EditFrVendorPayTerm" type="screen" page="component://fracct/widget/FrPaymentScreens.xml#EditFrVendorPayTerm"/>

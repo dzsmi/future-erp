@@ -630,4 +630,69 @@
         <value xml:lang="en">Show All</value>
         <value xml:lang="ko">전체 보기</value>
     </property>
+    <!-- 2021.06 전자세금계산서 연동 - 핀링크 송태호 -->
+    <property key="FrAcctETax">
+        <value xml:lang="en">e-Tax</value>
+        <value xml:lang="ko">전자</value>
+    </property>
+    <property key="FrAcctETaxInvoice">
+        <value xml:lang="en">Electronic Tax Invoice</value>
+        <value xml:lang="ko">전자세금계산서</value>
+    </property>
+    <property key="FrAcctNewETaxInvoice">
+        <value xml:lang="en">New e-Tax Invoice</value>
+        <value xml:lang="ko">전자세금계산서 발행</value>
+    </property>
+    <property key="FrAcctETaxNotice">
+        <value xml:lang="en">Electronic tax invoices are issued for sales only. Enter items after creating the header, then click Issue. VAT is 10% of each item supply amount, rounded to the won.</value>
+        <value xml:lang="ko">전자세금계산서는 매출만 발행합니다. 헤더 저장 후 품목을 입력하고 [발행]을 누르세요. 세액은 품목별 공급가액의 10%, 원 단위 반올림입니다.</value>
+    </property>
+    <property key="FrAcctETaxBuyer">
+        <value xml:lang="en">Buyer</value>
+        <value xml:lang="ko">공급받는자</value>
+    </property>
+    <property key="FrAcctETaxBuyerEmail">
+        <value xml:lang="en">Buyer Email</value>
+        <value xml:lang="ko">공급받는자 이메일</value>
+    </property>
+    <property key="FrAcctETaxItems">
+        <value xml:lang="en">Items</value>
+        <value xml:lang="ko">품목</value>
+    </property>
+    <property key="FrAcctETaxAddItem">
+        <value xml:lang="en">Add Item</value>
+        <value xml:lang="ko">품목 추가</value>
+    </property>
+    <property key="FrAcctETaxSupplyDate">
+        <value xml:lang="en">Supply Date</value>
+        <value xml:lang="ko">공급일자</value>
+    </property>
+    <property key="FrAcctETaxItemName">
+        <value xml:lang="en">Item</value>
+        <value xml:lang="ko">품목명</value>
+    </property>
+    <property key="FrAcctETaxItemSpec">
+        <value xml:lang="en">Spec</value>
+        <value xml:lang="ko">규격</value>
+    </property>
+    <property key="FrAcctETaxUnitPrice">
+        <value xml:lang="en">Unit Price</value>
+        <value xml:lang="ko">단가</value>
+    </property>
+    <property key="FrAcctETaxNtsNo">
+        <value xml:lang="en">NTS Approval No</value>
+        <value xml:lang="ko">국세청 승인번호</value>
+    </property>
+    <property key="FrAcctETaxSendStatus">
+        <value xml:lang="en">Send Status</value>
+        <value xml:lang="ko">전송상태</value>
+    </property>
+    <property key="FrAcctETaxIssue">
+        <value xml:lang="en">Issue</value>
+        <value xml:lang="ko">발행</value>
+    </property>
+    <property key="FrAcctETaxIssueConfirm">
+        <value xml:lang="en">Issue this electronic tax invoice? It cannot be modified after issue.</value>
+        <value xml:lang="ko">전자세금계산서를 발행합니다. 발행 후에는 수정할 수 없습니다. 계속하시겠습니까?</value>
+    </property>
 </resource>

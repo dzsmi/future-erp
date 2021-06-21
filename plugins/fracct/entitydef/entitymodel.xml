@@ -310,4 +310,36 @@
         </index>
     </entity>
 
+  <!-- ========================================================= -->
+  <!-- com.futureretail.fracct.tax  (2021.06 전자세금계산서 연동 - 핀링크 송태호) -->
+  <!-- ========================================================= -->
+
+    <extend-entity entity-name="FrTaxInvoice">
+        <field name="eTaxYn" type="indicator"><description>전자세금계산서 여부 (Y: ASP 발행 건)</description></field>
+        <field name="buyerEmail" type="email"><description>공급받는자 담당자 이메일</description></field>
+        <field name="etaxSendStatus" type="id"><description>ASP 전송상태 READY / SENT / FAIL</description></field>
+        <field name="etaxSendDate" type="date-time"><description>ASP 전송일시</description></field>
+        <field name="etaxResultMsg" type="description"><description>ASP 응답 메시지</description></field>
+    </extend-entity>
+
+    <entity entity-name="FrETaxInvoiceItem"
+            package-name="com.futureretail.fracct.tax"
+            title="FutureRetail Electronic Tax Invoice Item">
+        <field name="taxInvoiceId" type="id"></field>
+        <field name="itemSeqId" type="id"></field>
+        <field name="supplyDate" type="date"><description>공급일자</description></field>
+        <field name="itemName" type="name"><description>품목</description></field>
+        <field name="itemSpec" type="name"><description>규격</description></field>
+        <field name="quantity" type="fixed-point"><description>수량</description></field>
+        <field name="unitPrice" type="fixed-point"><description>단가 (소수 가능)</description></field>
+        <field name="supplyAmount" type="currency-amount"><description>공급가액</description></field>
+        <field name="vatAmount" type="currency-amount"><description>세액</description></field>
+        <field name="remark" type="comment"></field>
+        <prim-key field="taxInvoiceId"/>
+        <prim-key field="itemSeqId"/>
+        <relation type="one" fk-name="FRETAXI_TAXINV" rel-entity-name="FrTaxInvoice">
+            <key-map field-name="taxInvoiceId"/>
+        </relation>
+    </entity>
+
 </entitymodel>

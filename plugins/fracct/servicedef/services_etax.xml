@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: (주)핀링크 송태호 / 2021.06.21 -->
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>FutureRetail Accounting - Electronic Tax Invoice (ASP) Services</description>
+    <vendor>FinLink</vendor>
+    <version>1.0</version>
+
+    <service name="createFrETaxInvoice" engine="groovy"
+            location="component://fracct/groovyScripts/tax/FrETaxServices.groovy" invoke="createFrETaxInvoice" auth="true">
+        <description>전자세금계산서(매출) 작성 - FrTaxInvoice 작성중(FRTI_DRAFT), eTaxYn=Y</description>
+        <permission-service service-name="fracctAdminPermissionCheck" main-action="CREATE"/>
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+        <attribute name="issueDate" type="java.sql.Date" mode="IN" optional="false"/>
+        <attribute name="buyerEmail" type="String" mode="IN" optional="true"/>
+        <attribute name="description" type="String" mode="IN" optional="true"/>
+        <attribute name="taxInvoiceId" type="String" mode="OUT" optional="false"/>
+    </service>
+
+    <service name="addFrETaxInvoiceItem" engine="groovy"
+            location="component://fracct/groovyScripts/tax/FrETaxServices.groovy" invoke="addFrETaxInvoiceItem" auth="true">
+        <description>전자세금계산서 품목 추가 (공급가액 = 수량 × 단가 반올림, 세액 = 공급가액 × 10% 반올림) 후 합계 재계산</description>
+        <permission-service service-name="fracctAdminPermissionCheck" main-action="CREATE"/>
+        <attribute name="taxInvoiceId" type="String" mode="INOUT" optional="false"/>
+        <attribute name="supplyDate" type="java.sql.Date" mode="IN" optional="true"/>
+        <attribute name="itemName" type="String" mode="IN" optional="false"/>
+        <attribute name="itemSpec" type="String" mode="IN" optional="true"/>
+        <attribute name="quantity" type="BigDecimal" mode="IN" optional="true"/>
+        <attribute name="unitPrice" type="BigDecimal" mode="IN" optional="false"/>
+        <attribute name="remark" type="String" mode="IN" optional="true"/>
+    </service>
+
+    <service name="removeFrETaxInvoiceItem" engine="groovy"
+            location="component://fracct/groovyScripts/tax/FrETaxServices.groovy" invoke="removeFrETaxInvoiceItem" auth="true">
+        <description>전자세금계산서 품목 삭제 후 합계 재계산</description>
+        <permission-service service-name="fracctAdminPermissionCheck" main-action="DELETE"/>
+        <attribute name="taxInvoiceId" type="String" mode="INOUT" optional="false"/>
+        <attribute name="itemSeqId" type="String" mode="IN" optional="false"/>
+    </service>
+
+    <service name="issueFrETaxInvoice" engine="groovy" transaction-timeout="120"
+            location="component://fracct/groovyScripts/tax/FrETaxServices.groovy" invoke="issueFrETaxInvoice" auth="true">
+        <description>전자세금계산서 ASP 발행 요청 (fracct.etax.aspUrl). 성공 시 taxInvoiceNo = 국세청 승인번호, FRTI_REGISTERED</description>
+        <permission-service service-name="fracctAdminPermissionCheck" main-action="UPDATE"/>
+        <attribute name="taxInvoiceId" type="String" mode="INOUT" optional="false"/>
+        <attribute name="taxInvoiceNo" type="String" mode="OUT" optional="true"/>
+    </service>
+</services>

@@ -40,8 +40,14 @@
                 <field-map field-name="viewSize" from-field="viewSize"/>
             </service>
         </actions>
-        <field name="taxInvoiceId" title="${uiLabelMap.FrAcctTaxInvoiceId}" widget-style="buttontext" sort-field="true">
+        <field name="taxInvoiceId" title="${uiLabelMap.FrAcctTaxInvoiceId}" widget-style="buttontext" sort-field="true" use-when="!&quot;Y&quot;.equals(eTaxYn)">
             <hyperlink description="${taxInvoiceId}" target="ViewFrTaxInvoice" also-hidden="false">
+                <parameter param-name="taxInvoiceId"/>
+            </hyperlink>
+        </field>
+        <!-- 2021.06 전자세금계산서는 전자 상세 화면으로 -->
+        <field name="taxInvoiceId" title="${uiLabelMap.FrAcctTaxInvoiceId}" widget-style="buttontext" sort-field="true" use-when="&quot;Y&quot;.equals(eTaxYn)">
+            <hyperlink description="${taxInvoiceId} (${uiLabelMap.FrAcctETax})" target="ViewFrETaxInvoice" also-hidden="false">
                 <parameter param-name="taxInvoiceId"/>
             </hyperlink>
         </field>
