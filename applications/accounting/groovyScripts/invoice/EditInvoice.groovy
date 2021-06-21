@@ -23,6 +23,7 @@ import org.apache.ofbiz.base.util.UtilNumber
 
 import java.text.DateFormat
 
+println "########## EditInvoice.groovy start"
 invoiceId = parameters.get("invoiceId")
 
 invoice = from('Invoice').where('invoiceId', invoiceId).queryOne()
