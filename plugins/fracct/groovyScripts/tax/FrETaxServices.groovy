@@ -9,7 +9,9 @@
  * 금액 계산 (국세청 전자세금계산서 기준 원 단위 반올림)
  *  - 품목 공급가액 = 수량 × 단가, 원 단위 반올림(HALF_UP)
  *  - 품목 세액     = 품목 공급가액 × 10%, 원 단위 반올림(HALF_UP)
- *  - 합계          = 품목 합
+ *  - 헤더 공급가액 = Σ(수량 × 단가) 를 합산한 뒤 한 번만 반올림 (2021.06.28 수정)
+ *  - 헤더 세액     = 헤더 공급가액 × 10%, 반올림 (2021.06.28 수정 - 품목 세액 합 아님)
+ *    → 품목별 반올림 누적으로 ASP 에서 "합계 세액 불일치(E-2031)" 반려되던 건 조치
  *
  * ASP : fracct.etax.aspUrl (JSON POST), fracct.etax.testMode=Y 이면 호출 없이 가승인번호
  */
@@ -140,12 +142,14 @@ def issueFrETaxInvoice() {
  */
 void calcFrETaxTotals(GenericValue taxInvoice) {
     List<GenericValue> items = from("FrETaxInvoiceItem").where(taxInvoiceId: taxInvoice.taxInvoiceId).queryList()
-    BigDecimal supplyTotal = BigDecimal.ZERO
-    BigDecimal vatTotal = BigDecimal.ZERO
+    // 2021.06.28 공급가 합계는 수량×단가 원값을 합산 후 반올림, 세액은 합계 기준 (품목 반올림 값 합산 X)
+    BigDecimal supplyRaw = BigDecimal.ZERO
     for (GenericValue item : items) {
-        supplyTotal = supplyTotal.add(item.supplyAmount)
-        vatTotal = vatTotal.add(item.vatAmount)
+        BigDecimal qty = item.quantity ?: BigDecimal.ONE
+        supplyRaw = supplyRaw.add(qty.multiply(item.unitPrice ?: BigDecimal.ZERO))
     }
+    BigDecimal supplyTotal = supplyRaw.setScale(0, RoundingMode.HALF_UP)
+    BigDecimal vatTotal = supplyTotal.multiply(VAT_RATE).setScale(0, RoundingMode.HALF_UP)
     taxInvoice.supplyAmount = supplyTotal
     taxInvoice.vatAmount = vatTotal
     taxInvoice.totalAmount = supplyTotal.add(vatTotal)

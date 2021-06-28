@@ -644,8 +644,8 @@
         <value xml:lang="ko">전자세금계산서 발행</value>
     </property>
     <property key="FrAcctETaxNotice">
-        <value xml:lang="en">Electronic tax invoices are issued for sales only. Enter items after creating the header, then click Issue. VAT is 10% of each item supply amount, rounded to the won.</value>
-        <value xml:lang="ko">전자세금계산서는 매출만 발행합니다. 헤더 저장 후 품목을 입력하고 [발행]을 누르세요. 세액은 품목별 공급가액의 10%, 원 단위 반올림입니다.</value>
+        <value xml:lang="en">Electronic tax invoices are issued for sales only. Enter items after creating the header, then click Issue. Total VAT is 10% of the total supply amount, rounded to the won.</value>
+        <value xml:lang="ko">전자세금계산서는 매출만 발행합니다. 헤더 저장 후 품목을 입력하고 [발행]을 누르세요. 합계 세액은 공급가액 합계의 10%, 원 단위 반올림입니다(품목별 세액 합과 1~2원 다를 수 있음).</value>
     </property>
     <property key="FrAcctETaxBuyer">
         <value xml:lang="en">Buyer</value>
