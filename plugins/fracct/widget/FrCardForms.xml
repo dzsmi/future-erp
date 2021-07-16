@@ -93,6 +93,9 @@
         <field name="useYn" title="${uiLabelMap.FrAcctCardUseYn}">
             <drop-down allow-empty="false"><option key="Y"/><option key="N"/></drop-down>
         </field>
+        <!-- 2021.07.16 사용안함
+        <field name="submitButton" title="${uiLabelMap.CommonUpdate}" widget-style="smallSubmit"><submit button-type="button"/></field>
+        -->
         <field name="submitButton" title="${uiLabelMap.CommonUpdate}" widget-style="smallSubmit"><submit button-type="button"/></field>
     </form>
 
