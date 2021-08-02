@@ -17,4 +17,11 @@
         <description>재경팀 권한 체크 (FRACCT_ADMIN)</description>
         <implements service="permissionInterface"/>
     </service>
+
+    <!-- 2021.08.02 정해인 신규 (기존 유지) -->
+    <service name="fracctAdminPermissionCheck_2019" engine="simple"
+            location="component://fracct/minilang/permission/FrAcctPermissionServices.xml" invoke="fracctAdminPermissionCheck">
+        <description>재경팀 권한 체크 (FRACCT_ADMIN)</description>
+        <implements service="permissionInterface"/>
+    </service>
 </services>
