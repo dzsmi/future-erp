@@ -46,6 +46,7 @@
                 <set field="titleProperty" value="FrHrLeaveUse"/>
                 <set field="headerItem" value="Leave"/>
                 <set field="tabButtonItem" value="FindFrLeaveUse"/>
+                <!-- TODO 추후 공통화 -->
                 <service service-name="frHrPermissionCheck" result-map="permResult">
                     <field-map field-name="mainAction" value="ADMIN"/>
                 </service>
