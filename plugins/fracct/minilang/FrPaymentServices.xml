@@ -50,6 +50,54 @@
 		<field-to-result field="dueDate"/>
 	</simple-method>
 
+	<!-- 20210820 정해인 테스트용 -->
+	<simple-method method-name="createFrPaymentPlanFromTaxInvoiceBak" short-description="매입 세금계산서 지급계획 생성">
+		<entity-one entity-name="FrTaxInvoice" value-field="taxInvoice"/>
+		<if-empty field="taxInvoice">
+			<add-error><fail-property resource="FrAcctErrorUiLabels" property="FrAcctTaxInvoiceNotFound"/></add-error>
+			<check-errors/>
+		</if-empty>
+		<if-compare field="taxInvoice.taxInvoiceTypeEnumId" operator="not-equals" value="FRTI_PURCHASE">
+			<add-error><fail-property resource="FrAcctErrorUiLabels" property="FrAcctPaymentPlanPurchaseOnly"/></add-error>
+			<check-errors/>
+		</if-compare>
+
+		<!-- A5 지급기일 = 발행일이 속한 달의 다음 달 말일
+			 예) 2018-03-05 발행 → 2018-04-30, 2018-01-31 발행 → 2018-02-28
+			 ※ 거래처별 지급일수(FrVendorPayTerm)는 아직 반영하지 않음 -->
+		<set field="daysLater" value="0" type="Integer"/>
+		<set field="monthsLater" value="1" type="Integer"/>
+		<call-class-method class-name="org.apache.ofbiz.base.util.UtilDateTime" method-name="toTimestamp" ret-field="issueStamp">
+			<field field="taxInvoice.issueDate" type="java.util.Date"/>
+		</call-class-method>
+		<call-class-method class-name="org.apache.ofbiz.base.util.UtilDateTime" method-name="getMonthStart" ret-field="nextMonthStart">
+			<field field="issueStamp" type="java.sql.Timestamp"/>
+			<field field="daysLater" type="int"/>
+			<field field="monthsLater" type="int"/>
+		</call-class-method>
+		<call-class-method class-name="org.apache.ofbiz.base.util.UtilDateTime" method-name="getMonthEnd" ret-field="nextMonthEnd">
+			<field field="nextMonthStart" type="java.sql.Timestamp"/>
+			<field field="timeZone" type="java.util.TimeZone"/>
+			<field field="locale" type="java.util.Locale"/>
+		</call-class-method>
+		<call-class-method class-name="org.apache.ofbiz.base.util.UtilDateTime" method-name="toSqlDate" ret-field="dueDate">
+			<field field="nextMonthEnd" type="java.util.Date"/>
+		</call-class-method>
+
+		<make-value entity-name="FrPaymentPlan" value-field="newEntity"/>
+		<sequenced-id sequence-name="FrPaymentPlan" field="paymentPlanSeqId"/>
+		<set field="newEntity.paymentPlanId" value="PP${paymentPlanSeqId}"/>
+		<set field="newEntity.taxInvoiceId" from-field="taxInvoice.taxInvoiceId"/>
+		<set field="newEntity.partyId" from-field="taxInvoice.partyId"/>
+		<set field="newEntity.dueDate" from-field="dueDate"/>
+		<set field="newEntity.amount" from-field="taxInvoice.totalAmount"/>
+		<set field="newEntity.statusId" value="FRPP_PLANNED"/>
+		<create-value value-field="newEntity"/>
+
+		<field-to-result field="newEntity.paymentPlanId" result-name="paymentPlanId"/>
+		<field-to-result field="dueDate"/>
+	</simple-method>
+
 	<simple-method method-name="completeFrPaymentPlan" short-description="지급완료 처리">
 		<entity-one entity-name="FrPaymentPlan" value-field="paymentPlan"/>
 		<if-empty field="paymentPlan">

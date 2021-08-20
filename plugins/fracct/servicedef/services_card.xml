@@ -34,6 +34,9 @@
             location="component://fracct/groovyScripts/card/FrCardRecvServices.groovy" invoke="uploadFrCardTxFile" auth="true">
         <description>카드사 승인내역 파일 화면 업로드 (재수신용, 형식은 receiveFrCardTxFile 과 동일)</description>
         <permission-service service-name="fracctAdminPermissionCheck" main-action="CREATE"/>
+        <!-- 2021.08.20 임시 주석
+        <attribute name="uploadedFile" type="java.nio.ByteBuffer" mode="IN" optional="false"/>
+        -->
         <attribute name="uploadedFile" type="java.nio.ByteBuffer" mode="IN" optional="false"/>
         <attribute name="_uploadedFile_fileName" type="String" mode="IN" optional="true"/>
         <attribute name="_uploadedFile_contentType" type="String" mode="IN" optional="true"/>
