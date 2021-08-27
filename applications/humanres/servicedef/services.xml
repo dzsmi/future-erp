@@ -335,6 +335,15 @@ under the License.
         <override name="description" optional="false"/>
     </service>
 
+    <!-- 20210827 송태호 기존 로직 백업 -->
+    <service name="updateTerminationReasonLegacy" engine="entity-auto" default-entity-name="TerminationReason" invoke="update" auth="true">
+        <description>Update an Termination Reason</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="description" optional="false"/>
+    </service>
+
     <service name="deleteTerminationReason" engine="entity-auto" default-entity-name="TerminationReason" invoke="delete" auth="true">
         <description>Delete an Termination Reason</description>
         <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
