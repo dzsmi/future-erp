@@ -23,6 +23,18 @@
                         <screenlet title="${uiLabelMap.FrAcctCloseMonth}">
                             <include-form name="CloseFrPeriod" location="component://fracct/widget/FrPeriodForms.xml"/>
                         </screenlet>
+                        <!-- 2021.09.27 정해인 마감 해제 권한자만 -->
+                        <section>
+                            <condition>
+                                <if-has-permission permission="FRACCT_CLOSE" action="_ADMIN"/>
+                            </condition>
+                            <widgets>
+                                <screenlet title="${uiLabelMap.FrAcctReleaseMonth}">
+                                    <label text="${uiLabelMap.FrAcctReleaseNotice}"/>
+                                    <include-form name="ReleaseFrClosePeriod" location="component://fracct/widget/FrPeriodForms.xml"/>
+                                </screenlet>
+                            </widgets>
+                        </section>
                     </decorator-section>
                 </decorator-screen>
             </widgets>

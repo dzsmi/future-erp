@@ -24,6 +24,7 @@
                 <parameter param-name="closeYear" from-field="closeYear"/>
             </hyperlink>
         </field>
+        <!-- 2021.09.27 정해인 해제는 마감 해제 권한자만 (releaseFrClosePeriod), 사유는 아래 마감 해제 폼에서 입력
         <field name="closeLink" title=" " widget-style="buttontext" use-when="isClosed==&quot;Y&quot;">
             <hyperlink description="${uiLabelMap.FrAcctDoReopen}" target="reopenFrPeriod" link-type="hidden-form" also-hidden="false"
                 request-confirmation="true" confirmation-message="${uiLabelMap.FrAcctReopenConfirm}">
@@ -31,6 +32,8 @@
                 <parameter param-name="closeYear" from-field="closeYear"/>
             </hyperlink>
         </field>
+        -->
+        <field name="closeLink" title=" " use-when="isClosed==&quot;Y&quot;"><display description="${uiLabelMap.FrAcctClosed}"/></field>
     </form>
 
     <form name="CloseFrPeriod" type="single" target="closeFrPeriod"
@@ -38,5 +41,14 @@
         <field name="closeYearMonth" title="${uiLabelMap.FrAcctCloseYearMonth}" tooltip="yyyyMM" required-field="true"><text size="6" maxlength="6"/></field>
         <field name="comments" title="${uiLabelMap.CommonComments}"><text size="60" maxlength="255"/></field>
         <field name="submitButton" title="${uiLabelMap.FrAcctDoClose}"><submit button-type="button"/></field>
+    </form>
+
+    <!-- 2021.09.27 정해인 마감 해제 (FRACCT_CLOSE_ADMIN) -->
+    <form name="ReleaseFrClosePeriod" type="single" target="releaseFrClosePeriod"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="closeYearMonth" title="${uiLabelMap.FrAcctCloseYearMonth}" tooltip="yyyyMM" required-field="true"><text size="6" maxlength="6"/></field>
+        <field name="comments" title="${uiLabelMap.FrAcctReleaseReason}" required-field="true"><text size="60" maxlength="255"/></field>
+        <field name="closeYear"><hidden value="${closeYear}"/></field>
+        <field name="submitButton" title="${uiLabelMap.FrAcctDoReopen}"><submit button-type="button"/></field>
     </form>
 </forms>

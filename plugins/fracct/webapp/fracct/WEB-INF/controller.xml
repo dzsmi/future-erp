@@ -120,6 +120,13 @@
         <response name="success" type="view" value="FindFrClosePeriod"/>
         <response name="error" type="view" value="FindFrClosePeriod"/>
     </request-map>
+    <!-- 2021.09.27 정해인 마감 해제 권한 -->
+    <request-map uri="releaseFrClosePeriod">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="releaseFrClosePeriod"/>
+        <response name="success" type="view" value="FindFrClosePeriod"/>
+        <response name="error" type="view" value="FindFrClosePeriod"/>
+    </request-map>
 
     <!-- ================ 세금계산서 ================ -->
     <request-map uri="FindFrTaxInvoice">

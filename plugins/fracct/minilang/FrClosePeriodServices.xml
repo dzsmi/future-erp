@@ -3,6 +3,7 @@
 <!--
   수정이력
     2018.08.22  김현석  결산마감 항목 추가
+    2021.09.27  정해인  마감 해제 권한(FRACCT_CLOSE_ADMIN) - releaseFrClosePeriod, 마감 체크 ECA 조건 추가
 -->
 <simple-methods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns="http://ofbiz.apache.org/Simple-Method" xsi:schemaLocation="http://ofbiz.apache.org/Simple-Method http://ofbiz.apache.org/dtds/simple-methods.xsd">
@@ -145,5 +146,25 @@
         <set field="closePeriod.closedDate" from-field="nowTimestamp"/>
         <set field="closePeriod.comments" from-field="parameters.comments"/>
         <store-value value-field="closePeriod"/>
+    </simple-method>
+
+    <!-- 2021.09.27 정해인 마감 해제 (FRACCT_CLOSE_ADMIN, 해제 사유 필수)
+         결산 마감 관리 화면의 [해제] 버튼은 이 서비스로 변경 -->
+    <simple-method method-name="releaseFrClosePeriod" short-description="월 마감 해제 (마감 해제 권한자)">
+        <if-empty field="parameters.comments">
+            <add-error><fail-property resource="FrAcctErrorUiLabels" property="FrAcctPeriodReleaseReasonEmpty"/></add-error>
+            <check-errors/>
+        </if-empty>
+        <call-simple-method method-name="reopenFrPeriod"/>
+    </simple-method>
+
+    <!-- 2021.09.27 정해인 마감 체크 ECA 조건 (secas.xml condition-service)
+         마감 해제 권한자(FRACCT_CLOSE_ADMIN)는 마감월이어도 전표 입력/수정 가능 → conditionReply=false 이면 checkFrClosePeriod 실행 안 함 -->
+    <simple-method method-name="isFrCloseCheckTarget" short-description="마감 체크 대상 여부">
+        <set field="conditionReply" type="Boolean" value="true"/>
+        <if-has-permission permission="FRACCT_CLOSE" action="_ADMIN">
+            <set field="conditionReply" type="Boolean" value="false"/>
+        </if-has-permission>
+        <field-to-result field="conditionReply"/>
     </simple-method>
 </simple-methods>

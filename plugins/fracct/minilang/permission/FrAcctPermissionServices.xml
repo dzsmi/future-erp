@@ -86,4 +86,17 @@
         </if-has-permission>
         <field-to-result field="hasPermission"/>
     </simple-method>
+
+    <!-- 2021.09.27 정해인 결산 마감 해제 권한: FRACCT_CLOSE_ADMIN 만 통과 -->
+    <simple-method method-name="fracctCloseAdminPermissionCheck" short-description="FrAcct close admin permission check">
+        <set field="hasPermission" type="Boolean" value="false"/>
+        <if-has-permission permission="FRACCT_CLOSE" action="_ADMIN">
+            <set field="hasPermission" type="Boolean" value="true"/>
+            <else>
+                <property-to-field resource="FrAcctErrorUiLabels" property="FrAcctCloseAdminPermissionError" field="failMessage"/>
+                <field-to-result field="failMessage"/>
+            </else>
+        </if-has-permission>
+        <field-to-result field="hasPermission"/>
+    </simple-method>
 </simple-methods>

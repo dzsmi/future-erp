@@ -20,4 +20,15 @@
     <SecurityGroupPermission groupId="FRACCT_ADMIN" permissionId="ACCTG_ATX_CREATE" fromDate="2018-02-21 00:00:00.0"/>
 
     <SecurityGroupPermission groupId="SUPER" permissionId="FRACCT_ADMIN" fromDate="2018-02-21 00:00:00.0"/>
+
+    <!-- 2021.09.27 정해인 결산 마감 해제 권한 (재경팀장/결산 담당)
+         FRACCT_CLOSE_ADMIN : 마감 해제 + 마감월 전표 입력/수정 가능 (마감 체크 ECA 통과) -->
+    <SecurityPermission description="재경 결산 마감 해제 및 마감월 전표 처리" permissionId="FRACCT_CLOSE_ADMIN"/>
+    <SecurityGroup groupId="FRACCT_CLOSE_ADMIN" description="재경 - 결산 마감 관리자"/>
+    <SecurityGroupPermission groupId="FRACCT_CLOSE_ADMIN" permissionId="OFBTOOLS_VIEW" fromDate="2021-09-27 00:00:00.0"/>
+    <SecurityGroupPermission groupId="FRACCT_CLOSE_ADMIN" permissionId="FRACCT_VIEW" fromDate="2021-09-27 00:00:00.0"/>
+    <SecurityGroupPermission groupId="FRACCT_CLOSE_ADMIN" permissionId="FRACCT_ADMIN" fromDate="2021-09-27 00:00:00.0"/>
+    <SecurityGroupPermission groupId="FRACCT_CLOSE_ADMIN" permissionId="FRACCT_CLOSE_ADMIN" fromDate="2021-09-27 00:00:00.0"/>
+    <SecurityGroupPermission groupId="FRACCT_CLOSE_ADMIN" permissionId="ACCTG_ATX_CREATE" fromDate="2021-09-27 00:00:00.0"/>
+    <SecurityGroupPermission groupId="SUPER" permissionId="FRACCT_CLOSE_ADMIN" fromDate="2021-09-27 00:00:00.0"/>
 </entity-engine-xml>
