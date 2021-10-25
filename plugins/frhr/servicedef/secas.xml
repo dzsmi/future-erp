@@ -4,6 +4,7 @@
   수정이력
     2019.04.29  윤서진  인사 오류 수정
     2019.09.12  윤서진  인사 법개정 대응
+    2021.10.25  정해인  인사 오류 수정
 -->
 <service-eca xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/service-eca.xsd">
