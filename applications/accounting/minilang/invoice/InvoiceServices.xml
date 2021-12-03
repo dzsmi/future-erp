@@ -156,6 +156,9 @@ under the License.
                 <result-to-field result-name="invoiceId" field="parameters.invoiceId"/>
             </call-service>
         </if-empty>
+        <!-- 2021.12.03 사용안함
+        <field-to-result field="parameters.invoiceId" result-name="invoiceId"/>
+        -->
         <field-to-result field="parameters.invoiceId" result-name="invoiceId"/>
 
         <!-- set the invoice date if not provided -->
