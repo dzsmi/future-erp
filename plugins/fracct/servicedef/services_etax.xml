@@ -30,6 +30,20 @@
         <attribute name="remark" type="String" mode="IN" optional="true"/>
     </service>
 
+    <!-- 20211209 송태호 백업 -->
+    <service name="addFrETaxInvoiceItemLegacy" engine="groovy"
+            location="component://fracct/groovyScripts/tax/FrETaxServices.groovy" invoke="addFrETaxInvoiceItem" auth="true">
+        <description>전자세금계산서 품목 추가 (공급가액 = 수량 × 단가 반올림, 세액 = 공급가액 × 10% 반올림) 후 합계 재계산</description>
+        <permission-service service-name="fracctAdminPermissionCheck" main-action="CREATE"/>
+        <attribute name="taxInvoiceId" type="String" mode="INOUT" optional="false"/>
+        <attribute name="supplyDate" type="java.sql.Date" mode="IN" optional="true"/>
+        <attribute name="itemName" type="String" mode="IN" optional="false"/>
+        <attribute name="itemSpec" type="String" mode="IN" optional="true"/>
+        <attribute name="quantity" type="BigDecimal" mode="IN" optional="true"/>
+        <attribute name="unitPrice" type="BigDecimal" mode="IN" optional="false"/>
+        <attribute name="remark" type="String" mode="IN" optional="true"/>
+    </service>
+
     <service name="removeFrETaxInvoiceItem" engine="groovy"
             location="component://fracct/groovyScripts/tax/FrETaxServices.groovy" invoke="removeFrETaxInvoiceItem" auth="true">
         <description>전자세금계산서 품목 삭제 후 합계 재계산</description>
