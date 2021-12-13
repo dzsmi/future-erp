@@ -61,6 +61,41 @@ def receiveFrCardTxFile() {
     return result
 }
 
+// 2021.12.13 기존 메소드 백업
+def receiveFrCardTxFileOld() {
+    String module = "FrCardRecvServices.groovy"
+    String recvDir = EntityUtilProperties.getPropertyValue("fracct", "fracct.card.recvDir", delegator)
+    String doneDir = EntityUtilProperties.getPropertyValue("fracct", "fracct.card.doneDir", delegator)
+    String charset = EntityUtilProperties.getPropertyValue("fracct", "fracct.card.fileCharset", "MS949", delegator)
+
+    File dir = recvDir ? new File(recvDir) : null
+    if (dir == null || !dir.isDirectory()) {
+        return error(UtilProperties.getMessage("FrAcctErrorUiLabels", "FrAcctCardRecvDirNotFound", [recvDir: recvDir], locale))
+    }
+    List<File> files = dir.listFiles().findAll { File f -> f.isFile() && f.name ==~ /CARD_\d{8}.*\.csv/ }.sort { it.name }
+    if (!files) {
+        Debug.logInfo("법인카드 수신 파일 없음 : " + recvDir, module)
+        return success()
+    }
+
+    List recvFileIds = []
+    for (File f : files) {
+        Map recv = storeFrCardTxText(f.getText(charset), f.name)
+        run service: "checkFrCardTxRestrict", with: [recvFileId: recv.recvFileId]
+        recvFileIds.add(recv.recvFileId)
+        Debug.logInfo("법인카드 수신 ${f.name} : ${recv}", module)
+        if (doneDir) {
+            File done = new File(doneDir)
+            done.mkdirs()
+            f.renameTo(new File(done, f.name))
+        }
+    }
+
+    Map result = success()
+    result.recvFileIds = recvFileIds
+    return result
+}
+
 def uploadFrCardTxFile() {
     String charset = parameters.fileCharset ?: EntityUtilProperties.getPropertyValue("fracct", "fracct.card.fileCharset", "MS949", delegator)
     ByteBuffer buf = parameters.uploadedFile
