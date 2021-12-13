@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 작성: 오픈브릿지시스템즈 이소라 / 2018.05.14 -->
+<!--
+  수정이력
+    2021.12.13  정해인  인사 항목 추가
+-->
 <resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/ofbiz-properties.xsd">
     <property key="FrHrApplication">
         <value xml:lang="en">FR HR</value>

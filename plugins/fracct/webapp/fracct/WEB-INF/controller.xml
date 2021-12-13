@@ -173,6 +173,12 @@
         <security https="true" auth="true"/>
         <response name="success" type="view" value="ViewFrETaxInvoice"/>
     </request-map>
+
+    <!-- 2021.12.13 정해인 기존 로직 백업 -->
+    <request-map uri="ViewFrETaxInvoice_2019">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="ViewFrETaxInvoice"/>
+    </request-map>
     <request-map uri="addFrETaxInvoiceItem">
         <security https="true" auth="true"/>
         <event type="service" invoke="addFrETaxInvoiceItem"/>
