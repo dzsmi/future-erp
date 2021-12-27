@@ -32,6 +32,7 @@
         odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
         <actions>
             <set field="parameters.sortField" from-field="parameters.sortField" default-value="-issueDate"/>
+            <!-- 결산 시즌 이후 정리 예정 -->
             <service service-name="performFind" result-map="result" result-map-list="listIt">
                 <field-map field-name="inputFields" from-field="parameters"/>
                 <field-map field-name="entityName" value="FrTaxInvoice"/>
