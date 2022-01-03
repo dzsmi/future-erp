@@ -88,6 +88,17 @@
         <attribute name="isBalanced" type="String" mode="OUT" optional="false"/>
     </service>
 
+    <!-- 2022.01.03 임재훈 오타수정용 신규 -->
+    <service name="checkFrSlpBalance" engine="simple"
+            location="component://fracct/minilang/FrSlipServices.xml" invoke="checkFrSlipBalance" auth="true">
+        <description>전표 차변/대변 합계 및 일치 여부</description>
+        <permission-service service-name="fracctUserPermissionCheck" main-action="VIEW"/>
+        <attribute name="slipId" type="String" mode="IN" optional="false"/>
+        <attribute name="debitTotal" type="BigDecimal" mode="OUT" optional="false"/>
+        <attribute name="creditTotal" type="BigDecimal" mode="OUT" optional="false"/>
+        <attribute name="isBalanced" type="String" mode="OUT" optional="false"/>
+    </service>
+
     <!-- ================= 결재 ================= -->
     <service name="getFrApprLevel" engine="simple"
             location="component://fracct/minilang/FrSlipServices.xml" invoke="getFrApprLevel" auth="true">
