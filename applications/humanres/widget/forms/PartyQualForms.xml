@@ -82,6 +82,9 @@ under the License.
                 </entity-options>
             </drop-down>
         </field>
+        <!-- 2022.01.13 임시 주석
+        <field name="verifStatusId">
+        -->
         <field name="verifStatusId">
             <drop-down allow-empty="true">
                 <entity-options key-field-name="statusId" entity-name="StatusItem">

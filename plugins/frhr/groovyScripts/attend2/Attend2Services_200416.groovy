@@ -15,6 +15,7 @@ def isHoliday(LocalDate d, String holidayYn) {
 }
 
 def hours(Timestamp from, Timestamp to) {
+    // TODO 원인 파악 필요 (재현안됨)
   return new BigDecimal(to.getTime() - from.getTime()).divide(new BigDecimal(3600000), 2, RoundingMode.HALF_UP)
 }
 
