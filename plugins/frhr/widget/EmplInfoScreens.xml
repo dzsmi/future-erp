@@ -121,6 +121,7 @@
         </section>
     </screen>
 
+    <!-- 절대 삭제 금지 (급여 연관) -->
     <screen name="NewFrEmployee">
         <section>
             <actions>

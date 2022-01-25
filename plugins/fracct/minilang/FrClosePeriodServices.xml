@@ -109,6 +109,9 @@
             <set field="closePeriod.isClosed" value="Y"/>
             <set field="closePeriod.closedByUserLogin" from-field="userLogin.userLoginId"/>
             <set field="closePeriod.closedDate" from-field="nowTimestamp"/>
+            <!-- 2022.01.25 사용안함
+            <set field="closePeriod.comments" from-field="parameters.comments"/>
+            -->
             <set field="closePeriod.comments" from-field="parameters.comments"/>
             <create-value value-field="closePeriod"/>
             <else>

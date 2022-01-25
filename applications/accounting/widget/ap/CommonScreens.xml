@@ -103,6 +103,9 @@ under the License.
                 <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
                     <decorator-section name="body">
                         <screenlet title="${uiLabelMap.CommonEdit} ${uiLabelMap.PartyVendor}">
+                            <!-- 2022.01.25 현업요청으로 제외
+                            <include-form name="EditVendor" location="component://accounting/widget/ap/forms/VendorForms.xml"/>
+                            -->
                             <include-form name="EditVendor" location="component://accounting/widget/ap/forms/VendorForms.xml"/>
                         </screenlet>
                     </decorator-section>
