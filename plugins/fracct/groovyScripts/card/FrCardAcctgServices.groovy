@@ -42,6 +42,7 @@ def createFrCardAcctgTransBatch() {
             .orderBy("txDate").queryList()
 
     int postedCnt = 0
+    List<GenericValue> postedList = []
     List<String> errors = []
     for (GenericValue cardTx : cardTxList) {
         GenericValue card = from("FrCardMaster").where(cardNo: cardTx.cardNo).queryOne()
@@ -106,6 +107,19 @@ def createFrCardAcctgTransBatch() {
         cardTx.lastUpdatedByUserLogin = userLogin?.userLoginId
         cardTx.store()
         postedCnt++
+        postedList.add(cardTx)
+    }
+
+    // 2022.02.14 임재훈 - 마감월 법인카드 전표 확인 (VOC 2022-02 재무팀)
+    // TODO 원인 파악 필요 (재현안됨) - 개발서버에서 마감월 수기전표는 정상적으로 막힘
+    // 임시조치 - 근본원인 미확인, 일단 로그만 남김 (막으면 카드 미지급금 누락됨 - 재무팀 확인 후 처리)
+    for (GenericValue posted : postedList) {
+        String ym = UtilDateTime.toDateString(posted.txDate, "yyyyMM")
+        GenericValue closePeriod = from("FrClosePeriod").where(closeYearMonth: ym).queryOne()
+        if (closePeriod != null && "Y" == closePeriod.isClosed) {
+            println "### 마감월 법인카드 전표 생성됨 !!! cardTxId=" + posted.cardTxId + " txDate=" + posted.txDate + " acctgTransId=" + posted.acctgTransId
+            Debug.logWarning("[마감월 전표] " + ym + " 마감월에 법인카드 회계거래 생성 cardTxId=" + posted.cardTxId + ", acctgTransId=" + posted.acctgTransId, module)
+        }
     }
 
     Debug.logInfo("법인카드 자동전표 : 대상 ${cardTxList.size()}건 / 생성 ${postedCnt}건 / 오류 ${errors.size()}건", module)
