@@ -42,6 +42,7 @@
   </service>
 
   <!-- 재택근무 -->
+  <!-- TODO 원인 파악 필요 (재현안됨) -->
   <service name="requestWfh2" engine="groovy" location="component://frhr/groovyScripts/attend2/Attend2Services.groovy" invoke="requestWfh2" auth="true">
     <description>재택근무 신청</description>
     <attribute name="partyId" type="String" mode="IN" optional="false"/>
