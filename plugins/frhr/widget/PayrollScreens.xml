@@ -51,6 +51,9 @@
                             <condition><if-has-permission permission="FRHR" action="_ADMIN"/></condition>
                             <widgets>
                                 <screenlet title="${uiLabelMap.FrHrPayrollCalc}">
+                                    <!-- 2022.03.28 사용안함
+                                    <label text="${uiLabelMap.FrHrPayrollCalcNotice}"/>
+                                    -->
                                     <label text="${uiLabelMap.FrHrPayrollCalcNotice}"/>
                                     <include-form name="FrPayrollCalc" location="component://frhr/widget/PayrollForms.xml"/>
                                 </screenlet>
