@@ -23,4 +23,9 @@
     <property key="HumanResRequiredFieldMissingTrainingClassTypeId">
         <value xml:lang="en">Required Field Missing : Training Class Type Id.</value>
     </property>
+
+    <!-- 2022.04.19 임재훈 기존 로직 백업 -->
+    <property key="HumanResRequiredFieldMissingTrainingClassTypeIdBak">
+        <value xml:lang="en">Required Field Missing : Training Class Type Id.</value>
+    </property>
 </resource>
