@@ -34,6 +34,20 @@ if (partyId && payYearMonth ==~ /\d{6}/) {
         BigDecimal overtimeFactor = new BigDecimal(UtilProperties.getPropertyValue("frhr", "payroll.overtimeFactor", "1.5"))
         BigDecimal bonusPercent = parameters.bonusPercent ? new BigDecimal(parameters.bonusPercent) : BigDecimal.ZERO
 
+        // 2022.04.25 임재훈 - 미리보기/명세서 건강보험료 다름 VOC (인사팀)
+        // 임시조치 - 2022년부터는 요율 테이블(FrInsuranceRate) 값 사용, 이전 연도는 기존대로 properties
+        // TODO 원인 파악 필요 (재현안됨) - properties 요율이 언제부터 안 맞았는지 확인 못함, 과거 연도는 건드리지 않음
+        int previewYear = payYearMonth.substring(0, 4) as int
+        if (previewYear >= 2022) {
+            GenericValue healthRateValue = from("FrInsuranceRate").where(rateYear: (long) previewYear, insuranceType: "HEALTH").queryOne()
+            GenericValue longtermRateValue = from("FrInsuranceRate").where(rateYear: (long) previewYear, insuranceType: "LONGTERM").queryOne()
+            GenericValue employRateValue = from("FrInsuranceRate").where(rateYear: (long) previewYear, insuranceType: "EMPLOY").queryOne()
+            if (healthRateValue?.rate) healthRate = healthRateValue.rate
+            if (longtermRateValue?.rate) longtermRate = longtermRateValue.rate
+            if (employRateValue?.rate) employRate = employRateValue.rate
+            println "### PayrollPreview " + previewYear + " 요율 테이블 사용 health=" + healthRate + " longterm=" + longtermRate + " employ=" + employRate
+        }
+
         YearMonth ym = YearMonth.of(payYearMonth.substring(0, 4) as int, payYearMonth.substring(4, 6) as int)
         Date monthStart = Date.valueOf(ym.atDay(1))
         Date monthEnd = Date.valueOf(ym.atEndOfMonth())
