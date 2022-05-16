@@ -164,6 +164,14 @@
         <response name="success" type="view" value="FindFrLeaveUse"/>
         <response name="error" type="view" value="EditFrLeaveUse"/>
     </request-map>
+
+    <!-- 2022.05.16 임재훈 기존 로직 백업 -->
+    <request-map uri="createFrLeaveUseFix">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createFrLeaveUse"/>
+        <response name="success" type="view" value="FindFrLeaveUse"/>
+        <response name="error" type="view" value="EditFrLeaveUse"/>
+    </request-map>
     <request-map uri="approveFrLeaveUse">
         <security https="true" auth="true"/>
         <event type="service" invoke="approveFrLeaveUse"/>

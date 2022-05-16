@@ -80,6 +80,9 @@
     <screen name="EditPerfReviewItems">
         <section>
             <actions>
+                <!-- 2022.05.16 기존로직 주석처리
+                <set field="headerItem" value="PerfReview"/>
+                -->
                 <set field="headerItem" value="PerfReview"/>
                 <set field="titleProperty" value="PageTitleEditPartyReviewItem"/>
                 <set field="tabButtonItem" value="EditPerfReviewItems"/>
