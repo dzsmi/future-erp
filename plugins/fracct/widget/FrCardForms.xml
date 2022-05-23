@@ -55,6 +55,34 @@
         <field name="acctgTransId" title="${uiLabelMap.FrAcctCardAcctgTransId}"><display/></field>
     </form>
 
+    <!-- 20220523 임재훈 기존 로직 백업 -->
+    <form name="ListFrCardTx2" type="list" list-name="listIt" paginate-target="FindFrCardTx"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <set field="parameters.sortField" from-field="parameters.sortField" default-value="-txDate"/>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="FrCardTx"/>
+                <field-map field-name="orderBy" from-field="parameters.sortField"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="cardTxId" title="${uiLabelMap.FrAcctCardTxId}"><display/></field>
+        <field name="cardNo" title="${uiLabelMap.FrAcctCardNo}"><display/></field>
+        <field name="txDate" title="${uiLabelMap.FrAcctCardTxDate}" sort-field="true"><display type="date-time"/></field>
+        <field name="approvalNo" title="${uiLabelMap.FrAcctCardApprovalNo}"><display/></field>
+        <field name="merchantName" title="${uiLabelMap.FrAcctCardMerchant}"><display/></field>
+        <field name="mccName" title="${uiLabelMap.FrAcctCardMcc}"><display/></field>
+        <field name="supplyAmount" title="${uiLabelMap.FrAcctSupplyAmount}"><display type="currency" currency="KRW"/></field>
+        <field name="vatAmount" title="${uiLabelMap.FrAcctVatAmount}"><display type="currency" currency="KRW"/></field>
+        <field name="amount" title="${uiLabelMap.FrAcctCardAmount}" sort-field="true"><display type="currency" currency="KRW"/></field>
+        <field name="cancelYn" title="${uiLabelMap.FrAcctCardCancelYn}"><display/></field>
+        <field name="statusId" title="${uiLabelMap.CommonStatus}"><display-entity entity-name="StatusItem"/></field>
+        <field name="violationReason" title="${uiLabelMap.FrAcctCardViolation}"><display/></field>
+        <field name="acctgTransId" title="${uiLabelMap.FrAcctCardAcctgTransId}"><display/></field>
+    </form>
+
     <!-- ================ 파일 업로드 / 수신 이력 ================ -->
     <form name="FrCardTxUpload" type="upload" target="uploadFrCardTxFile"
         header-row-style="header-row" default-table-style="basic-table">
