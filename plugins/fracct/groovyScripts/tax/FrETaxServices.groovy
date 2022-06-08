@@ -137,6 +137,52 @@ def issueFrETaxInvoice() {
     return result
 }
 
+// 2022.06.08 기존 메소드 백업
+def issueFrETaxInvoice2() {
+    String module = "FrETaxServices.groovy"
+    GenericValue taxInvoice = from("FrTaxInvoice").where(taxInvoiceId: parameters.taxInvoiceId).queryOne()
+    String err = checkDraft(taxInvoice)
+    if (err) return error(err)
+
+    List<GenericValue> items = from("FrETaxInvoiceItem").where(taxInvoiceId: taxInvoice.taxInvoiceId).orderBy("itemSeqId").queryList()
+    if (!items) {
+        return error(UtilProperties.getMessage("FrAcctErrorUiLabels", "FrAcctETaxNoItem", locale))
+    }
+    calcFrETaxTotals(taxInvoice)
+
+    GenericValue buyer = from("PartyGroup").where(partyId: taxInvoice.partyId).queryOne()
+    Map req = [corpNum     : EntityUtilProperties.getPropertyValue("fracct", "fracct.etax.corpNum", delegator),
+               invoiceKey  : taxInvoice.taxInvoiceId,
+               writeDate   : taxInvoice.issueDate.toString().replace("-", ""),
+               buyerCorpNum: buyer?.federalTaxId,
+               buyerName   : buyer?.groupName,
+               buyerEmail  : taxInvoice.buyerEmail,
+               supplyTotal : taxInvoice.supplyAmount.toPlainString(),
+               taxTotal    : taxInvoice.vatAmount.toPlainString(),
+               total       : taxInvoice.totalAmount.toPlainString(),
+               items       : items.collect { [date : it.supplyDate?.toString()?.replace("-", ""), name: it.itemName, spec: it.itemSpec,
+                                              qty  : it.quantity?.toPlainString(), unitCost: it.unitPrice?.toPlainString(),
+                                              supply: it.supplyAmount.toPlainString(), tax: it.vatAmount.toPlainString()] }]
+
+    Map res = sendToAsp(req)
+    taxInvoice.etaxSendDate = UtilDateTime.nowTimestamp()
+    taxInvoice.etaxResultMsg = res.message
+    if (!res.success) {
+        taxInvoice.etaxSendStatus = "FAIL"
+        taxInvoice.store()
+        Debug.logWarning("전자세금계산서 발행 실패 ${taxInvoice.taxInvoiceId} : ${res.message}", module)
+        return error(UtilProperties.getMessage("FrAcctErrorUiLabels", "FrAcctETaxIssueFail", [message: res.message], locale))
+    }
+    taxInvoice.taxInvoiceNo = res.ntsConfirmNum
+    taxInvoice.etaxSendStatus = "SENT"
+    taxInvoice.statusId = "FRTI_REGISTERED"
+    taxInvoice.store()
+
+    Map result = success()
+    result.taxInvoiceNo = res.ntsConfirmNum
+    return result
+}
+
 /*
  * 품목 합계 → 헤더 공급가액/세액/합계
  */

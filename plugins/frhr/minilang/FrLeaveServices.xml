@@ -204,6 +204,24 @@
         <store-value value-field="leaveUse"/>
     </simple-method>
 
+    <!-- 2022.06.08 임재훈 신규 (기존 유지) -->
+    <simple-method method-name="approveFrLeaveUseBak" short-description="연차 사용 승인">
+        <entity-one entity-name="FrLeaveUse" value-field="leaveUse"/>
+        <if-empty field="leaveUse">
+            <add-error><fail-property resource="FrHrUiLabels" property="FrHrErrorLeaveUseNotFound"/></add-error>
+        </if-empty>
+        <check-errors/>
+        <if-compare field="leaveUse.statusId" operator="not-equals" value="FRLU_REQUESTED">
+            <add-error><fail-property resource="FrHrUiLabels" property="FrHrErrorLeaveUseNotRequested"/></add-error>
+        </if-compare>
+        <check-errors/>
+
+        <set field="leaveUse.statusId" value="FRLU_APPROVED"/>
+        <set field="leaveUse.approverPartyId" from-field="userLogin.partyId"/>
+        <now-timestamp field="leaveUse.approvedDate"/>
+        <store-value value-field="leaveUse"/>
+    </simple-method>
+
     <simple-method method-name="rejectFrLeaveUse" short-description="연차 사용 반려">
         <entity-one entity-name="FrLeaveUse" value-field="leaveUse"/>
         <if-empty field="leaveUse">
