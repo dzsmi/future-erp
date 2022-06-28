@@ -77,6 +77,7 @@ under the License.
         </section>
     </screen>
 
+    <!-- TODO 원인 파악 필요 (재현안됨) -->
     <screen name="EditPaymentGroupMember">
         <section>
             <actions>
