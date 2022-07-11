@@ -171,4 +171,12 @@
         <attribute name="slipId" type="String" mode="IN" optional="false"/>
         <attribute name="acctgTransId" type="String" mode="OUT" optional="false"/>
     </service>
+
+    <!-- 2022.07.11 임재훈 결재 알림 메일 (secas 에서 호출) -->
+    <service name="sendApprNotiMail2" engine="groovy"
+            location="component://fracct/groovyScripts/slip/FrApprNotiMail2.groovy" invoke="sendApprNotiMail2" auth="false">
+        <description>전표 상신 시 결재 알림 메일 발송 (fracct.properties appr.noti.mail.*)</description>
+        <attribute name="slipId" type="String" mode="IN" optional="true"/>
+        <attribute name="slipIds" type="List" mode="IN" optional="true"/>
+    </service>
 </services>

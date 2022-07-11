@@ -32,4 +32,13 @@
         <condition-service service-name="isFrCloseCheckTarget"/>
         <action service="checkFrClosePeriod" mode="sync" ignore-error="false" ignore-failure="false"/>
     </eca>
+
+    <!-- 2022.07.11 임재훈 결재 알림 메일 -->
+    <eca service="requestFrSlip" event="commit">
+        <action service="sendApprNotiMail2" mode="async" ignore-error="true" ignore-failure="true"/>
+    </eca>
+    <!-- 엑셀 업로드 상신도 메일 -->
+    <eca service="uploadFrSlipCsv" event="commit">
+        <action service="sendApprNotiMail2" mode="async" ignore-error="true" ignore-failure="true"/>
+    </eca>
 </service-eca>
