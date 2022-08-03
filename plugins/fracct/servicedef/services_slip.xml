@@ -172,6 +172,15 @@
         <attribute name="acctgTransId" type="String" mode="OUT" optional="false"/>
     </service>
 
+    <!-- 20220803 임재훈 오타수정용 신규 -->
+    <service name="postFrSlpAcctgTrans" engine="groovy"
+            location="component://fracct/groovyScripts/slip/FrSlipAcctgServices.groovy" invoke="postFrSlipAcctgTrans" auth="true">
+        <description>승인된 전표로 코어 createAcctgTrans / createAcctgTransEntry 호출 후 FrSlip.acctgTransId 연결</description>
+        <permission-service service-name="fracctAdminPermissionCheck" main-action="CREATE"/>
+        <attribute name="slipId" type="String" mode="IN" optional="false"/>
+        <attribute name="acctgTransId" type="String" mode="OUT" optional="false"/>
+    </service>
+
     <!-- 2022.07.11 임재훈 결재 알림 메일 (secas 에서 호출) -->
     <service name="sendApprNotiMail2" engine="groovy"
             location="component://fracct/groovyScripts/slip/FrApprNotiMail2.groovy" invoke="sendApprNotiMail2" auth="false">
