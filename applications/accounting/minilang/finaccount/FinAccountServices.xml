@@ -885,6 +885,90 @@ under the License.
         </else>
         </if-compare>
     </simple-method>
+
+    <!-- 20220815 임재훈 신규 (기존 유지) -->
+    <simple-method method-name="reconcileWithdrawalFinAcctgTransBak" short-description="Reconcile financial accounting transaction of type withdrawl">
+        <now-timestamp field="nowTimestamp"/>
+        <set field="finAccountTrans" from-field="parameters.finAccountTrans"/>
+        <get-related-one relation-name="FinAccount" value-field="finAccountTrans" to-value-field="finAccount"/>
+        <if-compare field="finAccountTrans.finAccountTransTypeId" operator="equals" value="WITHDRAWAL">
+            <if-empty field="finAccountTrans.paymentId">
+                <entity-and entity-name="Payment" list="payments">
+                    <field-map field-name="finAccountTransId" from-field="finAccountTrans.finAccountTransId"/>
+                </entity-and>
+            <else>
+                <get-related-one relation-name="Payment" value-field="finAccountTrans" to-value-field="payment"/>
+                <field-to-list field="payment" list="payments"/>
+            </else>
+            </if-empty>
+            <if-empty field="payments">
+                <entity-and entity-name="AcctgTrans" list="acctgTransList">
+                    <field-map field-name="finAccountTransId" from-field="finAccountTrans.finAccountTransId"/>
+                </entity-and>
+                <first-from-list list="acctgTransList" entry="acctgTrans"/>
+                <if-compare field="acctgTrans.isPosted" operator="equals" value="N">
+                    <set-service-fields service-name="postAcctgTrans" map="acctgTrans" to-map="postAcctgTransMap"/>
+                    <call-service service-name="postAcctgTrans" in-map-name="postAcctgTransMap"/>
+                </if-compare>
+            </if-empty>
+            <iterate list="payments" entry="payment">
+                <clear-field field="createAcctgTransAndEntriesMap"/>
+                <get-related relation-name="AcctgTrans" list="acctgTransList" value-field="payment"/>
+                <first-from-list list="acctgTransList" entry="acctgTrans"/>
+                <set-service-fields service-name="createAcctgTransAndEntries" map="acctgTrans" to-map="createAcctgTransAndEntriesMap"/>
+                <set field="entryAmount" type="BigDecimal" value="0"/>
+                <iterate list="acctgTransList" entry="acctgTrans">
+                    <if-compare field="acctgTrans.acctgTransTypeId" operator="not-equals" value="PAYMENT_APPL">
+                        <get-related relation-name="AcctgTransEntry" list="acctgTransEntries" value-field="acctgTrans"/>
+                    </if-compare> 
+                    <iterate list="acctgTransEntries" entry="oldAcctgTransEntry">
+                        <if-compare field="oldAcctgTransEntry.debitCreditFlag" operator="equals" value="C">
+                            <make-value entity-name="AcctgTransEntry" value-field="newAcctgTransEntry"/>
+                            <set field="newAcctgTransEntry.glAccountId" from-field="oldAcctgTransEntry.glAccountId"/>
+                            <set field="organizationPartyId" from-field="oldAcctgTransEntry.organizationPartyId"/>
+                            <set field="newAcctgTransEntry.organizationPartyId" from-field="organizationPartyId"/>
+                            <set field="newAcctgTransEntry.partyId" from-field="oldAcctgTransEntry.partyId"/>
+                            <set field="newAcctgTransEntry.amount" from-field="oldAcctgTransEntry.amount"/>
+                            <set field="newAcctgTransEntry.acctgTransEntryTypeId" from-field="oldAcctgTransEntry.acctgTransEntryTypeId"/>
+                            <set field="newAcctgTransEntry.debitCreditFlag" value="D"/>
+                            <set field="entryAmount" type="BigDecimal" value="${entryAmount + newAcctgTransEntry.amount}"/>
+                            <field-to-list field="newAcctgTransEntry" list="createAcctgTransAndEntriesMap.acctgTransEntries"/>
+                        </if-compare>
+                        <set-service-fields service-name="updateAcctgTransEntry" map="oldAcctgTransEntry" to-map="updateAcctgTransEntryMap"/>
+                        <set field="updateAcctgTransEntry.reconcileStatusId" value="AES_RECONCILED"/>
+                        <call-service service-name="updateAcctgTransEntry" in-map-name="updateAcctgTransEntryMap"/>
+                    </iterate>
+                </iterate>
+                <clear-field field="createAcctgTransAndEntriesMap.acctgTransId"/>
+                <set field="createAcctgTransAndEntriesMap.transactionDate" from-field="nowTimestamp"/>
+                <set field="createAcctgTransAndEntriesMap.postedDate" from-field="nowTimestamp"/>
+                <make-value entity-name="AcctgTransEntry" value-field="newAcctgTransEntry"/>
+                <set field="newAcctgTransEntry.glAccountId" from-field="finAccount.postToGlAccountId"/>
+                <set field="newAcctgTransEntry.organizationPartyId" from-field="organizationPartyId"/>
+                <set field="newAcctgTransEntry.partyId" from-field="oldAcctgTransEntry.partyId"/>
+                <set field="newAcctgTransEntry.amount" from-field="entryAmount"/>
+                <set field="newAcctgTransEntry.acctgTransEntryTypeId" value="_NA_"/>
+                <set field="newAcctgTransEntry.debitCreditFlag" value="C"/>
+                <field-to-list field="newAcctgTransEntry" list="createAcctgTransAndEntriesMap.acctgTransEntries"/>
+                <call-service service-name="createAcctgTransAndEntries" in-map-name="createAcctgTransAndEntriesMap">
+                    <result-to-field result-name="acctgTransId"/>
+                </call-service>
+                <entity-and entity-name="AcctgTransEntry" list="acctgTransEntries">
+                    <field-map field-name="acctgTransId"/>
+                </entity-and>
+                <iterate list="acctgTransEntries" entry="acctgTransEntry">
+                    <set-service-fields service-name="createGlReconciliationEntry" map="acctgTransEntry" to-map="createGlReconciliationEntryMap"/>
+                    <set field="createGlReconciliationEntryMap.glReconciliationId" from-field="finAccountTrans.glReconciliationId"/>
+                    <set field="createGlReconciliationEntryMap.reconciledAmount" from-field="acctgTransEntry.amount"/>
+                    <call-service service-name="createGlReconciliationEntry" in-map-name="createGlReconciliationEntryMap"/>
+                </iterate>
+            </iterate>
+        <else>
+            <property-to-field property="AccountingNotWithdrawalFinAccountTrans" resource="AccountingUiLabels" field="errorMessage"/>
+            <field-to-result field="errorMessage" result-name="errorMessage"/>
+        </else>
+        </if-compare>
+    </simple-method>
     <simple-method method-name="createPaymentAndFinAccountTrans" short-description="create new payment and associate with respective financial account in FinAccountTrans Entity.">
         <set-service-fields service-name="createPayment" map="parameters" to-map="createPaymentMap"/>
         <if-not-empty field="parameters.paymentMethodId">
