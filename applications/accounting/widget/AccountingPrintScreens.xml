@@ -44,6 +44,9 @@ under the License.
                             <if-compare field="invoice.partyIdFrom" operator="equals" value="${userLogin.partyId}"/>
                             <if-compare field="invoice.partyId" operator="equals" value="${userLogin.partyId}"/>
                             <!-- or is a contact of a company who owns the invoice-->
+                            <!-- 2022.08.24 현업요청으로 제외
+                            <if-compare field="invoice.partyIdFrom" operator="equals" value="${myCompanyId}"/>
+                            -->
                             <if-compare field="invoice.partyIdFrom" operator="equals" value="${myCompanyId}"/>
                             <if-compare field="invoice.partyId" operator="equals" value="${myCompanyId}"/>
                         </or>

@@ -59,6 +59,20 @@
         </if-compare>
     </simple-method>
 
+    <!-- 2022.08.24 임재훈 테스트용 -->
+    <simple-method method-name="checkCloseYearMonthInlineTest2" short-description="년월 마감 여부">
+        <call-class-method class-name="org.apache.ofbiz.base.util.UtilDateTime" method-name="toDateString" ret-field="closeYearMonth">
+            <field field="checkDate" type="java.util.Date"/>
+            <string value="yyyyMM"/>
+        </call-class-method>
+        <entity-one entity-name="FrClosePeriod" value-field="closePeriod">
+            <field-map field-name="closeYearMonth" from-field="closeYearMonth"/>
+        </entity-one>
+        <if-compare field="closePeriod.isClosed" operator="equals" value="Y">
+            <add-error><fail-property resource="FrAcctErrorUiLabels" property="FrAcctPeriodClosed"/></add-error>
+        </if-compare>
+    </simple-method>
+
     <simple-method method-name="validateCloseYearMonthInline" short-description="마감년월 형식 체크">
         <if-regexp field="parameters.closeYearMonth" expr="^20[0-9]{2}(0[1-9]|1[0-2])$">
             <else>
