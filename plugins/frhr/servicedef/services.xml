@@ -133,6 +133,20 @@
         <attribute name="avgDailyWage" type="BigDecimal" mode="OUT" optional="true"/>
         <attribute name="retirePayAmount" type="BigDecimal" mode="OUT" optional="true"/>
     </service>
+
+    <!-- 20220907 임재훈 오타수정용 신규 -->
+    <service name="calcFrRetierPay" engine="simple"
+            location="component://frhr/minilang/FrRetireServices.xml" invoke="calcFrRetirePay" auth="true">
+        <description>퇴직금 계산 : 평균임금 x 30 x 재직일수 / 365</description>
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+        <attribute name="retireDate" type="Date" mode="IN" optional="false"/>
+        <attribute name="serviceDays" type="Long" mode="OUT" optional="true"/>
+        <attribute name="wage3MonthAmount" type="BigDecimal" mode="OUT" optional="true"/>
+        <attribute name="bonus12MonthAmount" type="BigDecimal" mode="OUT" optional="true"/>
+        <attribute name="calDays3Month" type="Long" mode="OUT" optional="true"/>
+        <attribute name="avgDailyWage" type="BigDecimal" mode="OUT" optional="true"/>
+        <attribute name="retirePayAmount" type="BigDecimal" mode="OUT" optional="true"/>
+    </service>
     <service name="settleFrLastMonthPay" engine="simple"
             location="component://frhr/minilang/FrRetireServices.xml" invoke="settleFrLastMonthPay" auth="true">
         <description>퇴사자 마지막 달 일할 급여 및 4대보험/소득세 공제 정산</description>

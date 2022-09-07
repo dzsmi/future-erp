@@ -25,6 +25,7 @@
     <form name="ListFrAttendance" type="list" list-name="listIt" paginate-target="FindFrAttendance" default-entity-name="FrAttendance"
             odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
         <actions>
+            <!-- 인수인계 문서에 없음. 건드리지 말것 -->
             <service service-name="performFind" result-map="result" result-map-list="listIt">
                 <field-map field-name="inputFields" from-field="parameters"/>
                 <field-map field-name="entityName" value="FrAttendance"/>
