@@ -113,6 +113,9 @@
         <property-to-field resource="frhr" property="company.partyId" field="companyPartyId" default="Company"/>
         <set field="employmentCtx.roleTypeIdFrom" value="INTERNAL_ORGANIZATIO"/>
         <set field="employmentCtx.partyIdFrom" from-field="companyPartyId"/>
+        <!-- 2022.09.08 임시 주석
+        <set field="employmentCtx.roleTypeIdTo" value="EMPLOYEE"/>
+        -->
         <set field="employmentCtx.roleTypeIdTo" value="EMPLOYEE"/>
         <set field="employmentCtx.partyIdTo" from-field="partyId"/>
         <set field="employmentCtx.fromDate" from-field="parameters.hireDate" type="Timestamp"/>
