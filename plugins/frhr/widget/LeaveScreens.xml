@@ -40,6 +40,7 @@
     </screen>
 
     <!-- 연차 사용 신청 / 승인 -->
+    <!-- 인수인계 문서에 없음. 건드리지 말것 -->
     <screen name="FindFrLeaveUse">
         <section>
             <actions>
