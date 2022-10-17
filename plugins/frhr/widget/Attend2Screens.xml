@@ -39,6 +39,8 @@
         <set field="titleProperty" value="FrHrAttendance"/>
         <set field="headerItem" value="Attendance"/>
         <set field="tabButtonItem" value="Ot2Request"/>
+        <!-- 2022.10.17 임재훈 주 12시간 경고 -->
+        <script location="component://frhr/groovyScripts/attend2/Ot2WeekWarn.groovy"/>
       </actions>
       <widgets>
         <decorator-screen name="CommonFrHrDecorator" location="component://frhr/widget/CommonScreens.xml">
@@ -48,6 +50,10 @@
           <decorator-section name="body">
             <screenlet title="연장근로 신청">
               <label text="평일 연장근로는 주(월~일) 12시간을 넘게 신청할 수 없습니다."/>
+              <!-- 2022.10.17 임재훈 휴일 포함 주 합계 경고 (경고만) -->
+              <platform-specific>
+                <html><html-template location="component://frhr/template/attend2/Ot2WeekWarn.ftl"/></html>
+              </platform-specific>
               <include-form name="Ot2RequestForm" location="component://frhr/widget/Attend2Forms.xml"/>
             </screenlet>
             <screenlet title="신청 내역">
