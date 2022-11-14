@@ -79,6 +79,15 @@
         <attribute name="comments" type="String" mode="IN" optional="true"/>
     </service>
 
+    <!-- 20221114 임재훈 백업 -->
+    <service name="releaseFrClosePeriod2" engine="simple"
+            location="component://fracct/minilang/FrClosePeriodServices.xml" invoke="releaseFrClosePeriod" auth="true">
+        <description>월 마감 해제 (isClosed=N) - 마감 해제 권한자(FRACCT_CLOSE_ADMIN), 해제 사유 필수</description>
+        <permission-service service-name="fracctCloseAdminPermissionCheck" main-action="UPDATE"/>
+        <attribute name="closeYearMonth" type="String" mode="IN" optional="false"/>
+        <attribute name="comments" type="String" mode="IN" optional="true"/>
+    </service>
+
     <service name="isFrCloseCheckTarget" engine="simple"
             location="component://fracct/minilang/FrClosePeriodServices.xml" invoke="isFrCloseCheckTarget" auth="false">
         <description>

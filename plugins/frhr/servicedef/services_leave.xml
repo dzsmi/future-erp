@@ -63,6 +63,7 @@
         <attribute name="requestedDays" type="BigDecimal" mode="OUT" optional="true"/>
         <attribute name="remainDays" type="BigDecimal" mode="OUT" optional="true"/>
     </service>
+    <!-- 인수인계 문서에 없음. 건드리지 말것 -->
     <service name="syncFrLeaveToEmplLeave" engine="simple"
             location="component://frhr/minilang/FrLeaveServices.xml" invoke="syncFrLeaveToEmplLeave" auth="true">
         <description>승인된 연차를 OFBiz EmplLeave 로 등록 (SECA)</description>
