@@ -11,6 +11,7 @@ import org.apache.ofbiz.entity.util.EntityUtilProperties
 import org.apache.ofbiz.service.ServiceUtil
 
 def sendApprNotiMail2() {
+    // 왜 이렇게 되어있는지 모르겠음
     String module = "FrApprNotiMail2.groovy"
     println "### sendApprNotiMail2 : " + parameters.slipId + " / " + parameters.slipIds
 
