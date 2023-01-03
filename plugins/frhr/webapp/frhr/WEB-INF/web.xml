@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 작성: 오픈브릿지시스템즈 이소라 / 2018.05.21 -->
+<!--
+  수정이력
+    2023.01.03  한예린  인사 수정
+-->
 <web-app version="3.0">
     <display-name>FutureRetail HR</display-name>
     <description>FutureRetail HR Module (frhr)</description>
