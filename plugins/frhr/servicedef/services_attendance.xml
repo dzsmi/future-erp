@@ -65,4 +65,11 @@
         <permission-service service-name="frHrPermissionCheck" main-action="DELETE"/>
         <auto-attributes mode="IN" include="pk" optional="false"/>
     </service>
+
+    <!-- 20230104 한예린 오타수정용 신규 -->
+    <service name="deleteFrAtendanceOld" engine="entity-auto" default-entity-name="FrAttendance" invoke="delete" auth="true">
+        <description>근태 삭제</description>
+        <permission-service service-name="frHrPermissionCheck" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
 </services>
