@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 한예린 / 2023.02.13 -->
+<!-- [SR-2023-0112] 2023년 4대보험 근로자 부담 요율 (%) - 2023.01.01 적용 -->
+<!--   건강보험 3.495 -> 3.545, 장기요양 12.27 -> 12.81 (건강보험료 대비) -->
+<!--   국민연금 4.5, 고용보험 실업급여 0.9 (2022.07.01 인상분) 변동 없음 -->
+<!--   * 2021/2022년 요율은 요율관리 화면(FindFrInsuranceRate)에서 직접 입력되어 있음 -->
+<entity-engine-xml>
+    <FrInsuranceRate rateYear="2023" insuranceType="HEALTH" rate="3.545" description="건강보험 (보수월액 대비)"/>
+    <FrInsuranceRate rateYear="2023" insuranceType="LONGTERM" rate="12.81" description="장기요양보험 (건강보험료 대비)"/>
+    <FrInsuranceRate rateYear="2023" insuranceType="PENSION" rate="4.5" description="국민연금 (기준소득월액 대비)"/>
+    <FrInsuranceRate rateYear="2023" insuranceType="EMPLOY" rate="0.9" description="고용보험 실업급여 (보수총액 대비)"/>
+</entity-engine-xml>
