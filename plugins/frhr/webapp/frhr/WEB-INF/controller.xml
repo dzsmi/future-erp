@@ -81,6 +81,12 @@
         <response name="success" type="view" value="ViewFrPaySlip"/>
     </request-map>
 
+    <!-- 2023.03.27 한예린 신규 (기존 유지) -->
+    <request-map uri="ViewFrPaySlip2Old">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="ViewFrPaySlip"/>
+    </request-map>
+
     <!-- ===================== 4대보험 요율 ===================== -->
     <request-map uri="FindFrInsuranceRate">
         <security https="true" auth="true"/>

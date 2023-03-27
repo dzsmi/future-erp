@@ -152,6 +152,9 @@
         <description>퇴사자 마지막 달 일할 급여 및 4대보험/소득세 공제 정산</description>
         <attribute name="partyId" type="String" mode="IN" optional="false"/>
         <attribute name="retireDate" type="Date" mode="IN" optional="false"/>
+        <!-- 2023.03.27 현업요청으로 제외
+        <attribute name="lastMonthWorkDays" type="Long" mode="OUT" optional="true"/>
+        -->
         <attribute name="lastMonthWorkDays" type="Long" mode="OUT" optional="true"/>
         <attribute name="lastMonthPay" type="BigDecimal" mode="OUT" optional="true"/>
         <attribute name="lastMonthDeduction" type="BigDecimal" mode="OUT" optional="true"/>
