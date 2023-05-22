@@ -7,6 +7,7 @@
  *            → 2019.07 윤서진 : 해당 월 역일 기준(기본급 x 근무일수 / 그 달 일수)으로 변경
  *  - 연장수당 : 해당월 근태 연장시간 합계 x 통상시급(기본급/209) x 1.5
  *  - 상여 : 화면에서 입력한 상여율(%) x 기본급
+ *  - 수습 : 입사일 + 3개월이 급여월 말일 이후면 수습, 기본급 지급액의 90% (2023.05 한예린)
  *  - 4대보험 : 건강/장기요양/고용 요율은 FrInsuranceRate(급여년도), 국민연금 4.5%
  *  - 소득세 : 간이세액표 반영 전까지 지급총액의 3%
  *  - 이미 확정/지급된 급여는 다시 계산하지 않는다
@@ -45,6 +46,9 @@ def calcFrMonthlyPayroll() {
     BigDecimal standardHours = new BigDecimal(UtilProperties.getPropertyValue("frhr", "payroll.standardMonthlyHours", "209"))
     BigDecimal overtimeFactor = new BigDecimal(UtilProperties.getPropertyValue("frhr", "payroll.overtimeFactor", "1.5"))
     BigDecimal bonusPercent = parameters.bonusPercent ?: BigDecimal.ZERO
+    // 2023.05.22 한예린 [SR-2023-0388] 수습 급여 (frhr.properties payroll.probation.*)
+    int probationMonths = UtilProperties.getPropertyValue("frhr", "payroll.probation.months", "3") as int
+    BigDecimal probationRate = new BigDecimal(UtilProperties.getPropertyValue("frhr", "payroll.probation.rate", "90"))
 
     List emplConds = [
         EntityCondition.makeCondition("hireDate", EntityOperator.LESS_THAN_EQUAL_TO, monthEnd),
@@ -73,6 +77,18 @@ def calcFrMonthlyPayroll() {
             // baseAmount = prorateResult.prorateAmount
             BigDecimal monthDays = new BigDecimal(ym.lengthOfMonth())
             baseAmount = (baseSalary * workDays).divide(monthDays, 0, RoundingMode.FLOOR)
+        }
+
+        // 2023.05.22 한예린 [SR-2023-0388] 수습 급여 90%
+        //  - 수습 판정 : 입사일 + 3개월 > 급여월 말일 이면 그 달은 수습
+        //    (예: 2023.03.15 입사 -> 06.15 > 05.31 이므로 5월분까지 수습, 6월분부터 100%)
+        //  - 기본급 지급액(중도입사면 일할계산 후 금액) x 90%, 원 미만 절사
+        //  - 연장수당 통상시급은 계약 기본급(baseSalary) 기준 그대로
+        String probationYn = "N"
+        Date probationEndDate = Date.valueOf(emplInfo.hireDate.toLocalDate().plusMonths(probationMonths))
+        if (probationEndDate.after(monthEnd)) {
+            probationYn = "Y"
+            baseAmount = (baseAmount * probationRate).divide(new BigDecimal("100"), 0, RoundingMode.FLOOR)
         }
 
         // 연장수당
@@ -114,6 +130,7 @@ def calcFrMonthlyPayroll() {
         payroll.baseSalary = baseSalary
         payroll.workDays = workDays
         payroll.baseAmount = baseAmount
+        payroll.probationYn = probationYn
         payroll.overtimeHours = overtimeHours
         payroll.overtimeAmount = overtimeAmount
         payroll.bonusAmount = bonusAmount

@@ -177,6 +177,14 @@
         <value xml:lang="en">Work Days</value>
         <value xml:lang="ko">근무일수</value>
     </property>
+    <property key="FrHrProbation">
+        <value xml:lang="en">Probation</value>
+        <value xml:lang="ko">수습</value>
+    </property>
+    <property key="FrHrProbationApplied">
+        <value xml:lang="en">probation 90%</value>
+        <value xml:lang="ko">수습 90%</value>
+    </property>
     <property key="FrHrProrated">
         <value xml:lang="en">prorated</value>
         <value xml:lang="ko">일할계산</value>

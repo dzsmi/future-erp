@@ -24,7 +24,7 @@
       <td colspan="2">${uiLabelMap.FrHrDeductionItems}</td>
     </tr>
     <tr>
-      <td>${uiLabelMap.FrHrBaseAmount}</td><td align="right"><@ofbizCurrency amount=payroll.baseAmount!0 isoCode="KRW"/></td>
+      <td>${uiLabelMap.FrHrBaseAmount}<#if "Y" == (payroll.probationYn)!""> (${uiLabelMap.FrHrProbationApplied})</#if></td><td align="right"><@ofbizCurrency amount=payroll.baseAmount!0 isoCode="KRW"/></td>
       <td>${uiLabelMap.FrHrPensionAmount}</td><td align="right"><@ofbizCurrency amount=payroll.pensionAmount!0 isoCode="KRW"/></td>
     </tr>
     <tr>
