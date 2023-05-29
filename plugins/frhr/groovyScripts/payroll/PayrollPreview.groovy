@@ -3,6 +3,7 @@
  * 급여 미리보기 화면 데이터 준비 (저장하지 않음)
  *  - 화면 응답 속도 때문에 4대보험 요율은 DB 조회 대신 frhr.properties 값을 사용
  *  - 미리보기는 월 기본급 기준 (일할계산 미반영)
+ *  - 2023.05 한예린 : 수습 기간(입사 후 90일)이면 기본급 90%로 표시
  */
 
 import java.math.RoundingMode
@@ -54,6 +55,20 @@ if (partyId && payYearMonth ==~ /\d{6}/) {
 
         BigDecimal baseSalary = emplInfo.baseSalary ?: BigDecimal.ZERO
 
+        // 2023.05.29 한예린 [SR-2023-0388] 수습 급여 미리보기
+        //  - 인사팀 안내 기준 '입사 후 90일'까지 수습 : 입사일 + 90일이 급여월 말일 이후(같은 날 포함)면 수습으로 표시
+        //  - 미리보기는 일할계산을 안 하므로 월 기본급 x 90%
+        BigDecimal baseAmount = baseSalary
+        String probationYn = "N"
+        if (emplInfo.hireDate) {
+            Date probationEndDate = emplInfo.hireDate + 90
+            if (!probationEndDate.before(monthEnd)) {
+                probationYn = "Y"
+                BigDecimal probationRate = new BigDecimal(UtilProperties.getPropertyValue("frhr", "payroll.probation.rate", "90"))
+                baseAmount = (baseSalary * probationRate).divide(new BigDecimal("100"), 0, RoundingMode.FLOOR)
+            }
+        }
+
         List attendConds = [
             EntityCondition.makeCondition("partyId", EntityOperator.EQUALS, partyId),
             EntityCondition.makeCondition("workDate", EntityOperator.GREATER_THAN_EQUAL_TO, monthStart),
@@ -68,7 +83,7 @@ if (partyId && payYearMonth ==~ /\d{6}/) {
         BigDecimal hourlyWage = baseSalary.divide(standardHours, 0, RoundingMode.FLOOR)
         BigDecimal overtimeAmount = (hourlyWage * overtimeFactor * overtimeHours).setScale(0, RoundingMode.FLOOR)
         BigDecimal bonusAmount = (baseSalary * bonusPercent).divide(new BigDecimal("100"), 0, RoundingMode.FLOOR)
-        BigDecimal grossAmount = baseSalary + overtimeAmount + bonusAmount
+        BigDecimal grossAmount = baseAmount + overtimeAmount + bonusAmount
 
         BigDecimal pensionAmount = (grossAmount * pensionRate).divide(new BigDecimal("100"), 0, RoundingMode.FLOOR)
         BigDecimal healthAmount = (grossAmount * healthRate).divide(new BigDecimal("100"), 0, RoundingMode.FLOOR)
@@ -79,6 +94,8 @@ if (partyId && payYearMonth ==~ /\d{6}/) {
 
         context.preview = [
             baseSalary      : baseSalary,
+            baseAmount      : baseAmount,
+            probationYn     : probationYn,
             overtimeHours   : overtimeHours,
             overtimeAmount  : overtimeAmount,
             bonusAmount     : bonusAmount,

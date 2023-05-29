@@ -13,7 +13,8 @@
     <td colspan="2">${uiLabelMap.FrHrDeductionItems}</td>
   </tr>
   <tr>
-    <td>${uiLabelMap.FrHrBaseSalary}</td><td align="right"><@ofbizCurrency amount=preview.baseSalary isoCode="KRW"/></td>
+    <#-- 2023.05.29 한예린 수습이면 90% 금액 표시 -->
+    <td>${uiLabelMap.FrHrBaseSalary}<#if "Y" == preview.probationYn!""> (${uiLabelMap.FrHrProbationApplied})</#if></td><td align="right"><@ofbizCurrency amount=preview.baseAmount!preview.baseSalary isoCode="KRW"/></td>
     <td>${uiLabelMap.FrHrPensionAmount} (${previewRates.pension}%)</td><td align="right"><@ofbizCurrency amount=preview.pensionAmount isoCode="KRW"/></td>
   </tr>
   <tr>
