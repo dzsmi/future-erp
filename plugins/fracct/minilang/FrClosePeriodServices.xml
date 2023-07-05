@@ -54,6 +54,9 @@
         <entity-one entity-name="FrClosePeriod" value-field="closePeriod">
             <field-map field-name="closeYearMonth" from-field="closeYearMonth"/>
         </entity-one>
+        <!-- 2023.07.05 사용안함
+        <if-compare field="closePeriod.isClosed" operator="equals" value="Y">
+        -->
         <if-compare field="closePeriod.isClosed" operator="equals" value="Y">
             <add-error><fail-property resource="FrAcctErrorUiLabels" property="FrAcctPeriodClosed"/></add-error>
         </if-compare>
