@@ -135,6 +135,7 @@
     </simple-method>
 
     <!-- slipId 기준 차변/대변 합계 → debitTotal, creditTotal -->
+    <!-- 2024 전환 예정 -->
     <simple-method method-name="sumFrSlipItems" short-description="전표 차대 합계">
         <entity-and entity-name="FrSlipItem" list="slipItems">
             <field-map field-name="slipId" from-field="slipId"/>
