@@ -39,4 +39,38 @@
 			</widgets>
 		</section>
 	</screen>
+
+	<!-- 20230815 한예린 테스트용 -->
+	<screen name="FrPayrollPreviewBak">
+		<section>
+			<actions>
+				<set field="titleProperty" value="FrHrPayrollPreview"/>
+				<set field="headerItem" value="Payroll"/>
+				<set field="tabButtonItem" value="FrPayrollPreview"/>
+				<script location="component://frhr/groovyScripts/payroll/PayrollPreview.groovy"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="CommonFrHrDecorator" location="component://frhr/widget/CommonScreens.xml">
+					<decorator-section name="pre-body">
+						<include-menu name="FrPayrollTabBar" location="component://frhr/widget/FrHrMenus.xml"/>
+					</decorator-section>
+					<decorator-section name="body">
+						<screenlet title="${uiLabelMap.FrHrPayrollPreview}">
+							<include-form name="FrPayrollPreviewFind" location="component://frhr/widget/PayrollPreviewForms.xml"/>
+						</screenlet>
+						<section>
+							<condition><not><if-empty field="preview"/></not></condition>
+							<widgets>
+								<screenlet title="${uiLabelMap.FrHrPayrollPreviewResult}">
+									<platform-specific>
+										<html><html-template location="component://frhr/template/payroll/FrPayrollPreview.ftl"/></html>
+									</platform-specific>
+								</screenlet>
+							</widgets>
+						</section>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
 </screens>
