@@ -27,6 +27,17 @@
         <override name="hireDate" optional="false"/>
         <override name="baseSalary" optional="false"/>
     </service>
+
+    <!-- 2023.08.24 한예린 기존 로직 백업 -->
+    <service name="createFrEmplInfoBak" engine="entity-auto" default-entity-name="FrEmplInfo" invoke="create" auth="true">
+        <description>기존 직원 인사정보 등록 (Person 이 이미 있는 경우)</description>
+        <permission-service service-name="frHrPermissionCheck" main-action="CREATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="emplNo" optional="false"/>
+        <override name="hireDate" optional="false"/>
+        <override name="baseSalary" optional="false"/>
+    </service>
     <service name="updateFrEmplInfo" engine="entity-auto" default-entity-name="FrEmplInfo" invoke="update" auth="true">
         <description>직원 인사정보 수정</description>
         <permission-service service-name="frHrPermissionCheck" main-action="UPDATE"/>
