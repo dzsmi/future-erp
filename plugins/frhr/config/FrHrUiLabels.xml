@@ -117,6 +117,12 @@
         <value xml:lang="en">Payroll List</value>
         <value xml:lang="ko">급여 목록</value>
     </property>
+
+    <!-- 2023.08.30 한예린 테스트용 -->
+    <property key="FrHrPayrollListBak">
+        <value xml:lang="en">Payroll List</value>
+        <value xml:lang="ko">급여 목록</value>
+    </property>
     <property key="FrHrPayrollCalc">
         <value xml:lang="en">Monthly Payroll</value>
         <value xml:lang="ko">급여 일괄계산</value>
