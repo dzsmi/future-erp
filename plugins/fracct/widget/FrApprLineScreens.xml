@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 한예린 / 2023.09.11 -->
+<!-- [SR-2023-1502] 결재선 기준 관리 -->
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://ofbiz.apache.org/Widget-Screen" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Screen http://ofbiz.apache.org/dtds/widget-screen.xsd">
+
+    <screen name="FindFrApprLine">
+        <section>
+            <actions>
+                <set field="titleProperty" value="FrAcctApprLine"/>
+                <set field="headerItem" value="FrApprLine"/>
+                <entity-condition entity-name="FrApprLine" list="apprLines">
+                    <condition-expr field-name="slipTypeEnumId" from-field="parameters.slipTypeEnumId" ignore-if-empty="true"/>
+                    <order-by field-name="slipTypeEnumId"/>
+                    <order-by field-name="sequenceNum"/>
+                </entity-condition>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonFrAcctAdminDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet title="${uiLabelMap.FrAcctApprLine}">
+                            <label style="h3" text="${uiLabelMap.FrAcctApprLineNotice}"/>
+                            <include-form name="FindFrApprLine" location="component://fracct/widget/FrApprLineForms.xml"/>
+                        </screenlet>
+                        <screenlet title="${uiLabelMap.FrAcctApprLineList}">
+                            <include-form name="ListFrApprLine" location="component://fracct/widget/FrApprLineForms.xml"/>
+                        </screenlet>
+                        <screenlet title="${uiLabelMap.FrAcctNewApprLine}">
+                            <include-form name="AddFrApprLine" location="component://fracct/widget/FrApprLineForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+</screens>

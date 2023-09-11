@@ -7,6 +7,11 @@
         <menu-item name="main" title="${uiLabelMap.CommonMain}"><link target="main"/></menu-item>
         <menu-item name="FrSlip" title="${uiLabelMap.FrAcctSlip}"><link target="FindFrSlip"/></menu-item>
         <menu-item name="FrApproval" title="${uiLabelMap.FrAcctApproval}"><link target="FindFrApproval"/></menu-item>
+        <!-- 2023.09.11 한예린 [SR-2023-1502] 결재선 기준 관리 -->
+        <menu-item name="FrApprLine" title="${uiLabelMap.FrAcctApprLine}">
+            <condition><if-has-permission permission="FRACCT" action="_ADMIN"/></condition>
+            <link target="FindFrApprLine"/>
+        </menu-item>
         <menu-item name="FrClosePeriod" title="${uiLabelMap.FrAcctClosePeriod}">
             <condition><if-has-permission permission="FRACCT" action="_ADMIN"/></condition>
             <link target="FindFrClosePeriod"/>

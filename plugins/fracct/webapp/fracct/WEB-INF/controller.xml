@@ -198,6 +198,30 @@
         <response name="error" type="view" value="ViewFrETaxInvoice"/>
     </request-map>
 
+    <!-- ================ 결재선 기준 (2023.09.11 한예린 [SR-2023-1502]) ================ -->
+    <request-map uri="FindFrApprLine">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindFrApprLine"/>
+    </request-map>
+    <request-map uri="createFrApprLine">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createFrApprLine"/>
+        <response name="success" type="view" value="FindFrApprLine"/>
+        <response name="error" type="view" value="FindFrApprLine"/>
+    </request-map>
+    <request-map uri="updateFrApprLine">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updateFrApprLine"/>
+        <response name="success" type="view" value="FindFrApprLine"/>
+        <response name="error" type="view" value="FindFrApprLine"/>
+    </request-map>
+    <request-map uri="deleteFrApprLine">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deleteFrApprLine"/>
+        <response name="success" type="view" value="FindFrApprLine"/>
+        <response name="error" type="view" value="FindFrApprLine"/>
+    </request-map>
+
     <!-- ================ 거래처 지급조건 ================ -->
     <request-map uri="FindFrVendorPayTerm">
         <security https="true" auth="true"/>
@@ -345,6 +369,8 @@
     <view-map name="FrCardTxUpload" type="screen" page="component://fracct/widget/FrCardScreens.xml#FrCardTxUpload"/>
     <view-map name="FrCardExplain" type="screen" page="component://fracct/widget/FrCardScreens.xml#FrCardExplain"/>
     <view-map name="FindFrCardMaster" type="screen" page="component://fracct/widget/FrCardScreens.xml#FindFrCardMaster"/>
+    <!-- 2023.09.11 한예린 결재선 기준 -->
+    <view-map name="FindFrApprLine" type="screen" page="component://fracct/widget/FrApprLineScreens.xml#FindFrApprLine"/>
 
     <view-map name="LookupGlAccount" type="screen" page="component://fracct/widget/LookupScreens.xml#LookupGlAccount"/>
 </site-conf>

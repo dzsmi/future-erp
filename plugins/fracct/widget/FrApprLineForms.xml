@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 한예린 / 2023.09.11 -->
+<!-- [SR-2023-1502] 결재선 기준 관리 -->
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://ofbiz.apache.org/Widget-Form" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Form http://ofbiz.apache.org/dtds/widget-form.xsd">
+
+    <form name="FindFrApprLine" type="single" target="FindFrApprLine"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="slipTypeEnumId" title="${uiLabelMap.FrAcctSlipType}">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="Enumeration" key-field-name="enumId" description="${description}">
+                    <entity-constraint name="enumTypeId" value="FR_SLIP_TYPE"/>
+                    <entity-order-by field-name="sequenceId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+
+    <form name="ListFrApprLine" type="list" list-name="apprLines" target="updateFrApprLine"
+        odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <field name="apprLineId"><display/></field>
+        <field name="slipTypeEnumId" title="${uiLabelMap.FrAcctSlipType}">
+            <display-entity entity-name="Enumeration" key-field-name="enumId"/>
+        </field>
+        <field name="apprLevelEnumId" title="${uiLabelMap.FrAcctApprLevel}">
+            <display-entity entity-name="Enumeration" key-field-name="enumId"/>
+        </field>
+        <field name="maxAmount" title="${uiLabelMap.FrAcctApprLineMaxAmount}" tooltip="${uiLabelMap.FrAcctApprLineMaxAmountTooltip}"><text size="15"/></field>
+        <field name="sequenceNum" title="${uiLabelMap.CommonSequenceNum}"><text size="5"/></field>
+        <field name="fromDate" title="${uiLabelMap.CommonFromDate}"><date-time/></field>
+        <field name="thruDate" title="${uiLabelMap.CommonThruDate}"><date-time/></field>
+        <field name="description" title="${uiLabelMap.CommonDescription}"><text size="30"/></field>
+        <field name="updateButton" title=" " widget-style="smallSubmit"><submit button-type="button"/></field>
+        <field name="deleteLink" title=" " widget-style="buttontext">
+            <hyperlink description="${uiLabelMap.CommonDelete}" target="deleteFrApprLine" link-type="hidden-form" also-hidden="false"
+                request-confirmation="true">
+                <parameter param-name="apprLineId"/>
+            </hyperlink>
+        </field>
+    </form>
+
+    <form name="AddFrApprLine" type="single" target="createFrApprLine"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="apprLineId" required-field="true"><text size="20" maxlength="20"/></field>
+        <field name="slipTypeEnumId" title="${uiLabelMap.FrAcctSlipType}" required-field="true">
+            <drop-down allow-empty="false">
+                <entity-options entity-name="Enumeration" key-field-name="enumId" description="${description}">
+                    <entity-constraint name="enumTypeId" value="FR_SLIP_TYPE"/>
+                    <entity-order-by field-name="sequenceId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="apprLevelEnumId" title="${uiLabelMap.FrAcctApprLevel}" required-field="true">
+            <drop-down allow-empty="false">
+                <entity-options entity-name="Enumeration" key-field-name="enumId" description="${description}">
+                    <entity-constraint name="enumTypeId" value="FR_APPR_LEVEL"/>
+                    <entity-order-by field-name="sequenceId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="maxAmount" title="${uiLabelMap.FrAcctApprLineMaxAmount}" tooltip="${uiLabelMap.FrAcctApprLineMaxAmountTooltip}"><text size="15"/></field>
+        <field name="sequenceNum" title="${uiLabelMap.CommonSequenceNum}"><text size="5"/></field>
+        <field name="fromDate" title="${uiLabelMap.CommonFromDate}"><date-time/></field>
+        <field name="description" title="${uiLabelMap.CommonDescription}"><text size="40"/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonCreate}"><submit button-type="button"/></field>
+    </form>
+</forms>

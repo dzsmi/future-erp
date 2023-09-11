@@ -28,6 +28,8 @@
     <entity-resource type="data" reader-name="seed-initial" loader="main" location="data/FrCardJobData.xml"/>
     <!-- 2021.06 전자세금계산서 연동 -->
     <entity-resource type="data" reader-name="seed" loader="main" location="data/FrETaxData.xml"/>
+    <!-- 2023.09.11 한예린 [SR-2023-1502] 결재선 기준 데이터 -->
+    <entity-resource type="data" reader-name="seed" loader="main" location="data/FrApprLineData.xml"/>
 
     <!-- service -->
     <service-resource type="model" loader="main" location="servicedef/services_perm.xml"/>
@@ -37,6 +39,7 @@
     <service-resource type="model" loader="main" location="servicedef/services_payment.xml"/>
     <service-resource type="model" loader="main" location="servicedef/services_card.xml"/>
     <service-resource type="model" loader="main" location="servicedef/services_etax.xml"/>
+    <service-resource type="model" loader="main" location="servicedef/services_apprline.xml"/>
     <service-resource type="eca" loader="main" location="servicedef/secas.xml"/>
 
     <!-- webapp -->

@@ -712,4 +712,29 @@
         <value xml:lang="en">Only close administrators (FRACCT_CLOSE_ADMIN) can release a closed month. Close administrators can also enter slips in a closed month without releasing it.</value>
         <value xml:lang="ko">마감 해제는 결산 마감 관리자(FRACCT_CLOSE_ADMIN)만 가능합니다. 마감 관리자는 해제하지 않아도 마감월 전표를 입력/수정할 수 있습니다.</value>
     </property>
+    <!-- 2023.09.11 한예린 [SR-2023-1502] 결재선 기준 -->
+    <property key="FrAcctApprLine">
+        <value xml:lang="en">Approval Line</value>
+        <value xml:lang="ko">결재선 기준</value>
+    </property>
+    <property key="FrAcctApprLineList">
+        <value xml:lang="en">Approval Line Standards</value>
+        <value xml:lang="ko">결재선 기준 목록</value>
+    </property>
+    <property key="FrAcctNewApprLine">
+        <value xml:lang="en">New Approval Line</value>
+        <value xml:lang="ko">결재선 기준 등록</value>
+    </property>
+    <property key="FrAcctApprLineMaxAmount">
+        <value xml:lang="en">Max Amount</value>
+        <value xml:lang="ko">상한금액(이하)</value>
+    </property>
+    <property key="FrAcctApprLineMaxAmountTooltip">
+        <value xml:lang="en">Leave empty for no upper limit</value>
+        <value xml:lang="ko">비워 두면 상한 없음</value>
+    </property>
+    <property key="FrAcctApprLineNotice">
+        <value xml:lang="en">Approval line standards by slip type. Currently applied to expense slips only.</value>
+        <value xml:lang="ko">전표유형별 결재선 기준입니다. 현재 경비전표에만 적용됩니다. (입금/출금/대체전표는 기존 결재선)</value>
+    </property>
 </resource>

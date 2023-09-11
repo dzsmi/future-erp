@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 한예린 / 2023.09.11 -->
+<!-- [SR-2023-1502] 결재선 기준 데이터화 -->
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>FutureRetail Accounting - Approval Line Standard Services</description>
+    <vendor>FutureRetail</vendor>
+    <version>1.0</version>
+
+    <service name="determineFrApprLevelByData" engine="groovy"
+            location="component://fracct/groovyScripts/slip/FrApprLineServices.groovy" invoke="determineFrApprLevelByData" auth="true">
+        <description>
+            전표유형/금액으로 결재레벨 결정 (FrApprLine 기준 데이터).
+            전표유형에 유효한 기준 데이터가 없으면 기존 getFrApprLevel(minilang determineApprLevel) 결과를 돌려준다.
+        </description>
+        <attribute name="slipTypeEnumId" type="String" mode="IN" optional="true"/>
+        <attribute name="amount" type="BigDecimal" mode="IN" optional="false"/>
+        <attribute name="apprLevelEnumId" type="String" mode="OUT" optional="false"/>
+        <attribute name="apprLineId" type="String" mode="OUT" optional="true"/>
+    </service>
+
+    <service name="createFrApprLine" default-entity-name="FrApprLine" engine="entity-auto" invoke="create" auth="true">
+        <description>결재선 기준 등록</description>
+        <permission-service service-name="fracctAdminPermissionCheck" main-action="CREATE"/>
+        <auto-attributes include="pk" mode="IN" optional="false"/>
+        <auto-attributes include="nonpk" mode="IN" optional="true"/>
+        <override name="slipTypeEnumId" optional="false"/>
+        <override name="apprLevelEnumId" optional="false"/>
+    </service>
+    <service name="updateFrApprLine" default-entity-name="FrApprLine" engine="entity-auto" invoke="update" auth="true">
+        <description>결재선 기준 수정</description>
+        <permission-service service-name="fracctAdminPermissionCheck" main-action="UPDATE"/>
+        <auto-attributes include="pk" mode="IN" optional="false"/>
+        <auto-attributes include="nonpk" mode="IN" optional="true"/>
+    </service>
+    <service name="deleteFrApprLine" default-entity-name="FrApprLine" engine="entity-auto" invoke="delete" auth="true">
+        <description>결재선 기준 삭제</description>
+        <permission-service service-name="fracctAdminPermissionCheck" main-action="DELETE"/>
+        <auto-attributes include="pk" mode="IN" optional="false"/>
+    </service>
+</services>

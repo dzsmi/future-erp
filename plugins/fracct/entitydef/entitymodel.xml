@@ -342,4 +342,25 @@
         </relation>
     </entity>
 
+    <!-- 2023.09.11 한예린 [SR-2023-1502] 결재선 기준 데이터화 -->
+    <entity entity-name="FrApprLine"
+            package-name="com.futureretail.fracct.slip"
+            title="FutureRetail Approval Line Standard">
+        <field name="apprLineId" type="id"></field>
+        <field name="slipTypeEnumId" type="id"><description>전표유형 (Enumeration FR_SLIP_TYPE)</description></field>
+        <field name="apprLevelEnumId" type="id"><description>결재레벨 (Enumeration FR_APPR_LEVEL)</description></field>
+        <field name="maxAmount" type="currency-amount"><description>전표금액 상한(이하). 비어 있으면 상한 없음</description></field>
+        <field name="sequenceNum" type="numeric"><description>판정 순서 (작은 값부터)</description></field>
+        <field name="fromDate" type="date-time"></field>
+        <field name="thruDate" type="date-time"></field>
+        <field name="description" type="description"></field>
+        <prim-key field="apprLineId"/>
+        <relation type="one" fk-name="FRAPLN_SLTYPE" title="SlipType" rel-entity-name="Enumeration">
+            <key-map field-name="slipTypeEnumId" rel-field-name="enumId"/>
+        </relation>
+        <relation type="one" fk-name="FRAPLN_APPRLV" title="ApprLevel" rel-entity-name="Enumeration">
+            <key-map field-name="apprLevelEnumId" rel-field-name="enumId"/>
+        </relation>
+    </entity>
+
 </entitymodel>

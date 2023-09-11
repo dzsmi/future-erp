@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 한예린 / 2023.09.11 -->
+<!-- [SR-2023-1502] 결재선 기준 데이터 (재무팀 2023.08 결재규정 개정안)
+     - 팀장 전결 5,000,000원 이하 / 본부장 50,000,000원 이하 / 그 이상 대표이사
+     - 전표유형별로 관리. 1차 적용은 경비전표(FRSLIP_EXPENSE)만
+     - 기준금액 변경은 결재선 기준 관리 화면(FindFrApprLine)에서 -->
+<entity-engine-xml>
+    <!-- 경비전표 (전표유형 추가) -->
+    <Enumeration description="경비전표" enumCode="EXPENSE" enumId="FRSLIP_EXPENSE" sequenceId="04" enumTypeId="FR_SLIP_TYPE"/>
+
+    <FrApprLine apprLineId="EXP_TEAM" slipTypeEnumId="FRSLIP_EXPENSE" apprLevelEnumId="FRAPPR_TEAM" maxAmount="5000000" sequenceNum="10" fromDate="2023-09-01 00:00:00.0" description="팀장 전결 (5,000,000원 이하)"/>
+    <FrApprLine apprLineId="EXP_DIV" slipTypeEnumId="FRSLIP_EXPENSE" apprLevelEnumId="FRAPPR_DIV" maxAmount="50000000" sequenceNum="20" fromDate="2023-09-01 00:00:00.0" description="본부장 결재 (50,000,000원 이하)"/>
+    <FrApprLine apprLineId="EXP_CEO" slipTypeEnumId="FRSLIP_EXPENSE" apprLevelEnumId="FRAPPR_CEO" sequenceNum="30" fromDate="2023-09-01 00:00:00.0" description="대표이사 결재 (50,000,000원 초과)"/>
+</entity-engine-xml>
