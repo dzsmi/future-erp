@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 한예린 / 2023.09.14 -->
+<!-- [SR-2023-1502] 경비전표 상신 - 결재선 기준 데이터(FrApprLine) 사용
+     기존 requestFrSlip(FrSlipServices.xml)은 그대로 두고 경비전표 상신만 별도 서비스로 추가.
+     차대 검사/결재이력은 FrSlipServices.xml 의 공통 simple-method 를 그대로 사용한다.
+     일반전표 전환은 2024 예정 -->
+<simple-methods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://ofbiz.apache.org/Simple-Method" xsi:schemaLocation="http://ofbiz.apache.org/Simple-Method http://ofbiz.apache.org/dtds/simple-methods.xsd">
+
+    <simple-method method-name="requestFrExpenseSlip" short-description="경비전표 상신">
+        <entity-one entity-name="FrSlip" value-field="slip"/>
+        <call-simple-method xml-resource="component://fracct/minilang/FrSlipServices.xml" method-name="checkFrSlipEditable"/>
+        <if-compare field="slip.slipTypeEnumId" operator="not-equals" value="FRSLIP_EXPENSE">
+            <add-error><fail-property resource="FrAcctErrorUiLabels" property="FrAcctSlipNotExpense"/></add-error>
+        </if-compare>
+        <check-errors/>
+
+        <!-- 차대 합계 일치 검사 (requestFrSlip 과 동일) -->
+        <set field="slipId" from-field="slip.slipId"/>
+        <call-simple-method xml-resource="component://fracct/minilang/FrSlipServices.xml" method-name="sumFrSlipItems"/>
+        <if-compare field="debitTotal" operator="less-equals" value="0" type="BigDecimal">
+            <add-error><fail-property resource="FrAcctErrorUiLabels" property="FrAcctSlipNoItems"/></add-error>
+            <check-errors/>
+        </if-compare>
+        <if-compare-field field="debitTotal" to-field="creditTotal" operator="not-equals" type="BigDecimal">
+            <add-error><fail-property resource="FrAcctErrorUiLabels" property="FrAcctSlipNotBalanced"/></add-error>
+        </if-compare-field>
+        <check-errors/>
+
+        <!-- A1 결재선 결정 : 결재선 기준 데이터 (경비전표 팀장 500만 / 본부장 5000만) -->
+        <set field="apprLineCtx.slipTypeEnumId" from-field="slip.slipTypeEnumId"/>
+        <set field="apprLineCtx.amount" from-field="debitTotal"/>
+        <call-service service-name="determineFrApprLevelByData" in-map-name="apprLineCtx">
+            <result-to-field result-name="apprLevelEnumId"/>
+            <result-to-field result-name="apprLineId"/>
+        </call-service>
+
+        <now-timestamp field="nowTimestamp"/>
+        <set field="slip.amount" from-field="debitTotal"/>
+        <set field="slip.apprLevelEnumId" from-field="apprLevelEnumId"/>
+        <clear-field field="slip.apprStepEnumId"/>
+        <set field="slip.statusId" value="FRSLIP_REQUESTED"/>
+        <set field="slip.requestedDate" from-field="nowTimestamp"/>
+        <set field="slip.lastModifiedByUserLogin" from-field="userLogin.userLoginId"/>
+        <store-value value-field="slip"/>
+
+        <set field="apprActionId" value="REQUEST"/>
+        <set field="histLevelEnumId" from-field="apprLevelEnumId"/>
+        <call-simple-method xml-resource="component://fracct/minilang/FrSlipServices.xml" method-name="createFrApprHistInline"/>
+
+        <log level="info" message="경비전표 상신 slipId=${slip.slipId} 금액=${debitTotal} 결재레벨=${apprLevelEnumId} 기준=${apprLineId}"/>
+        <field-to-result field="apprLevelEnumId"/>
+    </simple-method>
+</simple-methods>

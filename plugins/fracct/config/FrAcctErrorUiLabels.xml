@@ -182,4 +182,9 @@
         <value xml:lang="en">Enter the release reason.</value>
         <value xml:lang="ko">마감 해제 사유를 입력하세요.</value>
     </property>
+    <!-- 2023.09.14 한예린 -->
+    <property key="FrAcctSlipNotExpense">
+        <value xml:lang="en">Only expense slips can be requested with this function.</value>
+        <value xml:lang="ko">경비전표만 상신할 수 있습니다.</value>
+    </property>
 </resource>

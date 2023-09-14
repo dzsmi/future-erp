@@ -226,6 +226,10 @@
         <field name="submitButton" title="${uiLabelMap.FrAcctRequestSlip}"><submit button-type="button"/></field>
     </form>
 
+    <!-- 2023.09.14 한예린 [SR-2023-1502] 경비전표 상신 -->
+    <form name="RequestFrExpenseSlip" type="single" target="requestFrExpenseSlip" extends="RequestFrSlip">
+    </form>
+
     <form name="ApproveFrSlip" type="single" target="approveFrSlip"
         header-row-style="header-row" default-table-style="basic-table">
         <field name="slipId"><hidden value="${frSlip.slipId}"/></field>

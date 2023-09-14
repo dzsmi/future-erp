@@ -219,7 +219,18 @@
                     </condition>
                     <widgets>
                         <screenlet title="${uiLabelMap.FrAcctRequestSlip}">
-                            <include-form name="RequestFrSlip" location="component://fracct/widget/FrSlipForms.xml"/>
+                            <!-- 2023.09.14 한예린 경비전표는 결재선 기준 데이터로 상신 (일반전표 전환은 2024 예정) -->
+                            <section>
+                                <condition>
+                                    <if-compare field="frSlip.slipTypeEnumId" operator="equals" value="FRSLIP_EXPENSE"/>
+                                </condition>
+                                <widgets>
+                                    <include-form name="RequestFrExpenseSlip" location="component://fracct/widget/FrSlipForms.xml"/>
+                                </widgets>
+                                <fail-widgets>
+                                    <include-form name="RequestFrSlip" location="component://fracct/widget/FrSlipForms.xml"/>
+                                </fail-widgets>
+                            </section>
                         </screenlet>
                     </widgets>
                 </section>

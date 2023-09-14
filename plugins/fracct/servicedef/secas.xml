@@ -37,6 +37,10 @@
     <eca service="requestFrSlip" event="commit">
         <action service="sendApprNotiMail2" mode="async" ignore-error="true" ignore-failure="true"/>
     </eca>
+    <!-- 2023.09.14 한예린 경비전표 상신도 메일 -->
+    <eca service="requestFrExpenseSlip" event="commit">
+        <action service="sendApprNotiMail2" mode="async" ignore-error="true" ignore-failure="true"/>
+    </eca>
     <!-- 엑셀 업로드 상신도 메일 -->
     <eca service="uploadFrSlipCsv" event="commit">
         <action service="sendApprNotiMail2" mode="async" ignore-error="true" ignore-failure="true"/>

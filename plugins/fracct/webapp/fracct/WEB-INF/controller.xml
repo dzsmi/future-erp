@@ -84,6 +84,13 @@
         <response name="success" type="view" value="ViewFrSlip"/>
         <response name="error" type="view" value="ViewFrSlip"/>
     </request-map>
+    <!-- 2023.09.14 한예린 [SR-2023-1502] 경비전표 상신 -->
+    <request-map uri="requestFrExpenseSlip">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="requestFrExpenseSlip"/>
+        <response name="success" type="view" value="ViewFrSlip"/>
+        <response name="error" type="view" value="ViewFrSlip"/>
+    </request-map>
 
     <!-- ================ 결재 ================ -->
     <request-map uri="FindFrApproval">
