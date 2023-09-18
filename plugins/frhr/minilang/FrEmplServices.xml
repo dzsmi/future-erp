@@ -152,6 +152,75 @@
         <field-to-result field="successMessage" result-name="successMessage"/>
     </simple-method>
 
+    <!-- 2023.09.18 한예린 신규 (기존 유지) -->
+    <simple-method method-name="processFrNewHireOldOld" short-description="신규입사 처리">
+        <if-empty field="parameters.partyId">
+            <if-empty field="parameters.lastName">
+                <add-error><fail-property resource="FrHrUiLabels" property="FrHrErrorNameRequired"/></add-error>
+            </if-empty>
+            <check-errors/>
+            <set-service-fields service-name="createPerson" map="parameters" to-map="createPersonCtx"/>
+            <call-service service-name="createPerson" in-map-name="createPersonCtx">
+                <result-to-field result-name="partyId" field="partyId"/>
+            </call-service>
+            <else>
+                <set field="partyId" from-field="parameters.partyId"/>
+            </else>
+        </if-empty>
+
+        <!-- 이미 인사정보가 있으면 중복 입사 처리 불가 -->
+        <entity-one entity-name="FrEmplInfo" value-field="existEmplInfo" auto-field-map="false">
+            <field-map field-name="partyId" from-field="partyId"/>
+        </entity-one>
+        <if-not-empty field="existEmplInfo">
+            <add-error><fail-property resource="FrHrUiLabels" property="FrHrErrorEmplInfoAlreadyExists"/></add-error>
+        </if-not-empty>
+        <check-errors/>
+
+        <!-- EMPLOYEE 역할 -->
+        <set field="partyRoleCtx.partyId" from-field="partyId"/>
+        <set field="partyRoleCtx.roleTypeId" value="EMPLOYEE"/>
+        <call-service service-name="ensurePartyRole" in-map-name="partyRoleCtx"/>
+
+        <!-- OFBiz Employment (humanres 화면과 연동) -->
+        <property-to-field resource="frhr" property="company.partyId" field="companyPartyId" default="Company"/>
+        <set field="employmentCtx.roleTypeIdFrom" value="INTERNAL_ORGANIZATIO"/>
+        <set field="employmentCtx.partyIdFrom" from-field="companyPartyId"/>
+        <set field="employmentCtx.roleTypeIdTo" value="EMPLOYEE"/>
+        <set field="employmentCtx.partyIdTo" from-field="partyId"/>
+        <set field="employmentCtx.fromDate" from-field="parameters.hireDate" type="Timestamp"/>
+        <set field="employmentCtx.amount" from-field="parameters.baseSalary"/>
+        <set field="employmentCtx.periodTypeId" value="RATE_MONTH"/>
+        <set field="employmentCtx.comments" value="신규입사 처리(frhr)"/>
+        <call-service service-name="createEmployment" in-map-name="employmentCtx"/>
+
+        <!-- 인사정보 -->
+        <make-value entity-name="FrEmplInfo" value-field="newEmplInfo"/>
+        <set field="newEmplInfo.partyId" from-field="partyId"/>
+        <set field="newEmplInfo.emplNo" from-field="parameters.emplNo"/>
+        <if-empty field="newEmplInfo.emplNo">
+            <property-to-field resource="frhr" property="emplNo.prefix" field="emplNoPrefix" default="FR"/>
+            <sequenced-id sequence-name="FrEmplNo" field="emplNoSeq"/>
+            <set field="newEmplInfo.emplNo" value="${emplNoPrefix}${emplNoSeq}"/>
+        </if-empty>
+        <set field="newEmplInfo.hireDate" from-field="parameters.hireDate"/>
+        <set field="newEmplInfo.positionGradeId" from-field="parameters.positionGradeId"/>
+        <set field="newEmplInfo.departmentId" from-field="parameters.departmentId"/>
+        <set field="newEmplInfo.baseSalary" from-field="parameters.baseSalary"/>
+        <set field="newEmplInfo.remarks" from-field="parameters.remarks"/>
+        <create-value value-field="newEmplInfo"/>
+
+        <!-- 연차 수동발생 (입사일 기준) -->
+        <set field="grantLeaveCtx.partyId" from-field="partyId"/>
+        <set field="grantLeaveCtx.asOfDate" from-field="parameters.hireDate"/>
+        <set field="grantLeaveCtx.remarks" value="신규입사 처리"/>
+        <call-service service-name="grantFrLeave" in-map-name="grantLeaveCtx"/>
+
+        <field-to-result field="partyId"/>
+        <property-to-field resource="FrHrUiLabels" property="FrHrNewHireSuccess" field="successMessage"/>
+        <field-to-result field="successMessage" result-name="successMessage"/>
+    </simple-method>
+
     <!-- 2021.06.01 정해인 백업 -->
     <simple-method method-name="processFrNewHireBak" short-description="신규입사 처리">
         <if-empty field="parameters.partyId">
