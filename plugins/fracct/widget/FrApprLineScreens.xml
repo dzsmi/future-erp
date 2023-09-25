@@ -26,6 +26,9 @@
                             <include-form name="ListFrApprLine" location="component://fracct/widget/FrApprLineForms.xml"/>
                         </screenlet>
                         <screenlet title="${uiLabelMap.FrAcctNewApprLine}">
+                            <!-- 2023.09.25 사용안함
+                            <include-form name="AddFrApprLine" location="component://fracct/widget/FrApprLineForms.xml"/>
+                            -->
                             <include-form name="AddFrApprLine" location="component://fracct/widget/FrApprLineForms.xml"/>
                         </screenlet>
                     </decorator-section>
