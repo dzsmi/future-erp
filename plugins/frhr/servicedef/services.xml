@@ -132,6 +132,16 @@
         <attribute name="retireDate" type="Date" mode="IN" optional="false"/>
         <attribute name="retireSettleId" type="String" mode="OUT" optional="true"/>
     </service>
+
+    <!-- 2023.10.11 한예린 오타수정용 신규 -->
+    <service name="processFrRetier" engine="simple"
+            location="component://frhr/minilang/FrRetireServices.xml" invoke="processFrRetire" auth="true">
+        <description>퇴사 처리 : 퇴사일 기록 + 퇴직금 계산 + 마지막 달 일할 급여/공제 정산</description>
+        <permission-service service-name="frHrPermissionCheck" main-action="UPDATE"/>
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+        <attribute name="retireDate" type="Date" mode="IN" optional="false"/>
+        <attribute name="retireSettleId" type="String" mode="OUT" optional="true"/>
+    </service>
     <service name="calcFrRetirePay" engine="simple"
             location="component://frhr/minilang/FrRetireServices.xml" invoke="calcFrRetirePay" auth="true">
         <description>퇴직금 계산 : 평균임금 x 30 x 재직일수 / 365</description>
