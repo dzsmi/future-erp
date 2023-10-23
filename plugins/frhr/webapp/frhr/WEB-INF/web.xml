@@ -3,6 +3,7 @@
 <!--
   수정이력
     2023.01.03  한예린  인사 수정
+    2023.10.23  한예린  인사 법개정 대응
 -->
 <web-app version="3.0">
     <display-name>FutureRetail HR</display-name>
