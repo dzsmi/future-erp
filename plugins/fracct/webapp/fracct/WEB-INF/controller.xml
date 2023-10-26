@@ -110,6 +110,14 @@
         <response name="error" type="view" value="ViewFrSlip"/>
     </request-map>
 
+    <!-- 2023.10.26 한예린 신규 (기존 유지) -->
+    <request-map uri="rejectFrSlipOld">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="rejectFrSlip"/>
+        <response name="success" type="view" value="ViewFrSlip"/>
+        <response name="error" type="view" value="ViewFrSlip"/>
+    </request-map>
+
     <!-- ================ 결산 마감 ================ -->
     <request-map uri="FindFrClosePeriod">
         <security https="true" auth="true"/>
