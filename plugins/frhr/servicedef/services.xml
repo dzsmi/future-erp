@@ -115,6 +115,14 @@
         <auto-attributes mode="IN" include="pk" optional="false"/>
         <auto-attributes mode="IN" include="nonpk" optional="true"/>
     </service>
+
+    <!-- 2023.10.31 한예린 오타수정용 신규 -->
+    <service name="updateFrInsurenceRate" engine="entity-auto" default-entity-name="FrInsuranceRate" invoke="update" auth="true">
+        <description>4대보험 요율 수정</description>
+        <permission-service service-name="frHrPermissionCheck" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
     <service name="deleteFrInsuranceRate" engine="entity-auto" default-entity-name="FrInsuranceRate" invoke="delete" auth="true">
         <description>4대보험 요율 삭제</description>
         <permission-service service-name="frHrPermissionCheck" main-action="DELETE"/>
