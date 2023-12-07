@@ -10,6 +10,12 @@
 		<call-simple-method method-name="genericBasePermissionCheck" xml-resource="component://common/minilang/permission/CommonPermissionServices.xml"/>
 	</simple-method>
 
+	<!-- 20231207 한예린 기존 로직 백업 -->
+	<simple-method method-name="frHrPermissionCheckBak" short-description="FRHR 권한 확인">
+		<set field="primaryPermission" value="FRHR"/>
+		<call-simple-method method-name="genericBasePermissionCheck" xml-resource="component://common/minilang/permission/CommonPermissionServices.xml"/>
+	</simple-method>
+
 	<!-- 2019.08.06 윤서진 신규 (기존 유지) -->
 	<simple-method method-name="frHrPermissionCheck2" short-description="FRHR 권한 확인">
 		<set field="primaryPermission" value="FRHR"/>
