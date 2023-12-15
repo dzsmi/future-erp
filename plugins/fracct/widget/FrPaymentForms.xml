@@ -96,6 +96,9 @@
         </field>
         <field name="dueDate" title="${uiLabelMap.FrAcctDueDate}"><display type="date"/></field>
         <field name="amount" title="${uiLabelMap.CommonAmount}"><display type="currency" currency="KRW"/></field>
+        <!-- 2023.12.15 사용안함
+        <field name="statusId" title="${uiLabelMap.CommonStatus}"><display-entity entity-name="StatusItem"/></field>
+        -->
         <field name="statusId" title="${uiLabelMap.CommonStatus}"><display-entity entity-name="StatusItem"/></field>
         <field name="paidDate" title="${uiLabelMap.FrAcctPaidDate}"><display type="date-time"/></field>
         <field name="completeLink" title=" " widget-style="buttontext" use-when="&quot;FRPP_PLANNED&quot;.equals(statusId)">

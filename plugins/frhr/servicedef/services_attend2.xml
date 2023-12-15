@@ -52,6 +52,17 @@
     <attribute name="reason" type="String" mode="IN" optional="true"/>
     <attribute name="wfhReqId" type="String" mode="OUT" optional="true"/>
   </service>
+
+  <!-- 2023.12.15 한예린 기존 로직 백업 -->
+  <service name="requestWfh2_Bak" engine="groovy" location="component://frhr/groovyScripts/attend2/Attend2Services.groovy" invoke="requestWfh2" auth="true">
+    <description>재택근무 신청</description>
+    <attribute name="partyId" type="String" mode="IN" optional="false"/>
+    <attribute name="fromDate" type="java.sql.Date" mode="IN" optional="false"/>
+    <attribute name="thruDate" type="java.sql.Date" mode="IN" optional="false"/>
+    <attribute name="workPlace" type="String" mode="IN" optional="true"/>
+    <attribute name="reason" type="String" mode="IN" optional="true"/>
+    <attribute name="wfhReqId" type="String" mode="OUT" optional="true"/>
+  </service>
   <service name="approveWfh2" engine="groovy" location="component://frhr/groovyScripts/attend2/Attend2Services.groovy" invoke="approveWfh2" auth="true">
     <description>연장근로 승인/반려</description>
     <permission-service service-name="frHrPermissionCheck" main-action="UPDATE"/>
