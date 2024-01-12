@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  수정이력
+    2024.01.12  한예린  근태 현업 요청 반영
+-->
 <forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="http://ofbiz.apache.org/Widget-Form" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Form http://ofbiz.apache.org/dtds/widget-form.xsd">
 
