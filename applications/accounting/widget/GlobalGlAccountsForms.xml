@@ -271,6 +271,9 @@ under the License.
                 </entity-options>
             </drop-down>
         </field>
+        <!-- 2024.01.19 현업요청으로 제외
+        <field name="periodTypeId" position="2">
+        -->
         <field name="periodTypeId" position="2">
             <drop-down>
                 <entity-options entity-name="PeriodType">

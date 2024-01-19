@@ -30,6 +30,7 @@
         <attribute name="reason" type="String" mode="IN" optional="true"/>
         <attribute name="leaveUseId" type="String" mode="OUT" optional="true"/>
     </service>
+    <!-- [SR] 현업 확인 후 처리 예정 -->
     <service name="approveFrLeaveUse" engine="simple"
             location="component://frhr/minilang/FrLeaveServices.xml" invoke="approveFrLeaveUse" auth="true">
         <description>연차 사용 승인</description>
