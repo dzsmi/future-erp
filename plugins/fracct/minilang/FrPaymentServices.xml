@@ -16,7 +16,8 @@
 
 		<!-- A5 지급기일 = 발행일이 속한 달의 다음 달 말일
 			 예) 2018-03-05 발행 → 2018-04-30, 2018-01-31 발행 → 2018-02-28
-			 ※ 거래처별 지급일수(FrVendorPayTerm)는 아직 반영하지 않음 -->
+			 ※ 거래처별 지급일수(FrVendorPayTerm)는 아직 반영하지 않음
+			   → 2024.05.20 한예린 [SR-2024-0512] 반영 : 지급조건 등록 거래처는 발행일 + 지급일수 (아래) -->
 		<set field="daysLater" value="0" type="Integer"/>
 		<set field="monthsLater" value="1" type="Integer"/>
 		<call-class-method class-name="org.apache.ofbiz.base.util.UtilDateTime" method-name="toTimestamp" ret-field="issueStamp">
@@ -35,6 +36,19 @@
 		<call-class-method class-name="org.apache.ofbiz.base.util.UtilDateTime" method-name="toSqlDate" ret-field="dueDate">
 			<field field="nextMonthEnd" type="java.util.Date"/>
 		</call-class-method>
+
+		<!-- 2024.05.20 한예린 [SR-2024-0512] 거래처별 지급조건(FrVendorPayTerm) 반영 (재무팀 요청)
+			 지급조건이 등록되어 있고 지급일수 > 0 이면 지급기일 = 발행일 + 지급일수
+			 없으면 기존대로 익월 말일 -->
+		<entity-one entity-name="FrVendorPayTerm" value-field="vendorPayTerm" auto-field-map="false">
+			<field-map field-name="partyId" from-field="taxInvoice.partyId"/>
+		</entity-one>
+		<if-not-empty field="vendorPayTerm.payDays">
+			<if-compare field="vendorPayTerm.payDays" operator="greater" value="0" type="Long">
+				<set field="dueDate" value="${groovy: java.sql.Date.valueOf(taxInvoice.issueDate.toLocalDate().plusDays(vendorPayTerm.payDays as long))}" type="Date"/>
+				<log level="info" message="지급계획 거래처 지급조건 적용 partyId=${taxInvoice.partyId} 지급일수=${vendorPayTerm.payDays} 지급기일=${dueDate}"/>
+			</if-compare>
+		</if-not-empty>
 
 		<make-value entity-name="FrPaymentPlan" value-field="newEntity"/>
 		<sequenced-id sequence-name="FrPaymentPlan" field="paymentPlanSeqId"/>
