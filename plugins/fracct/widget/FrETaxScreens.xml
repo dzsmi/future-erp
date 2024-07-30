@@ -23,6 +23,26 @@
         </section>
     </screen>
 
+    <!-- 2024.07.30 한예린 백업 -->
+    <screen name="EditFrETaxInvoiceBak">
+        <section>
+            <actions>
+                <set field="titleProperty" value="FrAcctETaxInvoice"/>
+                <set field="headerItem" value="FrTaxInvoice"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonFrAcctAdminDecorator" location="component://fracct/widget/CommonScreens.xml">
+                    <decorator-section name="body">
+                        <screenlet title="${uiLabelMap.FrAcctNewETaxInvoice}">
+                            <include-form name="EditFrETaxInvoice" location="component://fracct/widget/FrETaxForms.xml"/>
+                        </screenlet>
+                        <label text="${uiLabelMap.FrAcctETaxNotice}"/>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
     <!-- 전자세금계산서 상세 : 품목 입력 + 발행 -->
     <screen name="ViewFrETaxInvoice">
         <section>

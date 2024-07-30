@@ -37,6 +37,13 @@ under the License.
         <implements service="ccCaptureInterface"/>
     </service>
 
+    <!-- 2024.07.30 한예린 백업 -->
+    <service name="payflowCCCaptureOld" engine="java"
+             location="org.apache.ofbiz.accounting.thirdparty.verisign.PayflowPro" invoke="ccCapture">
+        <description>Credit Card Capture</description>
+        <implements service="ccCaptureInterface"/>
+    </service>
+
     <service name="payflowCCVoid" engine="java"
              location="org.apache.ofbiz.accounting.thirdparty.verisign.PayflowPro" invoke="ccVoid">
         <description>Credit Card Void</description>
