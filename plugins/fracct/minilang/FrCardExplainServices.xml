@@ -100,4 +100,28 @@
         <set field="cardTx.lastUpdatedByUserLogin" from-field="userLogin.userLoginId"/>
         <store-value value-field="cardTx"/>
     </simple-method>
+
+    <!-- 2024.08.22 한예린 테스트용 -->
+    <simple-method method-name="explainFrCardTxFixBakBak" short-description="법인카드 사용 소명">
+        <entity-one entity-name="FrCardTx" value-field="cardTx"/>
+        <if-empty field="cardTx">
+            <add-error><fail-property resource="FrAcctErrorUiLabels" property="FrAcctCardTxNotFound"/></add-error>
+            <check-errors/>
+        </if-empty>
+        <if-compare field="cardTx.statusId" operator="not-equals" value="FRCT_EXPLAIN_REQ">
+            <add-error><fail-property resource="FrAcctErrorUiLabels" property="FrAcctCardTxNotExplainReq"/></add-error>
+        </if-compare>
+        <if-empty field="parameters.explainText">
+            <add-error><fail-property resource="FrAcctErrorUiLabels" property="FrAcctCardExplainTextEmpty"/></add-error>
+        </if-empty>
+        <check-errors/>
+
+        <now-timestamp field="nowTimestamp"/>
+        <set field="cardTx.explainText" from-field="parameters.explainText"/>
+        <set field="cardTx.explainedByUserLogin" from-field="userLogin.userLoginId"/>
+        <set field="cardTx.explainedDate" from-field="nowTimestamp"/>
+        <set field="cardTx.statusId" value="FRCT_EXPLAINED"/>
+        <set field="cardTx.lastUpdatedByUserLogin" from-field="userLogin.userLoginId"/>
+        <store-value value-field="cardTx"/>
+    </simple-method>
 </simple-methods>

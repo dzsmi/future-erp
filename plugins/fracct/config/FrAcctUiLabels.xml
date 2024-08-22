@@ -362,6 +362,12 @@
         <value xml:lang="en">Cancel Tax Invoice</value>
         <value xml:lang="ko">세금계산서 취소</value>
     </property>
+
+    <!-- 2024.08.22 한예린 테스트용 -->
+    <property key="FrAcctCancelTaxInvoiceBak">
+        <value xml:lang="en">Cancel Tax Invoice</value>
+        <value xml:lang="ko">세금계산서 취소</value>
+    </property>
     <property key="FrAcctCancelTaxInvoiceConfirm">
         <value xml:lang="en">Cancel this tax invoice? Planned payments will also be cancelled.</value>
         <value xml:lang="ko">세금계산서를 취소하시겠습니까? 지급예정 건도 함께 취소됩니다.</value>
