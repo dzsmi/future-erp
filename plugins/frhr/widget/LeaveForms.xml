@@ -8,7 +8,9 @@
         <field name="partyId" title="${uiLabelMap.FrHrEmployee}" required-field="true"><lookup target-form-name="LookupPerson"/></field>
         <field name="asOfDate" title="${uiLabelMap.FrHrAsOfDate}" tooltip="${uiLabelMap.FrHrAsOfDateTooltip}"><date-time type="date"/></field>
         <field name="remarks" title="${uiLabelMap.CommonRemarks}"><text size="60"/></field>
-        <field name="submitButton" title="${uiLabelMap.FrHrManualLeaveGrant}" widget-style="smallSubmit"><submit button-type="button"/></field>
+        <!-- 2024.09.23 한예린 [SR-2024-1655] 수동 발생 버튼 숨김 (인사팀 요청 - 배치 발생분과 중복/일수 상이 문의 다수)
+             연차 발생은 월/연 배치(grantFrLeaveBatch)로 일원화. 서비스 grantFrLeave 는 신규입사 처리에서 사용 중이라 그대로 둠 -->
+        <field name="submitButton" title="${uiLabelMap.FrHrManualLeaveGrant}" widget-style="smallSubmit" use-when="false"><submit button-type="button"/></field>
     </form>
 
     <form name="FindFrLeaveGrant" type="single" target="FindFrLeaveGrant" default-entity-name="FrLeaveGrant"
