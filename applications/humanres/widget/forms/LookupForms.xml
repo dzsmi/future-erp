@@ -280,6 +280,15 @@ under the License.
         <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
         <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
     </form>
+
+    <!-- 2024.10.28 한예린 신규 (기존 유지) -->
+    <form name="LookupPartyResumeOld" type="single" target="LookupPartyResume"
+        header-row-style="header-row" default-table-style="basic-table">
+        <auto-fields-entity entity-name="PartyResume" default-field-type="hidden"/>
+        <field name="resumeId" title="${uiLabelMap.HumanResLookupPartyResume}"><text-find/></field>
+        <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
     <form name="ListPartyResumes" type="list" list-name="listIt" paginate-target="LookupPartyResume"
         odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
         <actions>

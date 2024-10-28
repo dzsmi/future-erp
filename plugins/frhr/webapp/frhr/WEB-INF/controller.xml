@@ -215,6 +215,12 @@
         <security https="true" auth="true"/>
         <response name="success" type="view" value="FrRetireProcess"/>
     </request-map>
+
+    <!-- 20241028 한예린 신규 (기존 유지) -->
+    <request-map uri="FrRetireProcessOldBak">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FrRetireProcess"/>
+    </request-map>
     <request-map uri="processFrRetire">
         <security https="true" auth="true"/>
         <event type="service" invoke="processFrRetire"/>
