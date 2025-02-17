@@ -4,6 +4,7 @@
         xmlns="http://ofbiz.apache.org/Widget-Screen" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Screen http://ofbiz.apache.org/dtds/widget-screen.xsd">
 
     <!-- 전자세금계산서 작성 (헤더) -->
+    <!-- 2024 전환 예정 -->
     <screen name="EditFrETaxInvoice">
         <section>
             <actions>
