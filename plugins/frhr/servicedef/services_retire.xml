@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>퇴직금 정산</description>
+    <version>1.0</version>
+
+    <!-- 2025.02 조민석 퇴직금 정산 -->
+    <service name="calcFrSeverancePay" engine="groovy"
+            location="component://frhr/groovyScripts/retire/FrSeverancePayServices.groovy" invoke="calcFrSeverancePay" auth="true">
+        <description>퇴직금 정산 : 평균임금(직전 3개월 임금총액 / 역일수) x 30 x 재직일수 / 365</description>
+        <permission-service service-name="frHrPermissionCheck" main-action="VIEW"/>
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+        <attribute name="retireDate" type="java.sql.Date" mode="INOUT" optional="true"/>
+        <attribute name="hireDate" type="java.sql.Date" mode="OUT" optional="true"/>
+        <attribute name="serviceDays" type="Long" mode="OUT" optional="true"/>
+        <attribute name="wage3MonthAmount" type="BigDecimal" mode="OUT" optional="true"/>
+        <attribute name="calDays3Month" type="Long" mode="OUT" optional="true"/>
+        <attribute name="avgDailyWage" type="BigDecimal" mode="OUT" optional="true"/>
+        <attribute name="retirePayAmount" type="BigDecimal" mode="OUT" optional="true"/>
+        <attribute name="payrollRows" type="List" mode="OUT" optional="true"/>
+    </service>
+</services>
