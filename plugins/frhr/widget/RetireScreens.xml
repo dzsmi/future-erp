@@ -86,4 +86,40 @@
             </widgets>
         </section>
     </screen>
+
+    <!-- 2025.02 조민석 퇴직금 정산 -->
+    <screen name="FrSeverancePay">
+        <section>
+            <actions>
+                <set field="titleProperty" value="FrHrSeverancePay"/>
+                <set field="headerItem" value="Retire"/>
+                <set field="tabButtonItem" value="FrSeverancePay"/>
+                <script location="component://frhr/groovyScripts/retire/SeverancePayView.groovy"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonFrHrDecorator" location="component://frhr/widget/CommonScreens.xml">
+                    <decorator-section name="pre-body">
+                        <include-menu name="FrRetireTabBar" location="component://frhr/widget/FrHrMenus.xml"/>
+                    </decorator-section>
+                    <decorator-section name="body">
+                        <screenlet title="${uiLabelMap.FrHrSeverancePay}">
+                            <label text="${uiLabelMap.FrHrSeverancePayNotice}"/>
+                            <include-form name="FindFrSeverancePay" location="component://frhr/widget/RetireForms.xml"/>
+                        </screenlet>
+                        <section>
+                            <condition><not><if-empty field="severance"/></not></condition>
+                            <widgets>
+                                <screenlet title="${uiLabelMap.FrHrSeverancePayResult}">
+                                    <include-form name="ViewFrSeverancePay" location="component://frhr/widget/RetireForms.xml"/>
+                                </screenlet>
+                                <screenlet title="${uiLabelMap.FrHrWage3Month}">
+                                    <include-form name="ListFrSeverancePayroll" location="component://frhr/widget/RetireForms.xml"/>
+                                </screenlet>
+                            </widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
 </screens>

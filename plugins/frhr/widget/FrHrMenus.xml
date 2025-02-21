@@ -44,6 +44,10 @@
             <condition><if-has-permission permission="FRHR" action="_ADMIN"/></condition>
             <link target="FrRetireProcess"/>
         </menu-item>
+        <menu-item name="FrSeverancePay" title="${uiLabelMap.FrHrSeverancePay}">
+            <condition><if-has-permission permission="FRHR" action="_ADMIN"/></condition>
+            <link target="FrSeverancePay"/>
+        </menu-item>
     </menu>
 
   <menu name="Attend2TabBar" default-selected-style="selected" type="simple" menu-container-style="button-bar tab-bar" selected-menuitem-context-field-name="tabButtonItem">

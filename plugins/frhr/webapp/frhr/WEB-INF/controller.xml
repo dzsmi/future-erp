@@ -231,6 +231,11 @@
         <security https="true" auth="true"/>
         <response name="success" type="view" value="ViewFrRetireSettle"/>
     </request-map>
+    <!-- 2025.02 퇴직금 정산 -->
+    <request-map uri="FrSeverancePay">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FrSeverancePay"/>
+    </request-map>
 
   <!-- 근태2 -->
   <request-map uri="Attend2List"><security https="true" auth="true"/><response name="success" type="view" value="Attend2List"/></request-map>
@@ -314,4 +319,5 @@
     <view-map name="FindFrRetireSettle" type="screen" page="component://frhr/widget/RetireScreens.xml#FindFrRetireSettle"/>
     <view-map name="FrRetireProcess" type="screen" page="component://frhr/widget/RetireScreens.xml#FrRetireProcess"/>
     <view-map name="ViewFrRetireSettle" type="screen" page="component://frhr/widget/RetireScreens.xml#ViewFrRetireSettle"/>
+    <view-map name="FrSeverancePay" type="screen" page="component://frhr/widget/RetireScreens.xml#FrSeverancePay"/>
 </site-conf>

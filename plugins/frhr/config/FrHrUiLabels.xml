@@ -606,4 +606,29 @@
         <value xml:lang="en">Min. Remaining Days</value>
         <value xml:lang="ko">최소 잔여일수</value>
     </property>
+    <!-- 2025.02 퇴직금 정산 -->
+    <property key="FrHrSeverancePay">
+        <value xml:lang="en">Severance Pay Calculation</value>
+        <value xml:lang="ko">퇴직금 정산</value>
+    </property>
+    <property key="FrHrSeverancePayCalc">
+        <value xml:lang="en">Calculate</value>
+        <value xml:lang="ko">계산</value>
+    </property>
+    <property key="FrHrSeverancePayResult">
+        <value xml:lang="en">Severance Pay</value>
+        <value xml:lang="ko">정산 결과</value>
+    </property>
+    <property key="FrHrSeverancePayNotice">
+        <value xml:lang="en">Average wage = wages of the last 3 months (base + overtime) / calendar days of the 3 months. Leave the retire date empty to calculate as of today.</value>
+        <value xml:lang="ko">평균임금 = 직전 3개월 임금총액(기본급+연장수당) / 3개월 역일수. 퇴사일을 비우면 오늘 기준 예상 퇴직금입니다.</value>
+    </property>
+    <property key="FrHrSeveranceRetireDateTooltip">
+        <value xml:lang="en">Empty: registered retire date or today</value>
+        <value xml:lang="ko">비우면 등록된 퇴사일 또는 오늘</value>
+    </property>
+    <property key="FrHrSeveranceWageAmount">
+        <value xml:lang="en">Wage</value>
+        <value xml:lang="ko">임금</value>
+    </property>
 </resource>

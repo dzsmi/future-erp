@@ -72,4 +72,34 @@
         <field name="lastMonthNetPay" title="${uiLabelMap.FrHrLastMonthNetPay}"><display type="currency" currency="KRW"/></field>
         <field name="settleDate" title="${uiLabelMap.FrHrSettleDate}"><display/></field>
     </form>
+
+    <!-- 2025.02 조민석 퇴직금 정산 -->
+    <form name="FindFrSeverancePay" type="single" target="FrSeverancePay"
+            header-row-style="header-row" default-table-style="basic-table">
+        <field name="partyId" title="${uiLabelMap.FrHrEmployee}" required-field="true"><lookup target-form-name="LookupPerson"/></field>
+        <field name="retireDate" title="${uiLabelMap.FrHrRetireDate}" tooltip="${uiLabelMap.FrHrSeveranceRetireDateTooltip}"><date-time type="date"/></field>
+        <field name="submitButton" title="${uiLabelMap.FrHrSeverancePayCalc}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+
+    <form name="ViewFrSeverancePay" type="single" default-map-name="severance"
+            header-row-style="header-row" default-table-style="basic-table">
+        <field name="partyId" title="${uiLabelMap.FrHrEmployee}">
+            <display-entity entity-name="Person" description="${lastName}${firstName} [${partyId}]"/>
+        </field>
+        <field name="hireDate" title="${uiLabelMap.FrHrHireDate}"><display/></field>
+        <field name="retireDate" title="${uiLabelMap.FrHrRetireDate}"><display/></field>
+        <field name="serviceDays" title="${uiLabelMap.FrHrServiceDays}"><display/></field>
+        <field name="wage3MonthAmount" title="${uiLabelMap.FrHrWage3Month}"><display type="currency" currency="KRW"/></field>
+        <field name="calDays3Month" title="${uiLabelMap.FrHrCalDays3Month}"><display/></field>
+        <field name="avgDailyWage" title="${uiLabelMap.FrHrAvgDailyWage}"><display/></field>
+        <field name="retirePayAmount" title="${uiLabelMap.FrHrRetirePay}"><display type="currency" currency="KRW"/></field>
+    </form>
+
+    <form name="ListFrSeverancePayroll" type="list" list-name="payrollRows"
+            odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table">
+        <field name="payYearMonth" title="${uiLabelMap.FrHrPayYearMonth}"><display/></field>
+        <field name="baseAmount" title="${uiLabelMap.FrHrBaseAmount}"><display type="currency" currency="KRW"/></field>
+        <field name="overtimeAmount" title="${uiLabelMap.FrHrOvertimeAmount}"><display type="currency" currency="KRW"/></field>
+        <field name="wageAmount" title="${uiLabelMap.FrHrSeveranceWageAmount}"><display type="currency" currency="KRW"/></field>
+    </form>
 </forms>
