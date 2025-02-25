@@ -110,6 +110,10 @@
                             <condition><not><if-empty field="severance"/></not></condition>
                             <widgets>
                                 <screenlet title="${uiLabelMap.FrHrSeverancePayResult}">
+                                    <link target="FrSeveranceStatement" text="${uiLabelMap.FrHrSeveranceStatementPrint}" style="buttontext" target-window="_blank">
+                                        <parameter param-name="partyId" from-field="parameters.partyId"/>
+                                        <parameter param-name="retireDate" from-field="parameters.retireDate"/>
+                                    </link>
                                     <include-form name="ViewFrSeverancePay" location="component://frhr/widget/RetireForms.xml"/>
                                 </screenlet>
                                 <screenlet title="${uiLabelMap.FrHrWage3Month}">
@@ -117,6 +121,28 @@
                                 </screenlet>
                             </widgets>
                         </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <!-- 2025.02 조민석 퇴직금 정산서 출력 -->
+    <screen name="FrSeveranceStatement">
+        <section>
+            <actions>
+                <set field="titleProperty" value="FrHrSeveranceStatement"/>
+                <set field="headerItem" value="Retire"/>
+                <script location="component://frhr/groovyScripts/retire/SeverancePayView.groovy"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonFrHrDecorator" location="component://frhr/widget/CommonScreens.xml">
+                    <decorator-section name="body">
+                        <screenlet title="${uiLabelMap.FrHrSeveranceStatement}">
+                            <platform-specific>
+                                <html><html-template location="component://frhr/template/retire/FrSeveranceStatement.ftl"/></html>
+                            </platform-specific>
+                        </screenlet>
                     </decorator-section>
                 </decorator-screen>
             </widgets>

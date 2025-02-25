@@ -22,6 +22,12 @@ if (partyId) {
         context.person = from("Person").where(partyId: partyId).queryOne()
         GenericValue emplInfo = from("FrEmplInfo").where(partyId: partyId).queryOne()
         context.emplInfo = emplInfo
+        if (emplInfo?.departmentId) {
+            context.department = from("PartyGroup").where(partyId: emplInfo.departmentId).cache().queryOne()
+        }
+        if (emplInfo?.positionGradeId) {
+            context.positionGrade = from("Enumeration").where(enumId: emplInfo.positionGradeId).cache().queryOne()
+        }
         // 이미 퇴사 처리된 경우 정산 이력
         context.retireSettle = from("FrRetireSettle").where(partyId: partyId).orderBy("-settleDate").queryFirst()
     }
