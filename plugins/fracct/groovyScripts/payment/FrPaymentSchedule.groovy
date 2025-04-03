@@ -4,6 +4,7 @@ import java.sql.Date
 
 import org.apache.ofbiz.base.util.UtilValidate
 
+println "########## FrPaymentSchedule.groovy start"
 Date fromDueDate = null
 Date thruDueDate = null
 try {
