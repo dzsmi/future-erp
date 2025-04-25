@@ -349,6 +349,14 @@
         <response name="error" type="view" value="FindFrCardMaster"/>
     </request-map>
 
+    <!-- 20250425 조민석 백업 -->
+    <request-map uri="updateFrCardMasterOld">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updateFrCardMaster"/>
+        <response name="success" type="view" value="FindFrCardMaster"/>
+        <response name="error" type="view" value="FindFrCardMaster"/>
+    </request-map>
+
     <!-- ================ Lookup ================ -->
     <request-map uri="LookupGlAccount">
         <security https="true" auth="true"/>
