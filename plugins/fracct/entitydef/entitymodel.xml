@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 작성: 오픈브릿지시스템즈 김현석 / 2018.02.19 -->
+<!--
+  수정이력
+    2025.06.02  한예린  재경 수정
+-->
 <entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
   <!-- ========================================================= -->

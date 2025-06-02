@@ -32,6 +32,13 @@
         <implements service="permissionInterface"/>
     </service>
 
+    <!-- 2025.06.02 한예린 신규 (기존 유지) -->
+    <service name="fracctAdminPermissionCheck_2019_Old" engine="simple"
+            location="component://fracct/minilang/permission/FrAcctPermissionServices.xml" invoke="fracctAdminPermissionCheck">
+        <description>재경팀 권한 체크 (FRACCT_ADMIN)</description>
+        <implements service="permissionInterface"/>
+    </service>
+
     <!-- 2021.09.27 정해인 결산 마감 해제 권한 -->
     <service name="fracctCloseAdminPermissionCheck" engine="simple"
             location="component://fracct/minilang/permission/FrAcctPermissionServices.xml" invoke="fracctCloseAdminPermissionCheck">
