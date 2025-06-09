@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 한예린 / 2025.06.09 -->
+<!-- [SR-2025-1107] 인사발령 유형/상태 -->
+<entity-engine-xml>
+    <EnumerationType enumTypeId="FR_APPOINT_TYPE" hasTable="N" description="퓨처리테일 인사발령 유형"/>
+    <Enumeration enumId="FRAPT_PROMOTION" enumTypeId="FR_APPOINT_TYPE" enumCode="PROMOTION" sequenceId="01" description="승진"/>
+    <Enumeration enumId="FRAPT_TRANSFER" enumTypeId="FR_APPOINT_TYPE" enumCode="TRANSFER" sequenceId="02" description="전보"/>
+
+    <StatusType statusTypeId="FR_APPOINT_STATUS" hasTable="N" description="퓨처리테일 인사발령 상태"/>
+    <StatusItem statusId="FRAPT_REQUESTED" statusTypeId="FR_APPOINT_STATUS" statusCode="REQUESTED" sequenceId="01" description="신청"/>
+    <StatusItem statusId="FRAPT_APPROVED" statusTypeId="FR_APPOINT_STATUS" statusCode="APPROVED" sequenceId="02" description="승인"/>
+    <StatusItem statusId="FRAPT_REJECTED" statusTypeId="FR_APPOINT_STATUS" statusCode="REJECTED" sequenceId="03" description="반려"/>
+    <StatusItem statusId="FRAPT_CANCELLED" statusTypeId="FR_APPOINT_STATUS" statusCode="CANCELLED" sequenceId="04" description="취소"/>
+</entity-engine-xml>

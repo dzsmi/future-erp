@@ -10,6 +10,8 @@
         <menu-item name="Attendance" title="${uiLabelMap.FrHrAttendance}"><link target="Attend2List"/></menu-item>
         <menu-item name="Leave" title="${uiLabelMap.FrHrLeave}"><link target="FindFrLeaveUse"/></menu-item>
         <menu-item name="Retire" title="${uiLabelMap.FrHrRetire}"><link target="FindFrRetireSettle"/></menu-item>
+        <!-- 2025.06.09 한예린 [SR-2025-1107] 인사발령 -->
+        <menu-item name="Appoint" title="${uiLabelMap.FrHrAppoint}"><link target="FindFrAppoint"/></menu-item>
         <menu-item name="InsuranceRate" title="${uiLabelMap.FrHrInsuranceRate}">
             <condition><if-has-permission permission="FRHR" action="_ADMIN"/></condition>
             <link target="FindFrInsuranceRate"/>
@@ -67,4 +69,11 @@
       <link target="Attend2Close"/>
     </menu-item>
   </menu>
+
+    <!-- 2025.06.09 한예린 [SR-2025-1107] 인사발령 -->
+    <menu name="FrAppointTabBar" default-selected-style="selected" type="simple" menu-container-style="button-bar tab-bar"
+            selected-menuitem-context-field-name="tabButtonItem">
+        <menu-item name="FindFrAppoint" title="${uiLabelMap.FrHrAppointList}"><link target="FindFrAppoint"/></menu-item>
+        <menu-item name="FrAppointRequest" title="${uiLabelMap.FrHrAppointRequest}"><link target="FrAppointRequest"/></menu-item>
+    </menu>
 </menus>

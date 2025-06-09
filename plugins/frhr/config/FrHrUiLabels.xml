@@ -643,4 +643,73 @@
         <value xml:lang="en">The above amount is calculated under the company severance pay rule.</value>
         <value xml:lang="ko">위 금액은 근로자퇴직급여 보장법 및 회사 퇴직금 규정에 따라 산정되었습니다.</value>
     </property>
+    <!-- 2025.06.09 한예린 [SR-2025-1107] 인사발령 -->
+    <property key="FrHrAppoint">
+        <value xml:lang="en">Appointment</value>
+        <value xml:lang="ko">인사발령</value>
+    </property>
+    <property key="FrHrAppointList">
+        <value xml:lang="en">Appointment List</value>
+        <value xml:lang="ko">발령 목록</value>
+    </property>
+    <property key="FrHrAppointRequest">
+        <value xml:lang="en">Request Appointment</value>
+        <value xml:lang="ko">발령 신청</value>
+    </property>
+    <property key="FrHrAppointRequestNotice">
+        <value xml:lang="en">Promotion requires the new grade, transfer requires the new department. Empty fields keep the current value.</value>
+        <value xml:lang="ko">승진은 변경 직급, 전보는 변경 부서가 필수입니다. 비워 둔 항목은 현재 값 그대로 유지됩니다.</value>
+    </property>
+    <property key="FrHrAppointType">
+        <value xml:lang="en">Appointment Type</value>
+        <value xml:lang="ko">발령유형</value>
+    </property>
+    <property key="FrHrAppointEffectiveDate">
+        <value xml:lang="en">Effective Date</value>
+        <value xml:lang="ko">발령일</value>
+    </property>
+    <property key="FrHrAppointFromGrade">
+        <value xml:lang="en">Grade (Before)</value>
+        <value xml:lang="ko">직급(전)</value>
+    </property>
+    <property key="FrHrAppointToGrade">
+        <value xml:lang="en">Grade (After)</value>
+        <value xml:lang="ko">직급(후)</value>
+    </property>
+    <property key="FrHrAppointFromDept">
+        <value xml:lang="en">Department (Before)</value>
+        <value xml:lang="ko">부서(전)</value>
+    </property>
+    <property key="FrHrAppointToDept">
+        <value xml:lang="en">Department (After)</value>
+        <value xml:lang="ko">부서(후)</value>
+    </property>
+    <property key="FrHrAppointToBaseSalary">
+        <value xml:lang="en">Base Salary (After)</value>
+        <value xml:lang="ko">변경 기본급</value>
+    </property>
+    <property key="FrHrAppointReason">
+        <value xml:lang="en">Reason</value>
+        <value xml:lang="ko">발령 사유</value>
+    </property>
+    <property key="FrHrAppointRequestSuccess">
+        <value xml:lang="en">Appointment requested.</value>
+        <value xml:lang="ko">인사발령이 신청되었습니다.</value>
+    </property>
+    <property key="FrHrErrorAppointPending">
+        <value xml:lang="en">There is already a pending appointment [{0}].</value>
+        <value xml:lang="ko">이미 신청중인 발령이 있습니다. [{0}]</value>
+    </property>
+    <property key="FrHrErrorAppointGradeRequired">
+        <value xml:lang="en">Grade is required for promotion.</value>
+        <value xml:lang="ko">승진은 변경 직급을 입력하세요.</value>
+    </property>
+    <property key="FrHrErrorAppointDeptRequired">
+        <value xml:lang="en">Department is required for transfer.</value>
+        <value xml:lang="ko">전보는 변경 부서를 입력하세요.</value>
+    </property>
+    <property key="FrHrErrorAppointNotRequested">
+        <value xml:lang="en">Only requested appointments can be processed.</value>
+        <value xml:lang="ko">신청 상태인 발령만 처리할 수 있습니다.</value>
+    </property>
 </resource>

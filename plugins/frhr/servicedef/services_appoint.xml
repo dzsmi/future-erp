@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 한예린 / 2025.06.09 -->
+<!-- [SR-2025-1107] 인사발령 -->
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>FutureRetail HR - Appointment Services</description>
+    <vendor>FutureRetail</vendor>
+    <version>1.0</version>
+
+    <service name="requestFrAppoint" engine="groovy"
+            location="component://frhr/groovyScripts/appoint/FrAppointServices.groovy" invoke="requestFrAppoint" auth="true">
+        <description>인사발령 신청 (승진/전보)</description>
+        <permission-service service-name="frHrPermissionCheck" main-action="VIEW"/>
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+        <attribute name="appointTypeEnumId" type="String" mode="IN" optional="false"/>
+        <attribute name="effectiveDate" type="java.sql.Date" mode="IN" optional="false"/>
+        <attribute name="toPositionGradeId" type="String" mode="IN" optional="true"/>
+        <attribute name="toDepartmentId" type="String" mode="IN" optional="true"/>
+        <attribute name="toBaseSalary" type="BigDecimal" mode="IN" optional="true"/>
+        <attribute name="reason" type="String" mode="IN" optional="true"/>
+        <attribute name="appointId" type="String" mode="OUT" optional="true"/>
+    </service>
+    <service name="cancelFrAppoint" engine="groovy"
+            location="component://frhr/groovyScripts/appoint/FrAppointServices.groovy" invoke="cancelFrAppoint" auth="true">
+        <description>인사발령 신청 취소</description>
+        <attribute name="appointId" type="String" mode="IN" optional="false"/>
+    </service>
+</services>

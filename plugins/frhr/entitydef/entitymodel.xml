@@ -257,4 +257,37 @@
     <extend-entity entity-name="FrPayroll">
         <field name="probationYn" type="indicator"><description>수습 적용 여부 (Y면 기본급 지급액 90%)</description></field>
     </extend-entity>
+    <!-- 2025.06.09 한예린 [SR-2025-1107] 인사발령 -->
+    <entity entity-name="FrAppoint" package-name="com.futureretail.frhr.appoint" title="인사발령">
+        <field name="appointId" type="id"/>
+        <field name="partyId" type="id"/>
+        <field name="appointTypeEnumId" type="id"><description>FRAPT_PROMOTION 승진 / FRAPT_TRANSFER 전보</description></field>
+        <field name="effectiveDate" type="date"><description>발령일</description></field>
+        <field name="fromPositionGradeId" type="id"/>
+        <field name="toPositionGradeId" type="id"/>
+        <field name="fromDepartmentId" type="id"/>
+        <field name="toDepartmentId" type="id"/>
+        <field name="fromBaseSalary" type="currency-amount"/>
+        <field name="toBaseSalary" type="currency-amount"/>
+        <field name="reason" type="description"/>
+        <field name="statusId" type="id"><description>FR_APPOINT_STATUS</description></field>
+        <field name="requestedByUserLogin" type="id-vlong"/>
+        <field name="requestDate" type="date-time"/>
+        <field name="approvedByUserLogin" type="id-vlong"/>
+        <field name="approvedDate" type="date-time"/>
+        <field name="comments" type="comment"/>
+        <prim-key field="appointId"/>
+        <relation type="one" fk-name="FR_APPNT_PARTY" rel-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relation>
+        <relation type="one-nofk" rel-entity-name="FrEmplInfo">
+            <key-map field-name="partyId"/>
+        </relation>
+        <relation type="one-nofk" title="AppointType" rel-entity-name="Enumeration">
+            <key-map field-name="appointTypeEnumId" rel-field-name="enumId"/>
+        </relation>
+        <relation type="one-nofk" rel-entity-name="StatusItem">
+            <key-map field-name="statusId"/>
+        </relation>
+    </entity>
 </entitymodel>

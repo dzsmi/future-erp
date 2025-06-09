@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 한예린 / 2025.06.09 -->
+<!-- [SR-2025-1107] 인사발령 -->
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://ofbiz.apache.org/Widget-Form" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Form http://ofbiz.apache.org/dtds/widget-form.xsd">
+
+    <form name="FindFrAppoint" type="single" target="FindFrAppoint" default-entity-name="FrAppoint"
+            header-row-style="header-row" default-table-style="basic-table">
+        <field name="noConditionFind"><hidden value="Y"/></field>
+        <field name="partyId" title="${uiLabelMap.FrHrEmployee}"><lookup target-form-name="LookupPerson"/></field>
+        <field name="appointTypeEnumId" title="${uiLabelMap.FrHrAppointType}">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="Enumeration" key-field-name="enumId" description="${description}">
+                    <entity-constraint name="enumTypeId" value="FR_APPOINT_TYPE"/>
+                    <entity-order-by field-name="sequenceId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="statusId" title="${uiLabelMap.CommonStatus}">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="StatusItem" key-field-name="statusId" description="${description}">
+                    <entity-constraint name="statusTypeId" value="FR_APPOINT_STATUS"/>
+                    <entity-order-by field-name="sequenceId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="effectiveDate" title="${uiLabelMap.FrHrAppointEffectiveDate}"><date-find type="date"/></field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+
+    <form name="ListFrAppoint" type="list" list-name="listIt" paginate-target="FindFrAppoint" default-entity-name="FrAppoint"
+            odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="FrAppoint"/>
+                <field-map field-name="orderBy" value="-requestDate"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="appointId" title="${uiLabelMap.CommonId}"><display/></field>
+        <field name="partyId" title="${uiLabelMap.FrHrEmployee}">
+            <display-entity entity-name="Person" description="${lastName}${firstName}"/>
+        </field>
+        <field name="appointTypeEnumId" title="${uiLabelMap.FrHrAppointType}">
+            <display-entity entity-name="Enumeration" key-field-name="enumId"/>
+        </field>
+        <field name="effectiveDate" title="${uiLabelMap.FrHrAppointEffectiveDate}"><display/></field>
+        <field name="fromPositionGradeId" title="${uiLabelMap.FrHrAppointFromGrade}">
+            <display-entity entity-name="Enumeration" key-field-name="enumId"/>
+        </field>
+        <field name="toPositionGradeId" title="${uiLabelMap.FrHrAppointToGrade}">
+            <display-entity entity-name="Enumeration" key-field-name="enumId"/>
+        </field>
+        <field name="fromDepartmentId" title="${uiLabelMap.FrHrAppointFromDept}">
+            <display-entity entity-name="PartyGroup" key-field-name="partyId" description="${groupName}"/>
+        </field>
+        <field name="toDepartmentId" title="${uiLabelMap.FrHrAppointToDept}">
+            <display-entity entity-name="PartyGroup" key-field-name="partyId" description="${groupName}"/>
+        </field>
+        <field name="toBaseSalary" title="${uiLabelMap.FrHrBaseSalary}"><display type="currency" currency="KRW"/></field>
+        <field name="statusId" title="${uiLabelMap.CommonStatus}">
+            <display-entity entity-name="StatusItem" key-field-name="statusId"/>
+        </field>
+        <field name="cancelLink" title=" " use-when="&quot;FRAPT_REQUESTED&quot;.equals(statusId)" widget-style="buttontext">
+            <hyperlink description="${uiLabelMap.CommonCancel}" target="cancelFrAppoint" request-confirmation="true">
+                <parameter param-name="appointId"/>
+            </hyperlink>
+        </field>
+    </form>
+
+    <form name="FrAppointRequest" type="single" target="requestFrAppoint"
+            header-row-style="header-row" default-table-style="basic-table">
+        <field name="partyId" title="${uiLabelMap.FrHrEmployee}" required-field="true"><lookup target-form-name="LookupPerson"/></field>
+        <field name="appointTypeEnumId" title="${uiLabelMap.FrHrAppointType}" required-field="true">
+            <drop-down allow-empty="false">
+                <entity-options entity-name="Enumeration" key-field-name="enumId" description="${description}">
+                    <entity-constraint name="enumTypeId" value="FR_APPOINT_TYPE"/>
+                    <entity-order-by field-name="sequenceId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="effectiveDate" title="${uiLabelMap.FrHrAppointEffectiveDate}" required-field="true"><date-time type="date"/></field>
+        <field name="toPositionGradeId" title="${uiLabelMap.FrHrAppointToGrade}">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="Enumeration" key-field-name="enumId" description="${description}">
+                    <entity-constraint name="enumTypeId" value="FR_POSITION_GRADE"/>
+                    <entity-order-by field-name="sequenceId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="toDepartmentId" title="${uiLabelMap.FrHrAppointToDept}"><lookup target-form-name="LookupPartyGroup"/></field>
+        <field name="toBaseSalary" title="${uiLabelMap.FrHrAppointToBaseSalary}"><text size="15"/></field>
+        <field name="reason" title="${uiLabelMap.FrHrAppointReason}"><textarea cols="60" rows="3"/></field>
+        <field name="submitButton" title="${uiLabelMap.FrHrAppointRequest}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+</forms>

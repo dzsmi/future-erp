@@ -241,6 +241,28 @@
         <response name="success" type="view" value="FrSeveranceStatement"/>
     </request-map>
 
+    <!-- ===================== 인사발령 (2025.06.09 한예린 [SR-2025-1107]) ===================== -->
+    <request-map uri="FindFrAppoint">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FindFrAppoint"/>
+    </request-map>
+    <request-map uri="FrAppointRequest">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FrAppointRequest"/>
+    </request-map>
+    <request-map uri="requestFrAppoint">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="requestFrAppoint"/>
+        <response name="success" type="view" value="FindFrAppoint"/>
+        <response name="error" type="view" value="FrAppointRequest"/>
+    </request-map>
+    <request-map uri="cancelFrAppoint">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="cancelFrAppoint"/>
+        <response name="success" type="view" value="FindFrAppoint"/>
+        <response name="error" type="view" value="FindFrAppoint"/>
+    </request-map>
+
   <!-- 근태2 -->
   <request-map uri="Attend2List"><security https="true" auth="true"/><response name="success" type="view" value="Attend2List"/></request-map>
   <request-map uri="saveAttend2">
@@ -325,4 +347,7 @@
     <view-map name="ViewFrRetireSettle" type="screen" page="component://frhr/widget/RetireScreens.xml#ViewFrRetireSettle"/>
     <view-map name="FrSeverancePay" type="screen" page="component://frhr/widget/RetireScreens.xml#FrSeverancePay"/>
     <view-map name="FrSeveranceStatement" type="screen" page="component://frhr/widget/RetireScreens.xml#FrSeveranceStatement"/>
+
+    <view-map name="FindFrAppoint" type="screen" page="component://frhr/widget/AppointScreens.xml#FindFrAppoint"/>
+    <view-map name="FrAppointRequest" type="screen" page="component://frhr/widget/AppointScreens.xml#FrAppointRequest"/>
 </site-conf>
