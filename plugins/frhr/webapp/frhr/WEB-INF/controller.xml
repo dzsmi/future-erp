@@ -256,6 +256,22 @@
         <response name="success" type="view" value="FindFrAppoint"/>
         <response name="error" type="view" value="FrAppointRequest"/>
     </request-map>
+    <request-map uri="FrAppointApprove">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="FrAppointApprove"/>
+    </request-map>
+    <request-map uri="approveFrAppoint">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="approveFrAppoint"/>
+        <response name="success" type="view" value="FrAppointApprove"/>
+        <response name="error" type="view" value="FrAppointApprove"/>
+    </request-map>
+    <request-map uri="rejectFrAppoint">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="rejectFrAppoint"/>
+        <response name="success" type="view" value="FrAppointApprove"/>
+        <response name="error" type="view" value="FrAppointApprove"/>
+    </request-map>
     <request-map uri="cancelFrAppoint">
         <security https="true" auth="true"/>
         <event type="service" invoke="cancelFrAppoint"/>
@@ -350,4 +366,5 @@
 
     <view-map name="FindFrAppoint" type="screen" page="component://frhr/widget/AppointScreens.xml#FindFrAppoint"/>
     <view-map name="FrAppointRequest" type="screen" page="component://frhr/widget/AppointScreens.xml#FrAppointRequest"/>
+    <view-map name="FrAppointApprove" type="screen" page="component://frhr/widget/AppointScreens.xml#FrAppointApprove"/>
 </site-conf>

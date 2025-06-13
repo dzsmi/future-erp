@@ -95,4 +95,22 @@
         <field name="reason" title="${uiLabelMap.FrHrAppointReason}"><textarea cols="60" rows="3"/></field>
         <field name="submitButton" title="${uiLabelMap.FrHrAppointRequest}" widget-style="smallSubmit"><submit button-type="button"/></field>
     </form>
+
+    <!-- 2025.06.13 한예린 발령 승인 -->
+    <form name="ListFrAppointApprove" type="list" list-name="appointList" extends="ListFrAppoint"
+            odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions/>
+        <field name="cancelLink"><ignored/></field>
+        <field name="reason" title="${uiLabelMap.FrHrAppointReason}"><display/></field>
+        <field name="approveLink" title=" " widget-style="buttontext">
+            <hyperlink description="${uiLabelMap.FrHrApprove}" target="approveFrAppoint" request-confirmation="true">
+                <parameter param-name="appointId"/>
+            </hyperlink>
+        </field>
+        <field name="rejectLink" title=" " widget-style="buttontext">
+            <hyperlink description="${uiLabelMap.FrHrReject}" target="rejectFrAppoint" request-confirmation="true">
+                <parameter param-name="appointId"/>
+            </hyperlink>
+        </field>
+    </form>
 </forms>

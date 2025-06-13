@@ -25,4 +25,19 @@
         <description>인사발령 신청 취소</description>
         <attribute name="appointId" type="String" mode="IN" optional="false"/>
     </service>
+
+    <!-- 2025.06.13 한예린 승인/반려 -->
+    <service name="approveFrAppoint" engine="groovy"
+            location="component://frhr/groovyScripts/appoint/FrAppointServices.groovy" invoke="approveFrAppoint" auth="true">
+        <description>인사발령 승인 : FrEmplInfo 반영 + 코어 Employment / PartyRelationship 갱신 (FRHR_ADMIN)</description>
+        <attribute name="appointId" type="String" mode="IN" optional="false"/>
+        <attribute name="comments" type="String" mode="IN" optional="true"/>
+    </service>
+    <service name="rejectFrAppoint" engine="groovy"
+            location="component://frhr/groovyScripts/appoint/FrAppointServices.groovy" invoke="rejectFrAppoint" auth="true">
+        <description>인사발령 반려</description>
+        <permission-service service-name="frHrPermissionCheck" main-action="UPDATE"/>
+        <attribute name="appointId" type="String" mode="IN" optional="false"/>
+        <attribute name="comments" type="String" mode="IN" optional="true"/>
+    </service>
 </services>

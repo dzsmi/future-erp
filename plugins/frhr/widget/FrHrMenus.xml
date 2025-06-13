@@ -75,5 +75,9 @@
             selected-menuitem-context-field-name="tabButtonItem">
         <menu-item name="FindFrAppoint" title="${uiLabelMap.FrHrAppointList}"><link target="FindFrAppoint"/></menu-item>
         <menu-item name="FrAppointRequest" title="${uiLabelMap.FrHrAppointRequest}"><link target="FrAppointRequest"/></menu-item>
+        <menu-item name="FrAppointApprove" title="${uiLabelMap.FrHrAppointApprove}">
+            <condition><if-has-permission permission="FRHR" action="_ADMIN"/></condition>
+            <link target="FrAppointApprove"/>
+        </menu-item>
     </menu>
 </menus>

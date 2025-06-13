@@ -712,4 +712,16 @@
         <value xml:lang="en">Only requested appointments can be processed.</value>
         <value xml:lang="ko">신청 상태인 발령만 처리할 수 있습니다.</value>
     </property>
+    <property key="FrHrAppointApprove">
+        <value xml:lang="en">Approve Appointment</value>
+        <value xml:lang="ko">발령 승인</value>
+    </property>
+    <property key="FrHrAppointApproveNotice">
+        <value xml:lang="en">On approval, grade/department/base salary are applied to the employee immediately and OFBiz employment records are updated from the effective date.</value>
+        <value xml:lang="ko">승인하면 직원 인사정보(직급/부서/기본급)가 바로 변경되고, OFBiz 고용정보는 발령일자로 갱신됩니다.</value>
+    </property>
+    <property key="FrHrAppointApproveSuccess">
+        <value xml:lang="en">Appointment approved.</value>
+        <value xml:lang="ko">인사발령이 승인되었습니다.</value>
+    </property>
 </resource>
