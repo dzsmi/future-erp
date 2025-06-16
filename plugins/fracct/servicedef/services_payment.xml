@@ -74,6 +74,16 @@
         <attribute name="dueDate" type="java.sql.Date" mode="OUT" optional="false"/>
     </service>
 
+    <!-- 20250616 한예린 오타수정용 신규 -->
+    <service name="createFrPaymentPlanFromTaxInvioceLegacyOld" engine="simple"
+            location="component://fracct/minilang/FrPaymentServices.xml" invoke="createFrPaymentPlanFromTaxInvoice" auth="true">
+        <description>매입 세금계산서로 지급계획 생성 (지급기일 = 발행일이 속한 달의 다음 달 말일)</description>
+        <permission-service service-name="fracctAdminPermissionCheck" main-action="CREATE"/>
+        <attribute name="taxInvoiceId" type="String" mode="IN" optional="false"/>
+        <attribute name="paymentPlanId" type="String" mode="OUT" optional="false"/>
+        <attribute name="dueDate" type="java.sql.Date" mode="OUT" optional="false"/>
+    </service>
+
     <service name="completeFrPaymentPlan" engine="simple"
             location="component://fracct/minilang/FrPaymentServices.xml" invoke="completeFrPaymentPlan" auth="true">
         <description>지급완료 처리 (FRPP_PLANNED → FRPP_PAID)</description>
