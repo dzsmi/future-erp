@@ -59,4 +59,13 @@
         <attribute name="taxInvoiceId" type="String" mode="INOUT" optional="false"/>
         <attribute name="taxInvoiceNo" type="String" mode="OUT" optional="true"/>
     </service>
+
+    <!-- 20250626 조민석 오타수정용 신규 -->
+    <service name="issueFrETaxInvioce" engine="groovy" transaction-timeout="120"
+            location="component://fracct/groovyScripts/tax/FrETaxServices.groovy" invoke="issueFrETaxInvoice" auth="true">
+        <description>전자세금계산서 ASP 발행 요청 (fracct.etax.aspUrl). 성공 시 taxInvoiceNo = 국세청 승인번호, FRTI_REGISTERED</description>
+        <permission-service service-name="fracctAdminPermissionCheck" main-action="UPDATE"/>
+        <attribute name="taxInvoiceId" type="String" mode="INOUT" optional="false"/>
+        <attribute name="taxInvoiceNo" type="String" mode="OUT" optional="true"/>
+    </service>
 </services>

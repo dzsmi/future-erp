@@ -219,6 +219,9 @@ under the License.
         <field name="approverPartyId" required-field="true"><lookup target-form-name="LookupPartyName"/></field>
         <field name="jobRequisitionId" required-field="true"><lookup target-form-name="LookupJobRequisition"/></field>
         <field name="statusId" title="${uiLabelMap.HumanResIJPStatus}"><hidden value="IJP_APPLIED"/></field>
+        <!-- 2025.06.26 현업요청으로 제외
+        <field name="emplPositionId"><hidden/></field>
+        -->
         <field name="emplPositionId"><hidden/></field>
         <field name="employmentAppSourceTypeId"><hidden/></field>
         <field name="referredByPartyId"><hidden/></field>
