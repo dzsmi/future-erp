@@ -58,6 +58,43 @@
         </field>
     </form>
 
+    <!-- 2025.07.29 조민석 신규 (기존 유지) -->
+    <form name="ListFrAttendance2" type="list" list-name="listIt" paginate-target="FindFrAttendance" default-entity-name="FrAttendance"
+            odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <actions>
+            <!-- 인수인계 문서에 없음. 건드리지 말것 -->
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="FrAttendance"/>
+                <field-map field-name="orderBy" value="-workDate|partyId"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="workDate" title="${uiLabelMap.FrHrWorkDate}"><display/></field>
+        <field name="partyId" title="${uiLabelMap.FrHrEmployee}">
+            <display-entity entity-name="Person" description="${lastName}${firstName}"/>
+        </field>
+        <field name="attendTypeId" title="${uiLabelMap.FrHrAttendType}"><display-entity entity-name="Enumeration" key-field-name="enumId"/></field>
+        <field name="checkInTime" title="${uiLabelMap.FrHrCheckIn}"><display/></field>
+        <field name="checkOutTime" title="${uiLabelMap.FrHrCheckOut}"><display/></field>
+        <field name="workHours" title="${uiLabelMap.FrHrWorkHours}"><display/></field>
+        <field name="overtimeHours" title="${uiLabelMap.FrHrOvertimeHours}"><display/></field>
+        <field name="remarks" title="${uiLabelMap.CommonRemarks}"><display/></field>
+        <field name="editLink" title=" " widget-style="buttontext">
+            <hyperlink description="${uiLabelMap.CommonEdit}" target="EditFrAttendance">
+                <parameter param-name="partyId"/>
+                <parameter param-name="workDate"/>
+            </hyperlink>
+        </field>
+        <field name="deleteLink" title=" " widget-style="buttontext">
+            <hyperlink description="${uiLabelMap.CommonDelete}" target="deleteFrAttendance" link-type="hidden-form" request-confirmation="true">
+                <parameter param-name="partyId"/>
+                <parameter param-name="workDate"/>
+            </hyperlink>
+        </field>
+    </form>
+
     <form name="EditFrAttendance" type="single" target="updateFrAttendance" default-map-name="attendance"
             header-row-style="header-row" default-table-style="basic-table">
         <alt-target use-when="attendance==null" target="createFrAttendance"/>
