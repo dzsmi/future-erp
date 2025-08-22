@@ -187,4 +187,13 @@
         </if-has-permission>
         <field-to-result field="conditionReply"/>
     </simple-method>
+
+    <!-- 2025.08.22 조민석 테스트용 -->
+    <simple-method method-name="isFrCloseCheckTargetOld" short-description="마감 체크 대상 여부">
+        <set field="conditionReply" type="Boolean" value="true"/>
+        <if-has-permission permission="FRACCT_CLOSE" action="_ADMIN">
+            <set field="conditionReply" type="Boolean" value="false"/>
+        </if-has-permission>
+        <field-to-result field="conditionReply"/>
+    </simple-method>
 </simple-methods>

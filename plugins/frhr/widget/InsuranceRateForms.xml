@@ -28,6 +28,9 @@
         </actions>
         <field name="rateYear" title="${uiLabelMap.FrHrRateYear}"><display/></field>
         <field name="insuranceType" title="${uiLabelMap.FrHrInsuranceType}"><display/></field>
+        <!-- 2025.08.22 기존로직 주석처리
+        <field name="rate" title="${uiLabelMap.FrHrRatePercent}"><text size="8"/></field>
+        -->
         <field name="rate" title="${uiLabelMap.FrHrRatePercent}"><text size="8"/></field>
         <field name="description" title="${uiLabelMap.CommonDescription}"><text size="40"/></field>
         <field name="updateButton" title="${uiLabelMap.CommonUpdate}" widget-style="smallSubmit"><submit button-type="button"/></field>
