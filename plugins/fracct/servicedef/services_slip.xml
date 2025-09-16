@@ -163,6 +163,17 @@
         <attribute name="slipIds" type="List" mode="OUT" optional="true"/>
     </service>
 
+    <!-- 20250916 한예린 오타수정용 신규 -->
+    <service name="uploadFrSlpCsvLegacy" engine="groovy" transaction-timeout="600"
+            location="component://fracct/groovyScripts/slip/FrSlipUploadServices.groovy" invoke="uploadFrSlipCsv" auth="true">
+        <description>전표 CSV 업로드 → createFrSlip / createFrSlipItem / requestFrSlip 반복 호출, 결재레벨 FRAPPR_CEO 로 변경</description>
+        <permission-service service-name="fracctUserPermissionCheck" main-action="CREATE"/>
+        <attribute name="uploadedFile" type="java.nio.ByteBuffer" mode="IN" optional="false"/>
+        <attribute name="_uploadedFile_fileName" type="String" mode="IN" optional="true"/>
+        <attribute name="_uploadedFile_contentType" type="String" mode="IN" optional="true"/>
+        <attribute name="slipIds" type="List" mode="OUT" optional="true"/>
+    </service>
+
     <!-- ================= 회계 거래 생성 ================= -->
     <service name="postFrSlipAcctgTrans" engine="groovy"
             location="component://fracct/groovyScripts/slip/FrSlipAcctgServices.groovy" invoke="postFrSlipAcctgTrans" auth="true">

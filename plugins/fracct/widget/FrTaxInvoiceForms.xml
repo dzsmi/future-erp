@@ -120,6 +120,24 @@
         <field name="description" title="${uiLabelMap.CommonDescription}"><display/></field>
     </form>
 
+    <!-- 2025.09.16 한예린 기존 로직 백업 -->
+    <form name="FrTaxInvoiceHeaderOld" type="single" default-map-name="taxInvoice"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="taxInvoiceId" title="${uiLabelMap.FrAcctTaxInvoiceId}" position="1"><display/></field>
+        <field name="taxInvoiceTypeEnumId" title="${uiLabelMap.FrAcctTaxInvoiceType}" position="2"><display-entity entity-name="Enumeration" key-field-name="enumId"/></field>
+        <field name="taxInvoiceNo" title="${uiLabelMap.FrAcctTaxInvoiceNo}" position="1"><display/></field>
+        <field name="statusId" title="${uiLabelMap.CommonStatus}" position="2"><display-entity entity-name="StatusItem"/></field>
+        <field name="partyId" title="${uiLabelMap.FrAcctVendor}" position="1">
+            <display-entity entity-name="PartyNameView" key-field-name="partyId" description="${groupName}${lastName}${firstName} [${partyId}]"/>
+        </field>
+        <field name="issueDate" title="${uiLabelMap.FrAcctIssueDate}" position="2"><display type="date"/></field>
+        <field name="supplyAmount" title="${uiLabelMap.FrAcctSupplyAmount}" position="1"><display type="currency" currency="KRW"/></field>
+        <field name="vatAmount" title="${uiLabelMap.FrAcctVatAmount}" position="2"><display type="currency" currency="KRW"/></field>
+        <field name="totalAmount" title="${uiLabelMap.FrAcctTotalAmount}" position="1"><display type="currency" currency="KRW"/></field>
+        <field name="createdByUserLogin" title="${uiLabelMap.FrAcctCreatedBy}" position="2"><display/></field>
+        <field name="description" title="${uiLabelMap.CommonDescription}"><display/></field>
+    </form>
+
     <form name="ListFrTaxInvoicePaymentPlan" type="list" list-name="paymentPlans"
         odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table">
         <field name="paymentPlanId" title="${uiLabelMap.FrAcctPaymentPlanId}"><display/></field>
