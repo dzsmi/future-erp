@@ -3,6 +3,7 @@
 <!--
   수정이력
     2024.10.07  한예린  전표 수정
+    2025.09.23  한예린  전표 현업 요청 반영
 -->
 <screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns="http://ofbiz.apache.org/Widget-Screen" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Screen http://ofbiz.apache.org/dtds/widget-screen.xsd">
