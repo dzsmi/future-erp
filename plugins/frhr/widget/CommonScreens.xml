@@ -118,7 +118,9 @@
                                 <link target="NewFrEmployee" text="${uiLabelMap.FrHrNewEmployee}" style="buttontext create"/>
                                 <link target="FrPayrollCalc" text="${uiLabelMap.FrHrPayrollCalc}" style="buttontext"/>
                                 <link target="FrPayrollPreview" text="${uiLabelMap.FrHrPayrollPreview}" style="buttontext"/>
+                                <!-- 2025.10.13 옛 근태 메뉴 정리 (근태는 상단 근태 메뉴 Attend2List)
                                 <link target="EditFrAttendance" text="${uiLabelMap.FrHrNewAttendance}" style="buttontext"/>
+                                -->
                                 <link target="EditFrLeaveUse" text="${uiLabelMap.FrHrNewLeaveUse}" style="buttontext"/>
                                 <link target="FrRetireProcess" text="${uiLabelMap.FrHrRetireProcess}" style="buttontext"/>
                             </container>

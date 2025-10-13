@@ -59,10 +59,12 @@
 										<parameter param-name="partyId"/>
 										<parameter param-name="noConditionFind" value="Y"/>
 									</link>
+									<!-- 2025.10.13 옛 근태 메뉴 정리
 									<link target="FindFrAttendance" text="${uiLabelMap.FrHrAttendance}" style="buttontext">
 										<parameter param-name="partyId"/>
 										<parameter param-name="noConditionFind" value="Y"/>
 									</link>
+									-->
 									<link target="FrLeaveBalance" text="${uiLabelMap.FrHrLeaveBalance}" style="buttontext">
 										<parameter param-name="partyId"/>
 									</link>
