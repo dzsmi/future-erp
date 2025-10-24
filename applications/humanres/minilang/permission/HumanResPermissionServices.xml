@@ -24,4 +24,10 @@
         <set field="primaryPermission" value="HUMANRES"/>
         <call-simple-method method-name="genericBasePermissionCheck" xml-resource="component://common/minilang/permission/CommonPermissionServices.xml"/>
     </simple-method>
+
+    <!-- 20251024 한예린 백업 -->
+    <simple-method method-name="humanResManagerPermissionOld" short-description="Check user has Humanres Manager permission">
+        <set field="primaryPermission" value="HUMANRES"/>
+        <call-simple-method method-name="genericBasePermissionCheck" xml-resource="component://common/minilang/permission/CommonPermissionServices.xml"/>
+    </simple-method>
 </simple-methods>
