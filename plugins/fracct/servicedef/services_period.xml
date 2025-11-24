@@ -3,6 +3,7 @@
 <!--
   수정이력
     2019.09.16  정해인  재경 수정
+    2025.11.24  조민석  재경 항목 추가
 -->
 <services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
