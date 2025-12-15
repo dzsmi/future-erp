@@ -7,6 +7,7 @@
 <simple-methods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns="http://ofbiz.apache.org/Simple-Method" xsi:schemaLocation="http://ofbiz.apache.org/Simple-Method http://ofbiz.apache.org/dtds/simple-methods.xsd">
 
+    <!-- 확인필요 -->
     <simple-method method-name="requestFrExpenseSlip" short-description="경비전표 상신">
         <entity-one entity-name="FrSlip" value-field="slip"/>
         <call-simple-method xml-resource="component://fracct/minilang/FrSlipServices.xml" method-name="checkFrSlipEditable"/>
