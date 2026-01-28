@@ -18,6 +18,23 @@
         <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
     </form>
 
+    <!-- 2026.01.28 한예린 기존 로직 백업 -->
+    <form name="FindFrPayrollOld" type="single" target="FindFrPayroll" default-entity-name="FrPayroll"
+            header-row-style="header-row" default-table-style="basic-table">
+        <field name="noConditionFind"><hidden value="Y"/></field>
+        <field name="payYearMonth" title="${uiLabelMap.FrHrPayYearMonth}" tooltip="yyyyMM"><text-find default-option="equals" hide-options="true"/></field>
+        <field name="partyId" title="${uiLabelMap.FrHrEmployee}"><lookup target-form-name="LookupPerson"/></field>
+        <field name="statusId" title="${uiLabelMap.CommonStatus}">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="StatusItem" key-field-name="statusId" description="${description}">
+                    <entity-constraint name="statusTypeId" value="FR_PAYROLL_STATUS"/>
+                    <entity-order-by field-name="sequenceId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+
     <form name="ListFrPayroll" type="list" list-name="listIt" paginate-target="FindFrPayroll" default-entity-name="FrPayroll"
             odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
         <actions>

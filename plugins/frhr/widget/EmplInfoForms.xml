@@ -1,98 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 작성: 오픈브릿지시스템즈 이소라 / 2018.05.28 -->
 <forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns="http://ofbiz.apache.org/Widget-Form" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Form http://ofbiz.apache.org/dtds/widget-form.xsd">
-    <form name="FindFrEmplInfo" type="single" target="FindFrEmplInfo" default-entity-name="FrEmplInfo"
-            header-row-style="header-row" default-table-style="basic-table">
-        <field name="noConditionFind"><hidden value="Y"/></field>
-        <field name="partyId" title="${uiLabelMap.FrHrEmployee}"><lookup target-form-name="LookupPerson"/></field>
-        <field name="emplNo" title="${uiLabelMap.FrHrEmplNo}"><text-find/></field>
-        <field name="positionGradeId" title="${uiLabelMap.FrHrPositionGrade}">
-            <drop-down allow-empty="true">
-                <entity-options entity-name="Enumeration" key-field-name="enumId" description="${description}">
-                    <entity-constraint name="enumTypeId" value="FR_POSITION_GRADE"/>
-                    <entity-order-by field-name="sequenceId"/>
-                </entity-options>
-            </drop-down>
-        </field>
-        <field name="departmentId" title="${uiLabelMap.FrHrDepartment}"><lookup target-form-name="LookupPartyGroup"/></field>
-        <field name="hireDate" title="${uiLabelMap.FrHrHireDate}"><date-find type="date"/></field>
-        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
-    </form>
+		xmlns="http://ofbiz.apache.org/Widget-Form" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Form http://ofbiz.apache.org/dtds/widget-form.xsd">
+	<form name="FindFrEmplInfo" type="single" target="FindFrEmplInfo" default-entity-name="FrEmplInfo"
+			header-row-style="header-row" default-table-style="basic-table">
+		<field name="noConditionFind"><hidden value="Y"/></field>
+		<field name="partyId" title="${uiLabelMap.FrHrEmployee}"><lookup target-form-name="LookupPerson"/></field>
+		<field name="emplNo" title="${uiLabelMap.FrHrEmplNo}"><text-find/></field>
+		<field name="positionGradeId" title="${uiLabelMap.FrHrPositionGrade}">
+			<drop-down allow-empty="true">
+				<entity-options entity-name="Enumeration" key-field-name="enumId" description="${description}">
+					<entity-constraint name="enumTypeId" value="FR_POSITION_GRADE"/>
+					<entity-order-by field-name="sequenceId"/>
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="departmentId" title="${uiLabelMap.FrHrDepartment}"><lookup target-form-name="LookupPartyGroup"/></field>
+		<field name="hireDate" title="${uiLabelMap.FrHrHireDate}"><date-find type="date"/></field>
+		<field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+	</form>
 
-    <form name="ListFrEmplInfo" type="list" list-name="listIt" paginate-target="FindFrEmplInfo" default-entity-name="FrEmplInfo"
-            odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
-        <actions>
-            <service service-name="performFind" result-map="result" result-map-list="listIt">
-                <field-map field-name="inputFields" from-field="parameters"/>
-                <field-map field-name="entityName" value="FrEmplInfo"/>
-                <field-map field-name="orderBy" value="emplNo"/>
-                <field-map field-name="viewIndex" from-field="viewIndex"/>
-                <field-map field-name="viewSize" from-field="viewSize"/>
-            </service>
-        </actions>
-        <field name="emplNo" title="${uiLabelMap.FrHrEmplNo}" widget-style="buttontext">
-            <hyperlink description="${emplNo}" target="EditFrEmplInfo">
-                <parameter param-name="partyId"/>
-            </hyperlink>
-        </field>
-        <field name="partyId" title="${uiLabelMap.FrHrEmployee}">
-            <display-entity entity-name="Person" description="${lastName}${firstName}"/>
-        </field>
-        <field name="positionGradeId" title="${uiLabelMap.FrHrPositionGrade}">
-            <display-entity entity-name="Enumeration" key-field-name="enumId"/>
-        </field>
-        <field name="departmentId" title="${uiLabelMap.FrHrDepartment}">
-            <display-entity entity-name="PartyGroup" key-field-name="partyId" description="${groupName}"/>
-        </field>
-        <field name="hireDate" title="${uiLabelMap.FrHrHireDate}"><display/></field>
-        <field name="retireDate" title="${uiLabelMap.FrHrRetireDate}"><display/></field>
-        <field name="baseSalary" title="${uiLabelMap.FrHrBaseSalary}"><display type="currency" currency="KRW"/></field>
-    </form>
+	<form name="ListFrEmplInfo" type="list" list-name="listIt" paginate-target="FindFrEmplInfo" default-entity-name="FrEmplInfo"
+			odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+		<actions>
+			<service service-name="performFind" result-map="result" result-map-list="listIt">
+				<field-map field-name="inputFields" from-field="parameters"/>
+				<field-map field-name="entityName" value="FrEmplInfo"/>
+				<field-map field-name="orderBy" value="emplNo"/>
+				<field-map field-name="viewIndex" from-field="viewIndex"/>
+				<field-map field-name="viewSize" from-field="viewSize"/>
+			</service>
+		</actions>
+		<field name="emplNo" title="${uiLabelMap.FrHrEmplNo}" widget-style="buttontext">
+			<hyperlink description="${emplNo}" target="EditFrEmplInfo">
+				<parameter param-name="partyId"/>
+			</hyperlink>
+		</field>
+		<field name="partyId" title="${uiLabelMap.FrHrEmployee}">
+			<display-entity entity-name="Person" description="${lastName}${firstName}"/>
+		</field>
+		<field name="positionGradeId" title="${uiLabelMap.FrHrPositionGrade}">
+			<display-entity entity-name="Enumeration" key-field-name="enumId"/>
+		</field>
+		<field name="departmentId" title="${uiLabelMap.FrHrDepartment}">
+			<display-entity entity-name="PartyGroup" key-field-name="partyId" description="${groupName}"/>
+		</field>
+		<field name="hireDate" title="${uiLabelMap.FrHrHireDate}"><display/></field>
+		<field name="retireDate" title="${uiLabelMap.FrHrRetireDate}"><display/></field>
+		<field name="baseSalary" title="${uiLabelMap.FrHrBaseSalary}"><display type="currency" currency="KRW"/></field>
+	</form>
 
-    <form name="EditFrEmplInfo" type="single" target="updateFrEmplInfo" default-map-name="emplInfo"
-            header-row-style="header-row" default-table-style="basic-table">
-        <alt-target use-when="emplInfo==null" target="createFrEmplInfo"/>
-        <auto-fields-service service-name="updateFrEmplInfo" map-name="emplInfo"/>
-        <field name="partyId" use-when="emplInfo==null" title="${uiLabelMap.FrHrEmployee}" required-field="true"><lookup target-form-name="LookupPerson"/></field>
-        <field name="partyId" use-when="emplInfo!=null" title="${uiLabelMap.FrHrEmployee}"><display/></field>
-        <field name="emplNo" title="${uiLabelMap.FrHrEmplNo}" required-field="true"><text size="20" maxlength="20"/></field>
-        <field name="hireDate" title="${uiLabelMap.FrHrHireDate}" required-field="true"><date-time type="date"/></field>
-        <field name="retireDate" title="${uiLabelMap.FrHrRetireDate}" tooltip="${uiLabelMap.FrHrRetireDateTooltip}"><display/></field>
-        <field name="positionGradeId" title="${uiLabelMap.FrHrPositionGrade}">
-            <drop-down allow-empty="true">
-                <entity-options entity-name="Enumeration" key-field-name="enumId" description="${description}">
-                    <entity-constraint name="enumTypeId" value="FR_POSITION_GRADE"/>
-                    <entity-order-by field-name="sequenceId"/>
-                </entity-options>
-            </drop-down>
-        </field>
-        <field name="departmentId" title="${uiLabelMap.FrHrDepartment}"><lookup target-form-name="LookupPartyGroup"/></field>
-        <field name="baseSalary" title="${uiLabelMap.FrHrBaseSalary}" required-field="true"><text size="15"/></field>
-        <field name="remarks" title="${uiLabelMap.CommonRemarks}"><text size="60"/></field>
-        <field name="submitButton" use-when="emplInfo==null" title="${uiLabelMap.CommonCreate}" widget-style="smallSubmit"><submit button-type="button"/></field>
-        <field name="submitButton" use-when="emplInfo!=null" title="${uiLabelMap.CommonUpdate}" widget-style="smallSubmit"><submit button-type="button"/></field>
-    </form>
+	<form name="EditFrEmplInfo" type="single" target="updateFrEmplInfo" default-map-name="emplInfo"
+			header-row-style="header-row" default-table-style="basic-table">
+		<alt-target use-when="emplInfo==null" target="createFrEmplInfo"/>
+		<auto-fields-service service-name="updateFrEmplInfo" map-name="emplInfo"/>
+		<field name="partyId" use-when="emplInfo==null" title="${uiLabelMap.FrHrEmployee}" required-field="true"><lookup target-form-name="LookupPerson"/></field>
+		<field name="partyId" use-when="emplInfo!=null" title="${uiLabelMap.FrHrEmployee}"><display/></field>
+		<field name="emplNo" title="${uiLabelMap.FrHrEmplNo}" required-field="true"><text size="20" maxlength="20"/></field>
+		<field name="hireDate" title="${uiLabelMap.FrHrHireDate}" required-field="true"><date-time type="date"/></field>
+		<field name="retireDate" title="${uiLabelMap.FrHrRetireDate}" tooltip="${uiLabelMap.FrHrRetireDateTooltip}"><display/></field>
+		<field name="positionGradeId" title="${uiLabelMap.FrHrPositionGrade}">
+			<drop-down allow-empty="true">
+				<entity-options entity-name="Enumeration" key-field-name="enumId" description="${description}">
+					<entity-constraint name="enumTypeId" value="FR_POSITION_GRADE"/>
+					<entity-order-by field-name="sequenceId"/>
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="departmentId" title="${uiLabelMap.FrHrDepartment}"><lookup target-form-name="LookupPartyGroup"/></field>
+		<field name="baseSalary" title="${uiLabelMap.FrHrBaseSalary}" required-field="true"><text size="15"/></field>
+		<field name="remarks" title="${uiLabelMap.CommonRemarks}"><text size="60"/></field>
+		<field name="submitButton" use-when="emplInfo==null" title="${uiLabelMap.CommonCreate}" widget-style="smallSubmit"><submit button-type="button"/></field>
+		<field name="submitButton" use-when="emplInfo!=null" title="${uiLabelMap.CommonUpdate}" widget-style="smallSubmit"><submit button-type="button"/></field>
+	</form>
 
-    <!-- 신규입사 : Person 신규 생성 또는 기존 Person 선택 -->
-    <form name="NewFrEmployee" type="single" target="processFrNewHire"
-            header-row-style="header-row" default-table-style="basic-table">
-        <field name="partyId" title="${uiLabelMap.FrHrExistingPerson}" tooltip="${uiLabelMap.FrHrExistingPersonTooltip}"><lookup target-form-name="LookupPerson"/></field>
-        <field name="lastName" title="${uiLabelMap.PartyLastName}"><text size="20"/></field>
-        <field name="firstName" title="${uiLabelMap.PartyFirstName}"><text size="20"/></field>
-        <field name="emplNo" title="${uiLabelMap.FrHrEmplNo}" tooltip="${uiLabelMap.FrHrEmplNoTooltip}"><text size="20" maxlength="20"/></field>
-        <field name="hireDate" title="${uiLabelMap.FrHrHireDate}" required-field="true"><date-time type="date" default-value="${groovy: org.apache.ofbiz.base.util.UtilDateTime.nowDateString('yyyy-MM-dd')}"/></field>
-        <field name="positionGradeId" title="${uiLabelMap.FrHrPositionGrade}">
-            <drop-down allow-empty="false" no-current-selected-key="FRPG_STAFF">
-                <entity-options entity-name="Enumeration" key-field-name="enumId" description="${description}">
-                    <entity-constraint name="enumTypeId" value="FR_POSITION_GRADE"/>
-                    <entity-order-by field-name="sequenceId"/>
-                </entity-options>
-            </drop-down>
-        </field>
-        <field name="departmentId" title="${uiLabelMap.FrHrDepartment}"><lookup target-form-name="LookupPartyGroup"/></field>
-        <field name="baseSalary" title="${uiLabelMap.FrHrBaseSalary}" required-field="true"><text size="15"/></field>
-        <field name="remarks" title="${uiLabelMap.CommonRemarks}"><text size="60"/></field>
-        <field name="submitButton" title="${uiLabelMap.FrHrNewHireProcess}" widget-style="smallSubmit"><submit button-type="button"/></field>
-    </form>
+	<!-- 신규입사 : Person 신규 생성 또는 기존 Person 선택 -->
+	<form name="NewFrEmployee" type="single" target="processFrNewHire"
+			header-row-style="header-row" default-table-style="basic-table">
+		<field name="partyId" title="${uiLabelMap.FrHrExistingPerson}" tooltip="${uiLabelMap.FrHrExistingPersonTooltip}"><lookup target-form-name="LookupPerson"/></field>
+		<field name="lastName" title="${uiLabelMap.PartyLastName}"><text size="20"/></field>
+		<field name="firstName" title="${uiLabelMap.PartyFirstName}"><text size="20"/></field>
+		<field name="emplNo" title="${uiLabelMap.FrHrEmplNo}" tooltip="${uiLabelMap.FrHrEmplNoTooltip}"><text size="20" maxlength="20"/></field>
+		<field name="hireDate" title="${uiLabelMap.FrHrHireDate}" required-field="true"><date-time type="date" default-value="${groovy: org.apache.ofbiz.base.util.UtilDateTime.nowDateString('yyyy-MM-dd')}"/></field>
+		<field name="positionGradeId" title="${uiLabelMap.FrHrPositionGrade}">
+			<drop-down allow-empty="false" no-current-selected-key="FRPG_STAFF">
+				<entity-options entity-name="Enumeration" key-field-name="enumId" description="${description}">
+					<entity-constraint name="enumTypeId" value="FR_POSITION_GRADE"/>
+					<entity-order-by field-name="sequenceId"/>
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="departmentId" title="${uiLabelMap.FrHrDepartment}"><lookup target-form-name="LookupPartyGroup"/></field>
+		<field name="baseSalary" title="${uiLabelMap.FrHrBaseSalary}" required-field="true"><text size="15"/></field>
+		<field name="remarks" title="${uiLabelMap.CommonRemarks}"><text size="60"/></field>
+		<field name="submitButton" title="${uiLabelMap.FrHrNewHireProcess}" widget-style="smallSubmit"><submit button-type="button"/></field>
+	</form>
 </forms>
