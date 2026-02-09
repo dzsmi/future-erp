@@ -24,6 +24,8 @@
     <entity-resource type="data" reader-name="seed" loader="main" location="data/FrHrInsuranceRateData2023.xml"/>
     <!-- 2024.01.15 한예린 [SR-2024-0047] 2024 요율 -->
     <entity-resource type="data" reader-name="seed" loader="main" location="data/FrHrInsuranceRateData2024.xml"/>
+    <!-- 2026.02.09 한예린 [SR-2026-0141] 2026 요율 -->
+    <entity-resource type="data" reader-name="seed" loader="main" location="data/FrHrInsuranceRateData2026.xml"/>
     <!-- 2025.06.09 한예린 [SR-2025-1107] 인사발령 -->
     <entity-resource type="data" reader-name="seed" loader="main" location="data/FrHrAppointData.xml"/>
     <!-- 2018.10.15 윤서진 연차 배치 스케줄 -->

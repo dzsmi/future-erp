@@ -8,7 +8,7 @@
  *  - 연장수당 : 해당월 근태 연장시간 합계 x 통상시급(기본급/209) x 1.5
  *  - 상여 : 화면에서 입력한 상여율(%) x 기본급
  *  - 수습 : 입사일 + 3개월이 급여월 말일 이후면 수습, 기본급 지급액의 90% (2023.05 한예린)
- *  - 4대보험 : 건강/장기요양/고용 요율은 FrInsuranceRate(급여년도), 국민연금 4.5%
+ *  - 4대보험 : 건강/장기요양/고용 요율은 FrInsuranceRate(급여년도), 국민연금 4.75% (2026.02 한예린, 이전 4.5%)
  *  - 소득세 : 간이세액표 반영 전까지 지급총액의 3%
  *  - 이미 확정/지급된 급여는 다시 계산하지 않는다
  */
@@ -40,7 +40,9 @@ def calcFrMonthlyPayroll() {
     if (healthRate == null || longtermRate == null || employRate == null) {
         return error(UtilProperties.getMessage("FrHrUiLabels", "FrHrErrorInsuranceRateNotFound", locale))
     }
-    BigDecimal pensionRate = new BigDecimal("4.5")
+    // 2026.02.09 한예린 [SR-2026-0141] 국민연금 4.5 -> 4.75 (2026.01 적용)
+    // BigDecimal pensionRate = new BigDecimal("4.5")
+    BigDecimal pensionRate = new BigDecimal("4.75")
     BigDecimal incomeTaxRate = new BigDecimal("3")
 
     BigDecimal standardHours = new BigDecimal(UtilProperties.getPropertyValue("frhr", "payroll.standardMonthlyHours", "209"))

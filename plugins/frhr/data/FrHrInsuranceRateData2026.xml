@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성: 한예린 / 2026.02.09 -->
+<!-- [SR-2026-0141] 2026년 4대보험 근로자 부담 요율 (%) - 2026.01.01 적용 -->
+<!--   건강보험 3.545 -> 3.595, 장기요양 12.95 -> 13.14 (건강보험료 대비) -->
+<!--   국민연금 4.5 -> 4.75 (연금개혁, 1998년 이후 첫 인상), 고용보험 실업급여 0.9 변동 없음 -->
+<entity-engine-xml>
+    <FrInsuranceRate rateYear="2026" insuranceType="HEALTH" rate="3.595" description="건강보험 (보수월액 대비)"/>
+    <FrInsuranceRate rateYear="2026" insuranceType="LONGTERM" rate="13.14" description="장기요양보험 (건강보험료 대비)"/>
+    <FrInsuranceRate rateYear="2026" insuranceType="PENSION" rate="4.75" description="국민연금 (기준소득월액 대비)"/>
+    <FrInsuranceRate rateYear="2026" insuranceType="EMPLOY" rate="0.9" description="고용보험 실업급여 (보수총액 대비)"/>
+</entity-engine-xml>
