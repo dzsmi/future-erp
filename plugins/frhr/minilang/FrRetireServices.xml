@@ -164,6 +164,95 @@
         <field-to-result field="retirePayAmount"/>
     </simple-method>
 
+    <!-- 20260216 한예린 기존 로직 백업 -->
+    <simple-method method-name="calcFrRetirePayBak" short-description="퇴직금 계산">
+        <entity-one entity-name="FrEmplInfo" value-field="emplInfo"/>
+        <if-empty field="emplInfo">
+            <add-error><fail-property resource="FrHrUiLabels" property="FrHrErrorEmplInfoNotFound"/></add-error>
+        </if-empty>
+        <check-errors/>
+
+        <set field="retireDate" from-field="parameters.retireDate"/>
+        <set field="hireDate" from-field="emplInfo.hireDate"/>
+        <set field="serviceDays" value="${groovy: retireDate - hireDate}" type="Long"/>
+
+        <set field="fromYearMonth3" value="${groovy: retireDate.toLocalDate().withDayOfMonth(1).minusMonths(3).format(java.time.format.DateTimeFormatter.ofPattern('yyyyMM'))}"/>
+        <set field="fromYearMonth12" value="${groovy: retireDate.toLocalDate().withDayOfMonth(1).minusMonths(12).format(java.time.format.DateTimeFormatter.ofPattern('yyyyMM'))}"/>
+        <set field="thruYearMonth" value="${groovy: retireDate.toLocalDate().withDayOfMonth(1).minusMonths(1).format(java.time.format.DateTimeFormatter.ofPattern('yyyyMM'))}"/>
+        <set field="calDays3Month" value="${groovy: java.time.temporal.ChronoUnit.DAYS.between(retireDate.toLocalDate().withDayOfMonth(1).minusMonths(3), retireDate.toLocalDate().withDayOfMonth(1))}" type="Long"/>
+
+        <!-- 직전 3개월 임금총액 -->
+        <entity-condition entity-name="FrPayroll" list="payrolls3">
+            <condition-list combine="and">
+                <condition-expr field-name="partyId" from-field="parameters.partyId"/>
+                <condition-expr field-name="payYearMonth" operator="greater-equals" from-field="fromYearMonth3"/>
+                <condition-expr field-name="payYearMonth" operator="less-equals" from-field="thruYearMonth"/>
+            </condition-list>
+        </entity-condition>
+        <set field="wage3MonthAmount" value="0" type="BigDecimal"/>
+        <iterate list="payrolls3" entry="payroll">
+            <calculate field="wage3MonthAmount" type="BigDecimal">
+                <calcop operator="add" field="wage3MonthAmount">
+                    <calcop operator="get" field="payroll.baseAmount"/>
+                    <calcop operator="get" field="payroll.overtimeAmount"/>
+                </calcop>
+            </calculate>
+        </iterate>
+
+        <!-- 직전 12개월 상여 -->
+        <entity-condition entity-name="FrPayroll" list="payrolls12">
+            <condition-list combine="and">
+                <condition-expr field-name="partyId" from-field="parameters.partyId"/>
+                <condition-expr field-name="payYearMonth" operator="greater-equals" from-field="fromYearMonth12"/>
+                <condition-expr field-name="payYearMonth" operator="less-equals" from-field="thruYearMonth"/>
+            </condition-list>
+        </entity-condition>
+        <set field="bonus12MonthAmount" value="0" type="BigDecimal"/>
+        <iterate list="payrolls12" entry="payroll">
+            <calculate field="bonus12MonthAmount" type="BigDecimal">
+                <calcop operator="add" field="bonus12MonthAmount">
+                    <calcop operator="get" field="payroll.bonusAmount"/>
+                </calcop>
+            </calculate>
+        </iterate>
+
+        <!-- 평균임금 -->
+        <calculate field="avgDailyWage" type="BigDecimal" decimal-scale="2" rounding-mode="HalfUp">
+            <calcop operator="divide">
+                <calcop operator="add" field="wage3MonthAmount">
+                    <calcop operator="divide">
+                        <calcop operator="multiply" field="bonus12MonthAmount"><number value="3"/></calcop>
+                        <number value="12"/>
+                    </calcop>
+                </calcop>
+                <calcop operator="get" field="calDays3Month"/>
+            </calcop>
+        </calculate>
+
+        <!-- 퇴직금 -->
+        <if-compare field="serviceDays" operator="less" value="365" type="Long">
+            <set field="retirePayAmount" value="0" type="BigDecimal"/>
+            <else>
+                <calculate field="retirePayAmount" type="BigDecimal" decimal-scale="0" rounding-mode="Floor">
+                    <calcop operator="divide">
+                        <calcop operator="multiply" field="avgDailyWage">
+                            <number value="30"/>
+                            <calcop operator="get" field="serviceDays"/>
+                        </calcop>
+                        <number value="365"/>
+                    </calcop>
+                </calculate>
+            </else>
+        </if-compare>
+
+        <field-to-result field="serviceDays"/>
+        <field-to-result field="wage3MonthAmount"/>
+        <field-to-result field="bonus12MonthAmount"/>
+        <field-to-result field="calDays3Month"/>
+        <field-to-result field="avgDailyWage"/>
+        <field-to-result field="retirePayAmount"/>
+    </simple-method>
+
     <!-- ================================================================== -->
     <!-- 퇴사자 마지막 달 정산                                               -->
     <!--  - 일할 급여 : calcDailyProrate (기본급 x 근무일수 / 30)            -->

@@ -14,6 +14,7 @@ import org.apache.ofbiz.base.util.UtilDateTime
 import org.apache.ofbiz.entity.GenericValue
 
 def determineFrApprLevelByData() {
+    println "########## determineFrApprLevelByData start"
     String module = "FrApprLineServices.groovy"
     BigDecimal amount = parameters.amount ?: BigDecimal.ZERO
     String slipTypeEnumId = parameters.slipTypeEnumId
