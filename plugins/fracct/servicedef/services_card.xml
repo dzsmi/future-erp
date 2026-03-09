@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 작성: (주)핀링크 송태호 / 2021.02.08 -->
+<!--
+  수정이력
+    2026.03.09  한예린  법인카드 법개정 대응
+-->
 <services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
     <description>FutureRetail Accounting - Corporate Card Services</description>
