@@ -36,6 +36,9 @@
   <screen name="Ot2Request">
     <section>
       <actions>
+        <!-- 2026.05.11 기존로직 주석처리
+        <set field="titleProperty" value="FrHrAttendance"/>
+        -->
         <set field="titleProperty" value="FrHrAttendance"/>
         <set field="headerItem" value="Attendance"/>
         <set field="tabButtonItem" value="Ot2Request"/>
