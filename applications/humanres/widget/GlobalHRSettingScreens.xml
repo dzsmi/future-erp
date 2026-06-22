@@ -168,6 +168,7 @@
             </widgets>
         </section>
     </screen>
+    <!-- 확인필요 -->
     <screen name="EditTerminationReasons">
         <section>
             <actions>
