@@ -53,6 +53,41 @@
             </widgets>
         </section>
     </screen>
+
+    <!-- 2026.06.29 한예린 기존 로직 백업 -->
+    <screen name="FindPartySkillsOld">
+        <section>
+            <actions>
+                <set field="titleProperty" value="HumanResFindPartySkill"/>
+                <set field="headerItem" value="EmplSkills"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <set field="partySkillsCtx" from-field="parameters"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="menu-bar">
+                                <section>
+                                    <widgets>
+                                        <container style="button-bar">
+                                            <link target="NewPartySkill" text="${uiLabelMap.HumanResNewPartySkill}" style="buttontext create"/>
+                                        </container>
+                                    </widgets>
+                                </section>
+                            </decorator-section>
+                            <decorator-section name="search-options">
+                                <include-form name="FindPartySkills" location="component://humanres/widget/forms/PartySkillForms.xml"></include-form>
+                            </decorator-section>
+                            <decorator-section name="search-results">
+                                <include-form name="ListPartySkills" location="component://humanres/widget/forms/PartySkillForms.xml"/>
+                            </decorator-section>
+                        </decorator-screen>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
     <screen name="EditPartySkills">
         <section>
             <actions>
