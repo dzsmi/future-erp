@@ -7,8 +7,12 @@
  *      50,000,000원 이하  : 팀장 → 본부장
  *      50,000,000원 초과  : 팀장 → 본부장 → 대표이사
  *  - 표시용. 저장하지 않음.
+ *  - 2026.07.20 조민석 [SR-2026-0688] 미리보기/실제 결재선 다름 VOC
+ *      하드코딩 대신 결재선 기준 데이터(FrApprLine, 결재선 기준 관리 화면) 조회로 변경
+ *      전표유형 기준 데이터 없으면 경비전표(FRSLIP_EXPENSE) 기준 사용
  */
 
+import org.apache.ofbiz.base.util.UtilDateTime
 import org.apache.ofbiz.base.util.UtilFormatOut
 import org.apache.ofbiz.base.util.UtilProperties
 import org.apache.ofbiz.base.util.UtilValidate
@@ -30,8 +34,35 @@ String team = UtilProperties.getMessage("FrAcctUiLabels", "FrAcctApprTeam", loca
 String div = UtilProperties.getMessage("FrAcctUiLabels", "FrAcctApprDiv", locale)
 String ceo = UtilProperties.getMessage("FrAcctUiLabels", "FrAcctApprCeo", locale)
 
-BigDecimal teamLimit = new BigDecimal("5000000")
-BigDecimal divLimit = new BigDecimal("50000000")
+// BigDecimal teamLimit = new BigDecimal("5000000")
+// BigDecimal divLimit = new BigDecimal("50000000")
+BigDecimal teamLimit = null
+BigDecimal divLimit = null
+
+def slip = from("FrSlip").where(slipId: parameters.slipId).queryOne()
+String slipTypeEnumId = slip?.slipTypeEnumId
+List apprLines = []
+if (slipTypeEnumId) {
+    apprLines = from("FrApprLine").where(slipTypeEnumId: slipTypeEnumId).orderBy("sequenceNum").filterByDate(UtilDateTime.nowTimestamp()).queryList()
+}
+if (!apprLines) {
+    // 결재선 기준 데이터가 경비전표만 있음
+    apprLines = from("FrApprLine").where(slipTypeEnumId: "FRSLIP_EXPENSE").orderBy("sequenceNum").filterByDate(UtilDateTime.nowTimestamp()).queryList()
+}
+apprLines.each { apprLine ->
+    if ("FRAPPR_TEAM" == apprLine.apprLevelEnumId && apprLine.maxAmount != null) {
+        teamLimit = apprLine.maxAmount
+    } else if ("FRAPPR_DIV" == apprLine.apprLevelEnumId && apprLine.maxAmount != null) {
+        divLimit = apprLine.maxAmount
+    }
+}
+if (teamLimit == null) {
+    teamLimit = new BigDecimal("5000000")
+}
+if (divLimit == null) {
+    divLimit = new BigDecimal("50000000")
+}
+println "########## FrSlipApprPreview slipType=" + slipTypeEnumId + " team=" + teamLimit + " div=" + divLimit
 
 String previewLevelEnumId
 List previewSteps = []
@@ -50,3 +81,5 @@ context.previewAmount = previewAmount
 context.previewAmountText = UtilFormatOut.formatAmount(previewAmount.doubleValue())
 context.previewLevelEnumId = previewLevelEnumId
 context.previewApprLine = previewSteps.join(" → ")
+context.previewTeamLimit = teamLimit
+context.previewDivLimit = divLimit
