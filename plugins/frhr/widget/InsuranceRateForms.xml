@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 작성: 오픈브릿지시스템즈 이소라 / 2018.06.25 -->
 <forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns="http://ofbiz.apache.org/Widget-Form" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Form http://ofbiz.apache.org/dtds/widget-form.xsd">
-    <form name="AddFrInsuranceRate" type="single" target="createFrInsuranceRate"
-            header-row-style="header-row" default-table-style="basic-table">
-        <field name="rateYear" title="${uiLabelMap.FrHrRateYear}" required-field="true"><text size="4" maxlength="4"/></field>
-        <field name="insuranceType" title="${uiLabelMap.FrHrInsuranceType}" required-field="true">
-            <drop-down allow-empty="false">
-                <option key="HEALTH" description="${uiLabelMap.FrHrInsuranceHealth}"/>
-                <option key="LONGTERM" description="${uiLabelMap.FrHrInsuranceLongterm}"/>
-                <option key="PENSION" description="${uiLabelMap.FrHrInsurancePension}"/>
-                <option key="EMPLOY" description="${uiLabelMap.FrHrInsuranceEmploy}"/>
-            </drop-down>
-        </field>
-        <field name="rate" title="${uiLabelMap.FrHrRatePercent}" required-field="true"><text size="8"/></field>
-        <field name="description" title="${uiLabelMap.CommonDescription}"><text size="40"/></field>
-        <field name="submitButton" title="${uiLabelMap.CommonAdd}" widget-style="smallSubmit"><submit button-type="button"/></field>
-    </form>
+		xmlns="http://ofbiz.apache.org/Widget-Form" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Form http://ofbiz.apache.org/dtds/widget-form.xsd">
+	<form name="AddFrInsuranceRate" type="single" target="createFrInsuranceRate"
+			header-row-style="header-row" default-table-style="basic-table">
+		<field name="rateYear" title="${uiLabelMap.FrHrRateYear}" required-field="true"><text size="4" maxlength="4"/></field>
+		<field name="insuranceType" title="${uiLabelMap.FrHrInsuranceType}" required-field="true">
+			<drop-down allow-empty="false">
+				<option key="HEALTH" description="${uiLabelMap.FrHrInsuranceHealth}"/>
+				<option key="LONGTERM" description="${uiLabelMap.FrHrInsuranceLongterm}"/>
+				<option key="PENSION" description="${uiLabelMap.FrHrInsurancePension}"/>
+				<option key="EMPLOY" description="${uiLabelMap.FrHrInsuranceEmploy}"/>
+			</drop-down>
+		</field>
+		<field name="rate" title="${uiLabelMap.FrHrRatePercent}" required-field="true"><text size="8"/></field>
+		<field name="description" title="${uiLabelMap.CommonDescription}"><text size="40"/></field>
+		<field name="submitButton" title="${uiLabelMap.CommonAdd}" widget-style="smallSubmit"><submit button-type="button"/></field>
+	</form>
 
-    <form name="ListFrInsuranceRate" type="list" list-name="rateList" target="updateFrInsuranceRate"
-            odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
-        <actions>
-            <entity-condition entity-name="FrInsuranceRate" list="rateList">
-                <order-by field-name="-rateYear"/>
-                <order-by field-name="insuranceType"/>
-            </entity-condition>
-        </actions>
-        <field name="rateYear" title="${uiLabelMap.FrHrRateYear}"><display/></field>
-        <field name="insuranceType" title="${uiLabelMap.FrHrInsuranceType}"><display/></field>
-        <!-- 2025.08.22 기존로직 주석처리
-        <field name="rate" title="${uiLabelMap.FrHrRatePercent}"><text size="8"/></field>
-        -->
-        <field name="rate" title="${uiLabelMap.FrHrRatePercent}"><text size="8"/></field>
-        <field name="description" title="${uiLabelMap.CommonDescription}"><text size="40"/></field>
-        <field name="updateButton" title="${uiLabelMap.CommonUpdate}" widget-style="smallSubmit"><submit button-type="button"/></field>
-        <field name="deleteLink" title=" " widget-style="buttontext">
-            <hyperlink description="${uiLabelMap.CommonDelete}" target="deleteFrInsuranceRate" link-type="hidden-form" request-confirmation="true">
-                <parameter param-name="rateYear"/>
-                <parameter param-name="insuranceType"/>
-            </hyperlink>
-        </field>
-    </form>
+	<form name="ListFrInsuranceRate" type="list" list-name="rateList" target="updateFrInsuranceRate"
+			odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+		<actions>
+			<entity-condition entity-name="FrInsuranceRate" list="rateList">
+				<order-by field-name="-rateYear"/>
+				<order-by field-name="insuranceType"/>
+			</entity-condition>
+		</actions>
+		<field name="rateYear" title="${uiLabelMap.FrHrRateYear}"><display/></field>
+		<field name="insuranceType" title="${uiLabelMap.FrHrInsuranceType}"><display/></field>
+		<!-- 2025.08.22 기존로직 주석처리
+		<field name="rate" title="${uiLabelMap.FrHrRatePercent}"><text size="8"/></field>
+		-->
+		<field name="rate" title="${uiLabelMap.FrHrRatePercent}"><text size="8"/></field>
+		<field name="description" title="${uiLabelMap.CommonDescription}"><text size="40"/></field>
+		<field name="updateButton" title="${uiLabelMap.CommonUpdate}" widget-style="smallSubmit"><submit button-type="button"/></field>
+		<field name="deleteLink" title=" " widget-style="buttontext">
+			<hyperlink description="${uiLabelMap.CommonDelete}" target="deleteFrInsuranceRate" link-type="hidden-form" request-confirmation="true">
+				<parameter param-name="rateYear"/>
+				<parameter param-name="insuranceType"/>
+			</hyperlink>
+		</field>
+	</form>
 </forms>
