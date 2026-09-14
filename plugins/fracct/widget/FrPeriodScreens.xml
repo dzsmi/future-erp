@@ -4,6 +4,7 @@
         xmlns="http://ofbiz.apache.org/Widget-Screen" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Screen http://ofbiz.apache.org/dtds/widget-screen.xsd">
 
     <!-- 결산 마감 관리: 연도별 12개월 마감 현황 + 마감/해제 -->
+    <!-- 확인필요 -->
     <screen name="FindFrClosePeriod">
         <section>
             <actions>
