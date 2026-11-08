@@ -1,3 +1,17 @@
+FUTURE RETAIL ERP (future-erp)
+
+이 저장소는 AI 부트캠프 실습용으로 만든 "가상의 레거시 운영 소스"입니다.
+여러 해 동안 여러 주체가 유지보수한 사내 ERP(재경·인사) 운영 소스를 재현한 것으로,
+등장하는 회사(퓨처리테일, 오픈브릿지시스템즈, 핀링크 등), 인물, 커밋 작성자,
+데이터, 키 값은 모두 가상이며 실제와 관계가 없습니다.
+
+Based on Apache OFBiz 17.12 (https://github.com/apache/ofbiz-framework, Apache License 2.0).
+Only part of OFBiz is included (applications: accounting, humanres, party, commonext, datamodel;
+framework/common); the repository is not buildable as-is and is intended for static analysis.
+plugins/fracct and plugins/frhr were written for this repository. Some OFBiz files were modified.
+
+---- Original Apache OFBiz NOTICE ----
+
 Apache OFBiz
 Copyright 2001-2017 The Apache Software Foundation
 
